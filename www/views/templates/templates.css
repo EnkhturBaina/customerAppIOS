@@ -95,6 +95,7 @@
   font-weight: bold;
   text-align: center;
   display: block;
+  padding-top: 20px;
 }
 .templates-list {
   position: relative;

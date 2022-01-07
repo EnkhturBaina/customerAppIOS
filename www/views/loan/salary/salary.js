@@ -107,7 +107,7 @@ angular.module("salary.Ctrl", []).controller("salaryCtrl", function ($scope, $ro
       }
     } else if (param == "agreeBank") {
       if (isEmpty($rootScope.bankListFilter.Agree)) {
-        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох банк, ББСБ байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
+        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох байгууллага байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
         return false;
       } else {
         return true;

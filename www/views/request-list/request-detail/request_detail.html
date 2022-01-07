@@ -4,11 +4,11 @@
   <ion-content overflow-scroll="true" class="request-detail-content margin-top-50">
     <div class="list" ng-controller="request_detailCtrl">
       <div class="request-detail-container">
-        <span class="bant-detail-title request-middle-title"> Банкны санал</span>
+        <span class="bant-detail-title request-middle-title"> Байгууллагын санал</span>
         <div class="bank-detail">
           <label class="item item-input bank-detail-label">
-            <p>Банк</p>
-            <input type="text" placeholder="Банк" name="bank" ng-model="$root.selectedMapBankDTL.departmentname" disabled />
+            <p>Байгууллага</p>
+            <input type="text" placeholder="Байгууллага" name="bank" ng-model="$root.selectedMapBankDTL.departmentname" disabled />
           </label>
           <label class="item item-input bank-detail-label">
             <p>Төлөв</p>
@@ -68,7 +68,7 @@
     </ion-content>
     <ion-footer class="bank-chat-footer">
       <form class="msger-inputarea">
-        <textarea type="text" ng-model="$root.sendChatData.text1" class="msger-input" placeholder="Банкинд зурвас илгээх..."></textarea>
+        <textarea type="text" ng-model="$root.sendChatData.text1" class="msger-input" placeholder="Байгууллагад зурвас илгээх..."></textarea>
         <button type="submit" class="msger-send-btn" ng-click="sendChat()"><i class="ion-paper-airplane"></i></button>
       </form>
     </ion-footer>

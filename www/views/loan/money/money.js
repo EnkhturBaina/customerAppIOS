@@ -32,7 +32,7 @@ angular.module("money.Ctrl", []).controller("moneyCtrl", function ($scope, $root
       }
     } else if (param == "agreeBank") {
       if (isEmpty($rootScope.bankListFilter.Agree)) {
-        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох банк, ББСБ байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
+        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох байгууллага байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
         return false;
       } else {
         return true;

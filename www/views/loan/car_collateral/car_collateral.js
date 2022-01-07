@@ -139,7 +139,7 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
     json.location = $rootScope.carCollateralRequestData.locationId;
     json.month = $rootScope.carCollateralRequestData.loanMonth;
     json.salaries = $rootScope.filterSalaries;
-    
+
     json.currency = 16074201974821;
     if (!isEmpty($rootScope.loginUserInfo)) {
       json.isMortgage = $rootScope.loginUserInfo.mikmortgagecondition;
@@ -331,7 +331,7 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
       return true;
     } else if (param == "agreeBank") {
       if (isEmpty($rootScope.bankListFilter.Agree)) {
-        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох банк, ББСБ байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
+        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох байгууллага байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
         return false;
       } else {
         return true;
