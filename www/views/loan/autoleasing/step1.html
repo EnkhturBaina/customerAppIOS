@@ -1,0 +1,59 @@
+<ion-view id="loanPages" hide-nav-bar="true">
+    <link href="views/loan/autoleasing/autoleasing.css" rel="stylesheet" />
+    <ion-header-bar align-title="left" class="navbar" style="background: none;top: 0">
+        <div class="title ion-color-big-text navbar-back-button" style="background: none">
+            <button ng-click="backFromStep1()" class="nav-back-button button buttons button-clear header-item" style="left: 10px">
+                <i class="ion-chevron-left ion-color-header"></i>
+                <span class="navbar-back-text ion-color-header" style="transform: translate3d(0px, 0px, 0px);"><span>Автомашины лизинг</span></span>
+            </button>
+        </div>
+        <div class="navbar-right-icon">
+        </div>
+    </ion-header-bar>
+    <ion-content overflow-scroll="true" class="ion-modified-content margin-top-50 autoleasing-step1-content">
+        <div class="big-container ghostwhite-noscroll-container">
+            <div class="magic-container step1-card-content">
+                <div class="progressbar-container">
+                    <ul id="progress-bar" class="progressbar">
+                        <li class="active step-li-1"></li>
+                        <li class="step-li-22"></li>
+                        <li class="step-li-3"></li>
+                        <li class="step-li-4"></li>
+                    </ul>
+                </div>
+                <div class="bottom-border-input-text step1-code-input-container">
+                    <p class="big-middle-title auto-step1-title">ТА АВАХ АВТОМАШИНЫХАА КОДЫГ ОРУУЛНА УУ?</p>
+                    <input inputmode="numeric" pattern="[0-9]*" id="step1CarCode" type="text" placeholder="00000000" name="carCode" class="step1-car-code ion-text-upper" ng-model="$root.newReqiust.itemcode" ng-keyup="getCarDatasIdEnterkey($event,$root.newReqiust.itemcode)" select-on-click />
+                </div>
+                <div class="step1-scan-qr-container">
+                    <!-- <div class="qr-btn-container">
+                        <button class="button qr-button" id="qr" ng-click="showQRreader()">
+                            <span class="filter">
+                                <i class="ion-qr-scanner qr-ico"></i>
+                                QR уншуулах
+                            </span>
+                        </button>
+                    </div> -->
+                    <button class="button btn single-button auto-step1-next-btn" id="Next" ng-click="getCarDatasId($root.newReqiust.itemcode)">Үргэлжлүүлэх</button>
+                </div>
+            </div>
+            <ion-footer class="bottom-footer">
+                <!-- **APP STORE UPDATE START** -->
+                <!-- <div class="bank-container">
+                    <p>Танд зээл олгох боломжтой банк, ББСБ-ууд</p>
+                    <img class="tooltip" ng-repeat="bank in allBankList | filter:{id:'!!'}" ng-if="bank.bank_logo" ng-src="{{$root.imagePath}}{{bank.bank_logo}}" title="{{bank.department_name}}" animation="fade" />
+                </div> -->
+                <!-- **APP STORE UPDATE END** -->
+            </ion-footer>
+        </div>
+    </ion-content>
+
+</ion-view>
+<script id="templates/auto.html" type="text/ng-template">
+  <ion-modal-view class="auto-temp-modal-view">
+    <ion-content class="padding bank-chat-content" scroll="false">
+        <!-- <span class="term-modal-off-text" ng-click="autoModal.hide()"><img style="width: 20px" src="img/x_mark.png" /></span> -->
+        <div class="templates-modal-include" ng-include src="'views/templates/auto.html'"></div>
+    </ion-content>
+  </ion-modal-view>
+</script>

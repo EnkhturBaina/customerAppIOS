@@ -1,0 +1,192 @@
+.selection {
+  background: none;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid;
+  border-color: #a2a7b552;
+  padding: 5px 0px 10px 0px;
+  margin-bottom: 10px;
+  color: #a2a7b5;
+}
+.collateral-loan-content {
+  /* margin-bottom: 50px !important;  */
+}
+.collateral-loan-label {
+  width: 100%;
+  border-left: none;
+  border-right: none;
+  background: none;
+  padding: 5px;
+  border-bottom-width: 1px;
+  border-color: #ccc;
+  border-top-width: 0px;
+}
+.collateral-loan-label input {
+  text-align: right;
+  color: #4b5180 !important;
+  font-weight: bold;
+  padding-right: 0px;
+  background-color: transparent !important;
+}
+.collateral-loan-label p {
+  color: #a2a7b5;
+  position: absolute;
+  overflow: unset !important;
+}
+.property-step2-select {
+  padding: 7px 0px 7px 0px !important;
+}
+#overlayCollateralLoan {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 2;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.overlay-pc-content {
+  color: #000;
+  font-size: 12px;
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+  padding-bottom: 50px;
+  background: #fff;
+  border: 1px solid #acd322;
+}
+.ident-icon {
+  border-radius: 5px;
+  border: 1px solid #ccfffc;
+  text-align: center;
+  font-size: 10px;
+  color: #eaf6e2;
+  line-height: 10px;
+  background: #65c8ae;
+  padding: 3px;
+  width: 18px !important;
+  height: 18px !important;
+  bottom: -3px;
+  margin-left: 50px;
+}
+.pc-card-front {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  position: relative;
+  display: grid;
+}
+.pc-card-front i {
+  position: absolute;
+  zoom: 2;
+}
+.pc-card-back {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  position: relative;
+  display: grid;
+}
+.pc-card-back i {
+  position: absolute;
+  zoom: 2;
+}
+.property-coll-label {
+  padding: 5px 0 !important;
+  display: contents !important;
+}
+.property-coll-label p {
+  padding: 6px 0px;
+  width: 100%;
+  text-align: center;
+  white-space: pre-line !important;
+  color: #a2a7b5;
+}
+.property-loan-container-card {
+  background-color: #fff;
+  padding: 15px 0px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px 0px rgb(0 0 0 / 29%);
+  margin: 10px 20px;
+}
+.property-label {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: 0px !important;
+  border-bottom: 1px solid #a2a7b552 !important;
+  padding: 0 5px !important;
+  display: block !important;
+}
+.property-label span {
+  font-size: 14px !important;
+}
+.property-label::after {
+  display: none !important;
+}
+.property-label input {
+  color: #4b5180 !important;
+  font-weight: bold !important;
+}
+.property-label textarea {
+  color: #4b5180 !important;
+  font-weight: bold !important;
+}
+.property-select {
+  padding: 7px 15px !important;
+  text-align-last: right !important;
+  position: relative !important;
+  float: right !important;
+  appearance: auto !important;
+  direction: ltr !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.property-input {
+  text-align: right !important;
+  background: #fff !important;
+}
+.property-img-row img {
+  margin: auto !important;
+  width: 100% !important;
+  height: 88px;
+  border-radius: 10px;
+}
+
+.property-step2-card {
+  padding: 10px;
+  margin: 20px 15px 0px 15px;
+  height: auto;
+  background-color: #fff !important;
+  margin: 70px 20px 10px 20px !important;
+}
+.property-step2-card select {
+  width: auto;
+  margin: 0 12px 0 auto;
+  float: right;
+  border: none;
+  border-color: #d5d5d5;
+  border-radius: 5px;
+  padding: 7px 0px 7px 30px;
+  color: #606060;
+  background-color: #fff;
+  position: absolute;
+  right: 0;
+}
+.property-step2-card select option {
+  text-align: right !important;
+}
+.property-dan-content .scroll {
+  position: static !important;
+  height: 100% !important;
+  padding: 10px 0 !important;
+}

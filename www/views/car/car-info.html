@@ -1,0 +1,155 @@
+<ion-view id="loanPages" hide-nav-bar="true" cache-view="false">
+    <link href="views/car/car.css" rel="stylesheet" />
+    <ion-header-bar align-title="left" class="navbar" style="background: none; top: 0">
+        <div class="title ion-color-big-text navbar-back-button" style="background: none">
+            <button ng-click="backFromCarInfo()" class="nav-back-button button buttons button-clear header-item" style="left: 10px">
+                <i class="ion-chevron-left ion-color-header"></i>
+                <span class="navbar-back-text ion-color-header" style="transform: translate3d(0px, 0px, 0px);"><span>Автомашины мэдээлэл</span></span>
+            </button>
+        </div>
+        <div class="navbar-right-icon">
+        </div>
+    </ion-header-bar>
+    <!-- <div id="paypopup" style="display: none">
+        <span class="qr-popup-close" ng-click="payOff()">&#10006;</span>
+        <div class="pay-container">
+            <ion-tabs class="tabs-striped tabs-top">
+                <ion-tab title="QPay">
+                    <div class="">
+                        <div class="item-info">
+                            <p class="middle-title">BMW X6</p>
+                            <ul>
+                                <li>Үйлдвэрлэсэн он <span> {{carData.productyear}} </span></li>
+                                <li>Орж ирсэн он <span> {{carData.entryyear}} </span></li>
+                                <li>Борлуулагч <span> {{carData.suppliername}} </span></li>
+                                <li>Төлөх дүн <span class="price">{{carData.price|formatNumber}}</span></li>
+                            </ul>
+                            <div class="qr-title">
+                                <p class="one"><span>QR аар төлөх банкаа сонгоно уу</span></p>
+                            </div>
+                            <div class="qr-bank-grid">
+                                <div class="qr-bank">
+                                    <img src="img/khanbank-mn.png" />
+                                    <p>Хаан банк</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-tab>
+                <ion-tab title="Карт">
+                    <div class="">
+                        <div class="item-info">
+                            <p class="middle-title">BMW X6</p>
+                            <ul>
+                                <li>Үйлдвэрлэсэн он <span> {{carData.productyear}} </span></li>
+                                <li>Орж ирсэн он <span> {{carData.entryyear}} </span></li>
+                                <li>Борлуулагч <span> {{carData.suppliername}}</span></li>
+                                <li>Төлөх дүн <span class="price">{{carData.price|formatNumber}}</span></li>
+                            </ul>
+                            <div class="qr-title">
+                                <p class="one"><span>Та төлбөр төлөх банкаа сонгоно уу</span></p>
+                            </div>
+                            <div class="qr-bank-grid">
+                                <div class="qr-bank">
+                                    <img src="img/khanbank-mn.png" />
+                                    <p>Хаан банк</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-tab>
+            </ion-tabs>
+        </div>
+    </div> -->
+    <ion-content overflow-scroll="true" class="ion-modified-content car-info-content has-header">
+        <div class="big-container">
+            <div class="magic-container car-info-contant-card">
+                <!-- Car -->
+                <div class="item-info car-detail-container">
+                    <ion-slide-box id="carInfoSlideBox" on-slide-changed="slideChanged(index)" class="leasing-badge" delegate-handle="slidebox1">
+                        <ion-slide ng-repeat="imgs in carImages" class="car-info-ion-slide">
+                            <div class="box1">
+                                <img ng-if="carData.itemimagefront == 0" id="carImg{{$index}}" class="car-img image-list-thumb" ng-src="{{imgs|guessImageMime}}" ng-click="showImages($index)" />
+                                <img ng-if="carData.itemimagefront == 1" id="carImg{{$index}}" class="car-img image-list-thumb" ng-src="{{$root.carMarketStorageURL}}{{imgs}}" ng-click="showImages($index)" />
+                            </div>
+                        </ion-slide>
+                    </ion-slide-box>
+                    <ul>
+                        <li>Үйлдвэрлэсэн он <span>{{carData.productyear}} </span></li>
+                        <li>Орж ирсэн он <span> {{carData.entryyear}} </span></li>
+                        <li>Код <span> {{carData.itemcode}} </span></li>
+                        <li>Борлуулагч <span> {{carData.suppliername}} </span></li>
+                        <li>Үнэ <span>{{carData.price|formatNumber}} ₮</span></li>
+                        <div id="addition-info" style="display: none">
+                            <li>Үйлдвэр <span> {{carData.factoryname}} </span></li>
+                            <li>Загвар <span> {{carData.modelname}} </span></li>
+                            <li>Өнгө <span> {{carData.color}} </span></li>
+                            <li>Явсан км<span> {{carData.mile|formatNumber}} </span></li>
+                            <li>Моторын багтаамж <span> {{carData.engine|formatNumber}} </span></li>
+                            <li>Арлын дугаар <span>{{carData.vinnumber}}</span></li>
+                            <li>Хөдөлгүүр <span>{{carData.fueltype}} </span></li>
+                            <li>Хурдны хайрцаг<span> {{carData.transmission}} </span></li>
+                            <li>Жолооны хүрд <span> {{carData.steering}} </span></li>
+                            <!-- <li>Үйлдвэрлэсэн улс <span>{{carData.industrycountry}}</span></li> -->
+                            <li>Хөтлөгч <span> {{carData.drivetype}} </span></li>
+                        </div>
+                    </ul>
+                    <button id="collapse-btn" class="collapse-btn" ng-click="collapse();">&#8594;</button>
+                    <button id="uncollapse-btn" class="collapse-btn" style="display: none" ng-click="uncollapse();">&#8592;</button>
+                </div>
+                <div class="custom-buttons">
+                    <!-- <button class="ibutton" ng-click="addtoBasket()"><i class="icon custom-cart-fill car-info-custom-icons"></i>
+                        Сагслах</button>
+                    <button class="ibutton" ng-click="payOn()"><img class="bustom-icons" src="img/icon/icons8-coin-wallet-96.png" /> Бэлнээр
+                        авах</button>
+                    <button class="ibutton" ng-click="goAutoleasing();">
+                        <img class="bustom-icons" src="img/icon/icons8-mortgage-100.png" /><br />
+                        Лизинг
+                    </button> -->
+                    <button class="button btn single-button" id="Next" ng-click="goAutoleasing();">Үргэлжлүүлэх</button>
+                </div>
+            </div>
+            <!-- **APP STORE UPDATE START** -->
+            <!-- <div class="bank-container">
+                <p>Танд зээл олгох боломжтой банк, ББСБ-ууд</p>
+                <img class="tooltip" ng-repeat="bank in bankList | filter:{id:'!!'}" ng-src="{{bank.bank_logo|guessImageMime}}" title="{{bank.department_name}}" animation="fade" />
+            </div> -->
+            <!-- **APP STORE UPDATE END** -->
+
+            <!-- <div class="suggest-slider-container">
+                <span class="suggest-title">Ижил төстэй бараа</span> -->
+
+            <!-- <ion-scroll direction="x" class="wide-as-needed suggest-scroll">
+                    <div class="horizontal-item suggest-card-container" ng-repeat="car in $root.carDatas | filter:selectCarName" ng-if="car.id != selectedCarId" ng-click="selectCar(car)">
+                        <div class="h-item suggest-card">
+                            <img src="{{car.itempic|guessImageMime}}" class="car-img-suggest" />
+                            <span class="car-name">{{car.modelname}}</span>
+                            <span>{{car.itemcode}}</span>
+                            <span class="date">{{car.productyear}}-{{car.entryyear}}</span>
+                        </div>
+                    </div>
+                </ion-scroll> -->
+
+            <!-- <a class="prev" ng-click="previous()">&#10094;</a> -->
+            <!-- <a class="next" ng-click="next()">&#10095;</a> -->
+            <!-- </div> -->
+            <ion-footer class="bottom-footer"></ion-footer>
+        </div>
+    </ion-content>
+</ion-view>
+
+<script id="templates/image-zoom.html" type="text/ng-template">
+    <div class="modal image-modal transparent" ng-click="closeModal()">
+        <ion-slide-box on-slide-changed="slideChangedZoom(index)" show-pager="true" active-slide="activeSlide">
+            <ion-slide ng-repeat="imgs in carImages">
+                <ion-scroll direction="xy" scrollbar-x="false" scrollbar-y="false"
+                            zooming="true" min-zoom="{{zoomMin}}" style="width: 100%;height: 100%"
+                            delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus(activeSlide)"
+                            on-release="updateSlideStatus(activeSlide)">
+                    <div ng-if="carData.itemimagefront == 0" class="imageZoom" style="background-image: url({{$root.imagePath}}{{imgs}})"></div>
+                    <div ng-if="carData.itemimagefront == 1" class="imageZoom" style="background-image: url({{$root.carMarketStorageURL}}{{imgs}})"></div>
+                </ion-scroll>
+            </ion-slide>
+        </ion-slide-box>
+    </div>
+</script>

@@ -1,0 +1,15 @@
+<link href="views/templates/templates.css" rel="stylesheet" />
+<div class="list templates-list">
+    <div class="card property-dan-card">
+        <span class="property-dan-title">Барьцаалаах үл хөдлөх хөрөнгөө сонгоно уу</span>
+        <ion-scroll direction="y" class="templates-scroll">
+            <ion-radio ng-repeat="bank in propJson" class="property-dan-select" ng-click="selectDanProperty(bank)">
+                <p class="property-size">{{bank.propertyNationRegisterNumber}}</p>
+                <h2 class="property-category">{{bank.codeName}} {{bank.propertySize}} м.кв</h2>
+                <p class="property-address">{{bank.fullAddress}}</p>
+            </ion-radio>
+        </ion-scroll>
+        <button class="button btn single-button auto-template-btn" id="Next" ng-click="propertyDan.hide()" style="margin: 0 auto !important;">Барьцаалах</button>
+        <div class="register-property-hand" id="Next" ng-click="propertyDan.hide();registerHandProperty()">Өөр хөрөнгө бүртгэх</div>
+    </div>
+</div>

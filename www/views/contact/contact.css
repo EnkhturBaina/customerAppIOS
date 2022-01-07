@@ -1,0 +1,32 @@
+.contact-container > .scroll {
+  height: auto;
+}
+.contact-detail {
+  margin: 20px 20px;
+}
+.contact-detail p {
+  width: 40%;
+}
+.contact-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px 0px rgb(0 0 0 / 29%);
+  margin-bottom: 10px;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+.contact-card i {
+  color: #acd322 !important;
+}
+.contact-card span {
+  white-space: pre-wrap;
+}
+.contact-list {
+  border: 0 !important;
+  display: flex !important;
+  margin: 10px;
+}
+.contact-list span {
+  margin-left: 20px;
+}

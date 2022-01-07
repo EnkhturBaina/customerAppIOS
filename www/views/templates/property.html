@@ -1,0 +1,34 @@
+<link href="views/templates/templates.css" rel="stylesheet" />
+<div class="list templates-list">
+    <div class="card templates-card">
+        <ion-scroll direction="y" class="templates-scroll">
+            <!-- <span class="templates-title">Зээлийн маркетийг сонгож буй<span>Танд баярлалаа</span></span> -->
+            <span class="templates-sub-title">Та зээлээ сонгон авахдаа</span>
+            <div class="templates-content">
+                <div class="templates-content-ul">
+                    <img style="width: 70px" src="img/tick-box.png" />
+                    <span>Барьцаалаах үл хөдлөх хөрөнгөө бүртгэнэ</span>
+                </div>
+                <div class="templates-content-ul">
+                    <img style="width: 70px" src="img/resume.png" />
+                    <span>Зээлийн мэдээллээ оруулна</span>
+                </div>
+                <div class="templates-content-ul">
+                    <img style="width: 70px" src="img/send-mail.png" />
+                    <span>Зээлийн хүсэлтээ илгээнэ</span>
+                </div>
+            </div>
+            <button class="button btn single-button auto-template-btn" id="Next" ng-click="propertyModal.hide()">Үргэлжлүүлэх</button>
+            <!-- **APP STORE UPDATE START** -->
+            <!-- <div class="bank-container-template">
+                <p class="auto-template-bank-title">Танд зээл олгох боломжтой банк, ББСБ-ууд</p>
+                <ion-scroll direction="x" class="wide-scroll-bank">
+                    <div class="photobanner">
+                        <img class="tooltip" ng-repeat="bank in allBankList" ng-if="bank.bank_logo" ng-src="{{bank.bank_logo|guessImageMime}}" title="{{bank.department_name}}" animation="fade" />
+                    </div>
+                </ion-scroll>
+            </div> -->
+            <!-- **APP STORE UPDATE END** -->
+        </ion-scroll>
+    </div>
+</div>

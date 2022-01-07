@@ -1,0 +1,53 @@
+<ion-view id="loanPages" hide-nav-bar="true">
+    <link href="views/car/car.css" rel="stylesheet" />
+    <ion-header-bar align-title="left" class="navbar" style="background: none; top: 0">
+        <div class="title ion-color-big-text navbar-back-button" style="background: none">
+            <button ui-sref="home" class="nav-back-button button buttons button-clear header-item" style="left: 10px">
+                <i class="ion-chevron-left ion-color-header"></i>
+                <span class="navbar-back-text ion-color-header" style="transform: translate3d(0px, 0px, 0px);"><span>Хүсэлт илгээх</span></span>
+            </button>
+        </div>
+        <div class="navbar-right-icon">
+        </div>
+    </ion-header-bar>
+    <ion-content overflow-scroll="true" class="ion-modified-content car-loan-content">
+        <div class="big-container">
+            <div class="magic-container margin-lr-20 margin-top-20">
+                <p class="ion-color-text">Та хайх гэж буй автомашины брэндийг сонгох эсвэл кодыг бичнэ үү</p>
+                <div class="search-input">
+                    <span class="icon ion-search"></span>
+                    <input type="text" placeholder="Хайх" ng-model="search.modelname" select-on-click />
+                </div>
+                <div ng-show="!selectedSubCat|isEmptyCust" style="margin-bottom: 2%">
+                    <span class="brand-list-tags-span" ng-repeat="cat in selectedSubCat | filter:{factoryid:'!!'}" ng-click="clearSelectedSubCat(cat.factoryid)">
+                        {{cat.factoryname}}
+                        <i class="icon ion-close-round" style="padding-left: 10%; font-size: 12px"></i>
+                    </span>
+                </div>
+                <div class="brand-tags">
+                    <ul>
+                        <li class="tags" ng-repeat="cat in $root.categoryData | limitTo:5" ng-if="$index<=categoryShowLimit && cat.factoryname" ng-click="selectCategory(cat)">{{cat.factoryname}}</li>
+                        <li class="tags ion-color-text" ui-sref="car-brandlist" ng-click="showFullCategory()">Бусад</li>
+                    </ul>
+                </div>
+                <div class="cars">
+                    <ul>
+                        <li class="car-detail" ng-repeat="car in carDatas | filter:search" ng-if="car.modelname" ng-click="selectCar(car)">
+                            <div class="car-img"><img ng-src="{{car.itempic|guessImageMime}}" /></div>
+                            <div id="car-dtl" class="desc">
+                                <p class="car-title">{{car.modelname}}</p>
+                                <span>{{car.productyear}}/{{car.entryyear}}</span>
+                                <!-- <span>Да хүрээ</span> -->
+                                <p class="car-price">{{car.price|formatNumber}}₮</p>
+                                <div class="car-list-display-flex">
+                                    <span class="car-code">{{car.itemcode}}</span><i class="fa fa-ellipsis-h"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <ion-footer class="bottom-footer"></ion-footer>
+        </div>
+    </ion-content>
+</ion-view>

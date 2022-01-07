@@ -1,0 +1,96 @@
+<ion-view id="loanPages" hide-nav-bar="true" cache-view="false">
+    <link href="views/other_goods/other_goods.css" rel="stylesheet" />
+    <link href="views/loan/business_loan/business_loan.css" rel="stylesheet" />
+    <div id="overlayItemPicGoods" ng-click="goodsSourceSelectOff()">
+        <div class="overlay-goods-content">
+            <div class="get-photo-choose">
+                <div class="get-camera" ng-click="takePhoto()"><i class="icon ion-camera photo-choose-icon"></i><span class="photo-choose-span">Камер нээх</span></div>
+                <div class="get-gallery" ng-click="takePhoto('1')"><i class="icon ion-images photo-choose-icon"></i><span class="photo-choose-span">Зурагнаас сонгох</span></div>
+            </div>
+            <button class="button btn single-button">Хаах</button>
+        </div>
+    </div>
+    <div ng-repeat="data in [{'title':'Бараа бүртгэх'}]" ng-include src="'views/navbar.html'"></div>
+    <ion-content overflow-scroll="true" class="ion-modified-content margin-top-50 add-goods-content">
+        <div class="big-container ghostwhite-noscroll-container">
+            <div class="magic-container add-goods-content-card">
+                <div class="margin-lr-20">
+                    <div class="">
+                        <label class="item item-input selector-container">
+                            <p class="title">Барааны төрөл</p>
+                            <select class="consumer-loan-suppp-select" ng-model="$root.newCarReq.categoryId" ng-change="changeSupCategory($root.newCarReq.categoryId)">
+                                <option ng-repeat="cat in supplierCategory track by $index" ng-if="cat.name && !cat.name.includes('Автомашин')" value="{{cat.id}}">{{cat.name}}</option>
+                            </select>
+                        </label>
+                        <label class="item item-input selector-container">
+                            <p class="title">Бараа нийлүүлэгч</p>
+                            <select id="shopId" class="consumer-loan-suppp-select" ng-model="$root.newCarReq.shopId" ng-change="changeSubVendor($root.newCarReq.shopId)" disabled>
+                                <option ng-repeat="supp in allSupplierList track by $index" ng-if="supp.suppliername" value="{{supp.id}}">{{supp.suppliername}}</option>
+                            </select>
+                        </label>
+                        <label class="item item-input selector-container">
+                            <p class="title">Салбар</p>
+                            <select id="subVendorId" class="consumer-loan-suppp-select" ng-model="$root.newCarReq.subVendorId" disabled>
+                                <option ng-repeat="supp in subVendor track by $index" ng-if="supp.suppliername" value="{{supp.id}}">{{supp.suppliername}}</option>
+                            </select>
+                        </label>
+                        <label class="item item-input selector-container">
+                            <p class="title">Барааны үнэ</p>
+                            <div class="search-input-container">
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" ng-model="$root.newCarReq.unitPrice" name="" class="search-input-type ng-pristine ng-untouched ng-valid ng-valid-pattern" ng-keyup="hideKeyboard($event)" thousand-separator />
+                                <input type="hidden" ng-model="$root.newCarReq.itemid" select-on-click />
+
+                            </div>
+                        </label>
+                        <div class="margin-tb-20-40 text-center selector-container">
+                            <span class="ion-color-text other-goods-mid-text">Та бараа авах баримтын зураг болон барааны зурагаа борлуулалтын ажилтнаас авч оруулна уу.</span>
+                        </div>
+                        <div class="consumer-img-list">
+                            <div class="row">
+                                <div class="col col-50 consumer-img img-input-area-picture1" ng-click="goodsSourceSelectOn('picture1')">
+                                    <div ng-if="!$root.newCarReq.picture1" width="100px" height="75px" class="consumer-img-list-grid">
+                                        +
+                                    </div>
+                                    <img ng-if="$root.newCarReq.picture1" ng-src="{{'data:image/png;base64,'+$root.newCarReq.picture1}}" class="consumer-uploaded-img" />
+                                </div>
+                                <div class="col col-50 consumer-img img-input-area-picture2" ng-click="goodsSourceSelectOn('picture2')">
+                                    <div ng-if="!$root.newCarReq.picture2" width="100px" height="75px" class="consumer-img-list-grid">
+                                        +
+                                    </div>
+                                    <img ng-if="$root.newCarReq.picture2" ng-src="{{'data:image/png;base64,'+$root.newCarReq.picture2}}" class="consumer-uploaded-img" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-50 consumer-img img-input-area-picture3" ng-click="goodsSourceSelectOn('picture3')">
+                                    <div ng-if="!$root.newCarReq.picture3" width="100px" height="75px" class="consumer-img-list-grid">
+                                        +
+                                    </div>
+                                    <img ng-if="$root.newCarReq.picture3" ng-src="{{'data:image/png;base64,'+$root.newCarReq.picture3}}" class="consumer-uploaded-img" />
+                                </div>
+                                <div class="col col-50 consumer-img img-input-area-picture4" ng-click="goodsSourceSelectOn('picture4')">
+                                    <div ng-if="!$root.newCarReq.picture4" width="100px" height="75px" class="consumer-img-list-grid">
+                                        +
+                                    </div>
+                                    <img ng-if="$root.newCarReq.picture4" ng-src="{{'data:image/png;base64,'+$root.newCarReq.picture4}}" class="consumer-uploaded-img" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ion-footer class="bottom-footer margin-bottom-0">
+                <!-- <div class="attention-text">
+                    <span>Анхааруулга</span>
+                    <span>Үнийн дүнгээс гарсан зөрүүг та нэмж төлж болзошгүй тул та үнийн дүнгээ зөв оруулна уу</span>
+                </div> -->
+                <!-- **APP STORE UPDATE START** -->
+                <!-- <div class="bank-container">
+                    <p>Танд зээл олгох боломжтой банк, ББСБ-ууд</p>
+                    <img ng-repeat="bank in allBankList | filter:{id:'!!'}" ng-if="bank.bank_logo" ng-src="{{$root.imagePath}}{{bank.bank_logo}}" />
+                </div> -->
+                <!-- **APP STORE UPDATE END** -->
+                <button class="button btn single-button" id="Next" ng-click="addOther()">Хадгалах</button>
+            </ion-footer>
+        </div>
+    </ion-content>
+</ion-view>

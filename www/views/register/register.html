@@ -1,0 +1,79 @@
+<ion-view hide-nav-bar="true">
+  <link href="views/register/register.css" rel="stylesheet" />
+  <div ng-repeat="data in [{'title':'Буцах'}]" ng-include src="'views/navbar.html'"></div>
+  <ion-content overflow-scroll="true" class="ion-modified-content margin-top-50 danselect-content">
+    <div class="register-step1-container">
+      <div id="register-step-1" class="register-step-1">
+        <p class="big-middle-title register-step1-title">Утасны дугаар нь таны нэвтрэх нэр болно</p>
+        <!-- <div class="step-1-text">
+        </div> -->
+        <label class="item item-input item-stacked-label register-label">
+          <span class="input-label">Утасны дугаар</span>
+          <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="**********" name="mobileNumber" class="register-mobile" ng-model="$root.crmUserData.userName" select-on-click />
+        </label>
+        <label class="item item-input item-stacked-label register-label" id="regLabel">
+          <span class="input-label">Регистр</span>
+          <div class="reg-chars-container">
+            <div class="select-reg-chars">
+              <span id="regCharA" type="text">Р</span>
+              <span id="regCharB" type="text">Д</span>
+            </div>
+            <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="00000000" id="regNums" class="registerRegSelector" name="uniqueIdentifier" readonly />
+          </div>
+        </label>
+        <label class="item item-input item-stacked-label register-label">
+          <span class="input-label">Нууц үг</span>
+          <input type="{{inputType}}" placeholder="Нууц үг" name="password" class="register-password" ng-model="$root.customerPassword.passwordHash" select-on-click />
+        </label>
+        <button class="button button-icon register-show-pass-btn" style="zoom: 1" ng-click="hideShowPasswordReg()">
+          <i class="ion-eye" id="eye-icon-register"></i>
+        </button>
+      </div>
+      <div id="register-step-2" class="register-step-2 remove-step">
+        <div class="step-1-text">
+          <p class="big-middle-title">Таны {{crmUserData.userName}} дугаарт илгээсэн 6 оронтой кодыг оруулж баталгаажуулна уу.</p>
+        </div>
+        <div class="step-1-text">
+          <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="000000" id="confirmationCode" name="confirmCode" class="register-confirm" ng-model="smsConfirmCode" />
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="button btn single-button" id="Next" ng-show="isStep1" ng-click="sendSmsCode()">Үргэлжлүүлэх</button>
+        <button class="button resend-code-btn" id="resendBtn" ng-show="isStep2" ng-click="resendCode()" disabled>Дахин код илгээх</button>
+        <button class="button btn single-button" ng-disabled="disabledBtn" ng-click="registerCustomer()" ng-show="isStep2">Бүртгүүлэх</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
+<script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view id="profileKeyContainer" class="reg-num-modal">
+        <ion-content scroll="false" class="padding overlay-profile-reg-select-content">
+            <div id="keypadReg" cellpadding="5" cellspacing="3">
+                <div class="row keyboard-row-1">
+                    <div class="col keyboard-title keyboard-title-left" ng-click="cancelRegNums()">Хаах</div>
+                    <div class="col keyboard-title keyboard-title-right" ng-click="saveRegNums()">Хадгалах</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('1')">1</div>
+                    <div class="col keypad-col" ng-click="addCode('2')">2</div>
+                    <div class="col keypad-col" ng-click="addCode('3')">3</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('4')">4</div>
+                    <div class="col keypad-col" ng-click="addCode('5')">5</div>
+                    <div class="col keypad-col" ng-click="addCode('6')">6</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('7')">7</div>
+                    <div class="col keypad-col" ng-click="addCode('8')">8</div>
+                    <div class="col keypad-col" ng-click="addCode('9')">9</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="emptyCode()">C</div>
+                    <div class="col keypad-col" ng-click="addCode('0')">0</div>
+                    <div class="col keypad-col" ng-click="clearD()"><i class="ion-arrow-left-c"></i></div>
+                </div>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>

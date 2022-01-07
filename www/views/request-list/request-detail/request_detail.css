@@ -1,0 +1,336 @@
+.request-car-detail {
+  display: inline;
+}
+.request-car-detail img {
+  width: 120px;
+  height: 80px;
+  float: left;
+  margin: 0 10px 0 20px;
+  border-radius: 10px;
+}
+.request-car-detail p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4b5180 !important;
+  margin: 0 0 20px !important;
+}
+.request-car-detail span {
+  font-size: 14px;
+  color: #b8b8b8 !important;
+}
+.bank-detail {
+  background-color: #fff;
+  padding: 5px 0px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px 0px rgb(0 0 0 / 29%);
+  margin: 0px 10px;
+}
+.bant-detail-title {
+  padding-left: 16px;
+  padding-bottom: 10px;
+  display: block;
+  color: #4b5180 !important;
+  margin-top: 21px;
+}
+.bank-detail p {
+  color: #c4c8d1 !important;
+}
+.bank-detail-label {
+  border: 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+}
+.bank-detail-label input {
+  text-align: right;
+  color: #4b5180 !important;
+  background-color: #fff;
+  font-weight: bold;
+}
+.bank-detail > .item-checkbox span {
+  font-size: 14px;
+  color: #4b5180 !important;
+}
+.bank-detail > .item-checkbox .checkbox {
+  left: unset !important;
+  right: 15px !important;
+  padding: 10px 7px !important;
+}
+.bank-detail > .item-checkbox {
+  padding-left: 16px !important;
+}
+.detail-checkbox {
+  padding-left: 15px !important;
+  background-color: #fff !important;
+  color: #a2a7b5 !important;
+  font-size: 14px !important;
+  border-bottom: 0px !important;
+}
+.detail-checkbox > .checkbox {
+  left: unset !important;
+  right: 15px !important;
+  padding: 10px 7px !important;
+}
+.detail-checkbox > .checkbox > .checkbox-icon {
+  width: 25px !important;
+  height: 25px !important;
+}
+.detail-checkbox > .checkbox > .checkbox input:checked:before,
+.checkbox input:checked + .checkbox-icon:before {
+  background-color: #acd322 !important;
+  border-color: #acd322 !important;
+}
+.detail-checkbox > .checkbox > .checkbox-icon::before {
+  border-radius: 5px !important;
+}
+.detail-btn-container {
+  display: flex;
+  padding-top: 50px;
+  width: 100%;
+  padding: 35px 20px;
+  bottom: 15%;
+  position: relative;
+}
+#successRequestPopup {
+  z-index: 99 !important;
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  cursor: pointer;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+}
+#responseSuccessRequestPopup {
+  z-index: 99 !important;
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  cursor: pointer;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+}
+#cancelRequestPopup {
+  z-index: 99 !important;
+  position: relative;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  cursor: pointer;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+}
+#responeCancelRequestPopup {
+  z-index: 99 !important;
+  position: relative;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  cursor: pointer;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+}
+.confirm-overlay-container {
+  animation: popup 0.2s;
+  position: absolute;
+  left: 0;
+  top: 40%;
+  width: auto;
+  color: #4b5180;
+  text-align: center;
+  border-radius: 10px;
+  background: #fff;
+  display: grid;
+  margin: 0 50px;
+}
+.confirm-title {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+.confirm-overlay-body-text {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+.confirm-btn {
+  width: 50%;
+  margin: 5px auto;
+}
+.confirm-overlay-container select {
+  border-radius: 5px;
+  padding: 5px;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 5px;
+  background: #f8f8f8 !important;
+}
+.request-detail-content > .scroll {
+  height: 100% !important;
+}
+.bank-chat-title {
+  padding-top: 15px;
+  padding-left: 16px;
+  padding-bottom: 10px;
+  display: block;
+  color: #4b5180 !important;
+}
+.bank-chat-container {
+  border: 1px solid #bebebe;
+  border-radius: 10px;
+  display: flow-root;
+  margin: 10px;
+  background: #fff;
+  box-shadow: 4px 4px 12px 0px #888888;
+}
+.bank-chat-income {
+  display: grid;
+}
+.bank-chat-send {
+  display: grid;
+  float: right;
+  margin-right: 5px;
+}
+.income-chat-body {
+  background: #ededed;
+  width: fit-content;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px 0px 10px 10px;
+  max-width: 60vw;
+}
+.send-chat-body {
+  background: rgb(86, 197, 198);
+  background: -moz-linear-gradient(119deg, rgba(86, 197, 198, 1) 55%, rgba(61, 192, 250, 1) 100%);
+  background: -webkit-linear-gradient(119deg, rgba(86, 197, 198, 1) 55%, rgba(61, 192, 250, 1) 100%);
+  background: linear-gradient(119deg, rgba(86, 197, 198, 1) 55%, rgba(61, 192, 250, 1) 100%);
+  width: fit-content;
+  border-radius: 5px;
+  padding: 5px;
+  color: #fff;
+  /* margin: 0px 10px 0px 10px; */
+  max-width: 60vw;
+  margin: 0 10px 0 auto;
+}
+.income-chat-time {
+  font-size: 10px;
+  padding-left: 15px;
+}
+.send-chat-time {
+  font-size: 10px;
+  padding-left: 15px;
+  text-align: right;
+  padding-right: 15px;
+}
+.modal-chat-body {
+  display: grid;
+}
+.bank-chat-modal {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.bank-chat-modal > .bar-header {
+  border-bottom: 1px solid #dbdbdb;
+}
+.bank-chat-content {
+  margin-bottom: 70px !important;
+  padding: 10px 0;
+}
+.bank-chat-content > .scroll {
+  height: 100% !important;
+}
+.msger-inputarea {
+  display: flex;
+  padding: 5px 10px;
+  border-top: var(--border);
+  background: #eee;
+}
+.msger-inputarea * {
+  border: none;
+  border-radius: 3px;
+  font-size: 1em;
+}
+.msger-input {
+  flex: 1;
+  background: #ddd;
+  padding: 5px;
+}
+.msger-send-btn {
+  background: rgb(69 194 232);
+  color: #fff !important;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.23s;
+  height: 30px;
+  margin: auto 0 auto 10px;
+  padding: 0 15px;
+  font-size: 20px;
+}
+.msger-send-btn:hover {
+  background: rgb(69 194 232);
+}
+.bank-chat-footer {
+  bottom: 0px;
+  position: absolute;
+  width: 100%;
+}
+.bank-chat-hide-btn {
+  padding: 3px 12px !important;
+}
+.request-detail-container {
+  margin-top: 20px;
+}
+.bank-overlay-off-text {
+  color: #fff;
+  position: absolute;
+  left: 80%;
+  top: 35%;
+  font-size: 25px;
+}
+.bank-chat-body {
+  display: block;
+  position: relative;
+  padding: 10px;
+}
+.bank-chat-body img {
+  margin: auto;
+  position: absolute;
+  border-radius: 20px;
+}
+.bank-chat-body .income-chat-body {
+  margin: 10px 0px 10px 30px;
+}
+.dtl-pop-up-bank-name {
+  font-weight: bold;
+}
+.confirmPopup .popup {
+  width: 75% !important;
+}
+.dtl-pop-up-sub-title {
+  font-size: 12px;
+}

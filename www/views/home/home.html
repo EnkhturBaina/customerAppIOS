@@ -1,0 +1,210 @@
+﻿<link href="views/home/home.css" rel="stylesheet" />
+<ion-view ng-if="!$root.showBanner" view-title="Зээлийн маркет">
+    <div>
+        <ion-tabs class="home-tabs tabs-top home-card-tab" id="homeTabsId" delegate-handle="myHeaderTabHandle">
+            <!-- Tab 1 -->
+            <ion-tab title="Зээлийн маркет">
+                <ion-nav-view class="ghostwhite">
+                    <ion-content overflow-scroll="true" class="padding scroll-content ionic-scroll has-header home-tab-2-content">
+                        <p class="loan-tab-title ion-color-text">Та авах зээлийн төрлөө сонгоно уу.</p>
+                        <div class="card" ui-sref="autoleasing-1">
+                            <div class="item loan-card-1 card-body item-text-wrap">
+                                <div class="loan-card-first-row">
+                                    <span class="ion-text-bold ion-float-right">Автолизинг</span>
+                                </div>
+                                <div class="loan-card-2-first-row">
+                                    <span class="ion-float-right loan-card-text">Та бүх төрлийн автомашиныг эндээс олон лизингээс сонгон авах боломжтой.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" ui-sref="danselect">
+                            <div class="item loan-card-2 card-body item-text-wrap">
+                                <div class="loan-card-first-row">
+                                    <span class="ion-text-bold ion-float-right">Автомашин барьцаалсан зээл</span>
+                                </div>
+                                <div class="loan-card-2-first-row">
+                                    <span class="ion-float-right loan-card-text">Та автомашинаа барьцаалан өөрт тохирсон зээлийг эндээс аваарай.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" ui-sref="otherGoods">
+                            <div class="item loan-card-3 card-body item-text-wrap">
+                                <div class="loan-card-first-row">
+                                    <span class="ion-text-bold ion-float-right">Хэрэглээний лизинг</span>
+                                </div>
+                                <div class="loan-card-2-first-row">
+                                    <span class="ion-float-right loan-card-text">Та бүх төрлийн цахилгаан бараа, гар утсыг хэрэглээний лизингээр аваарай.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" ui-sref="property_collateral_danselect">
+                            <div class="item loan-card-4 card-body item-text-wrap">
+                                <div class="loan-card-first-row">
+                                    <span class="ion-text-bold ion-float-right">Үл хөдлөх барьцаалсан зээл</span>
+                                </div>
+                                <div class="loan-card-2-first-row">
+                                    <span class="ion-float-right loan-card-text">Та үл хөдлөх хөрөнгөө барьцаалан өөрт тохирсон зээлийг эндээс аваарай. </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" ui-sref="pre_loan">
+                            <div class="item loan-card-5 card-body item-text-wrap">
+                                <div class="loan-card-first-row">
+                                    <span class="ion-text-bold ion-float-right">Зээлийн эрхээ шалгах</span>
+                                </div>
+                                <div class="loan-card-2-first-row">
+                                    <span class="ion-float-right loan-card-text">Та урьдчилж зээлийн хэмжээгээ тогтоолгоод дараа нь машинаа аваарай.</span>
+                                </div>
+                            </div>
+                        </div><br />
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Барааны маркет">
+                <ion-nav-view class="ghostwhite">
+                    <ion-content overflow-scroll="true" style="height: 80%;margin: 0 10px;" class="">
+                        <ion-slide-box does-continue="true" auto-play="true" slide-interval="2000" ng-if="dcSuppliers.length" show-pager="false" class="home-tab-2-slide-box" delegate-handle="suppliersDelegate">
+                            <ion-slide ng-repeat="bg in dcSuppliers | filter:{id:'!!'}" ng-click="supplierDetailFromHome(bg.id)">
+                                <div class="home-tab2-slider home-tab2-ion-slide card home-card home-card-1">
+                                    <img style="width: 200px;max-height: 150px;" ng-src="{{$root.imagePath}}{{bg.supplierpic}}" />
+                                </div>
+
+                            </ion-slide>
+                        </ion-slide-box>
+
+
+                        <div class="home-card-container">
+                            <div class="card home-card home-card-2" ui-sref="suppliers">
+                                <div class="item card-body item-text-wrap small-box">
+                                    <div class="ion-text-bold"><span>Дэлгүүр</span></div>
+                                    <div class="home-card-small-text">
+                                        <span>Та бараагаа хүүгүй зээл, лизингээр авах боломжтой</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card home-card home-card-3" ui-sref="purchase-inst">
+                                <div class="item card-body item-text-wrap small-box">
+                                    <div class="ion-text-bold"><span>Бараа авах заавар</span></div>
+                                    <div class="home-card-small-text">
+                                        <span>Та бараа авах заавартай танилцаарай</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home-card-container">
+                            <div class="card home-card home-card-4" ng-click="callComingSoon()">
+                                <div class=" item card-body item-text-wrap small-box">
+                                    <div class="ion-text-bold"><span>Онцлох</span></div>
+                                    <div class="home-card-small-text">
+                                        <span>Та онцгой барааг яг одоо хүүгүй зээл, лизингээр аваарай</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card home-card home-card-5" ng-click="callComingSoon()">
+                                <div class="item card-body item-text-wrap small-box">
+                                    <div class="ion-text-bold"><span>Тренд</span></div>
+                                    <div class="home-card-small-text">
+                                        <span>Та хамгийн шинэлэгийг хүүгүй зээл, лизингээр аваарай</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab>
+
+            <!-- Tab 2 -->
+        </ion-tabs>
+    </div>
+</ion-view>
+
+<div ng-if="showBanner" hide-nav-bar="true">
+    <ion-view>
+        <ion-content id="loginLayout" scroll="false" style="top: 0;">
+            <style>
+                .slider-pager .slider-pager-page.active {
+                    color: #000;
+                    width: 12px;
+                }
+
+                .intro-body-text {
+                    text-align: left;
+                    padding-right: 10%;
+                    padding-left: 10%;
+                    white-space: normal;
+                    width: 100%;
+                    color: #0a1a3e;
+                }
+
+                .intro-title {
+                    text-align: left;
+                    font-size: 16px;
+                    padding-right: 10%;
+                    padding-left: 10%;
+                    margin-top: 8%;
+                    font-weight: bold;
+                    color: #0a1a3e;
+                }
+
+                .slider-button-container {
+                    display: flex;
+                    padding-top: 10%;
+                }
+
+                .intro-not-show {
+                    padding-left: 15px !important;
+                    background-color: #f8f8fe !important;
+                    color: #a2a7b5 !important;
+                    font-size: 14px !important;
+                    border: 0px !important;
+                    margin: 0 20vw !important;
+                }
+
+                .intro-not-show>.checkbox {
+                    left: unset !important;
+                    right: 15px !important;
+                    padding: 10px 7px !important;
+                }
+
+                .intro-not-show>.checkbox>.checkbox-icon {
+                    width: 25px !important;
+                    height: 25px !important;
+                }
+
+                .intro-not-show>.checkbox>.checkbox input:after,
+                .checkbox-icon:after {
+                    color: #fff !important;
+                }
+
+                .intro-not-show>.checkbox>.checkbox input:checked:before,
+                .checkbox input:checked+.checkbox-icon:before {
+                    background-color: #acd322 !important;
+                    border-color: #acd322 !important;
+                }
+
+                .intro-not-show>.checkbox>.checkbox-icon::before {
+                    border-radius: 5px !important;
+                }
+            </style>
+            <ion-slide-box auto-play="true" slide-interval="2000" style="height: 80%; padding-top: 20%" on-slide-changed="slideChanged(index)">
+                <ion-slide ng-repeat="banner in bannerData">
+                    <h2 class="intro-title">{{banner.text2}}</h2>
+                    <p class="intro-body-text">{{banner.name}}</p>
+                    <img ng-src="{{banner.text1}}" style="display: block;max-width: 80%;height: auto;margin: 50px auto;" />
+                </ion-slide>
+            </ion-slide-box>
+            <div class="slider-button-container" ng-if="((bannerData|objLength)!=activeSlideIndex+1)">
+                <button class="bottom-first-button" ng-click="endSlideChanged()">АЛГАСАХ</button>
+                <button class="bottom-second-button" ng-click="nextSlideChanged()">ДАРААХ</button>
+            </div>
+            <div ng-if="((bannerData|objLength)==activeSlideIndex+1)">
+                <button ng-click="hideIntro()" class="button btn single-button">Үргэлжлүүлэх</button>
+                <ion-checkbox class="intro-not-show" ng-model="isBanneNotShowChecked.checked" ng-change="isNotShow()">
+                    <span>Дахин харуулахгүй</span>
+                </ion-checkbox>
+            </div>
+        </ion-content>
+    </ion-view>
+</div>

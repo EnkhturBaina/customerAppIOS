@@ -1,0 +1,296 @@
+<ion-view hide-nav-bar="true" cache-view="false">
+    <link href="views/profile/profile.css" rel="stylesheet" />
+    <div id="overlayProfilePicute" ng-click="ppSourceSelectOff()">
+        <div class="overlay-profile-content">
+            <div class="get-photo-choose">
+                <div class="get-camera" ng-click="takePhoto()"><i class="icon ion-camera photo-choose-icon"></i><span class="photo-choose-span">Камер нээх</span></div>
+                <div class="get-gallery" ng-click="takePhoto('1')"><i class="icon ion-images photo-choose-icon"></i><span class="photo-choose-span">Зурагнаас сонгох</span></div>
+            </div>
+            <button class="button btn single-button">Хаах</button>
+        </div>
+    </div>
+    <ion-pane class="profile-info-container has-header">
+        <div class="profile-avatar">
+            <ion-header-bar align-title="left" class="navbar ion-bg-none" style="background: none;top: 0">
+                <div class="title ion-color-big-text navbar-back-button ion-bg-none">
+                    <button class="nav-back-button button buttons button-clear header-item car-back-nav" style="left: 10px" ng-click="hideShowFooter();backFromProfile();">
+                        <i class="ion-chevron-left ion-color-header ion-color-white"></i>
+                        <span class="navbar-back-text ion-color-header ion-color-white"><span>Хувийн мэдээлэл</span></span>
+                    </button>
+                </div>
+                <div class="navbar-right-icon">
+                </div>
+            </ion-header-bar>
+
+            <div class="avatar-base" ng-click="ppSourceSelectOn(3)">
+                <div ng-if="!$root.customerProfilePicture.profilePictureClob" class="profile-picture-add-btn">
+                    +
+                </div>
+                <img ng-if="!$root.customerProfilePicture.profilePictureClob|isEmpty" ng-src="{{'data:image/png;base64,'+$root.customerProfilePicture.profilePictureClob}}" />
+            </div>
+        </div>
+        <ion-tabs id="profile-tabs-striped" class="tabs-striped tabs-top profile-card-tabs profile-tab profile-tabs-tab" delegate-handle="profileTabs">
+            <!-- Tab 1 -->
+            <ion-tab title="Иргэн">
+                <ion-nav-view class="gray-background">
+                    <ion-content overflow-scroll="true" class="profile-content">
+                        <div class="list profile-list">
+                            <label class="item item-input profile-label" id="lastNameLabel">
+                                <p>Овог</p>
+                                <input type="text" id="customerLastName" placeholder="Овог" name="lastName" ng-model="$root.customerProfileData.lastname" ng-change="replaceCyr($root.customerProfileData.lastname)" ng-keyup="hideKeyboard($event)" select-on-click />
+                                <span id="lastNameError" class="profile-input-name-error">Та овогоо крилл үсгээр оруулна уу</span>
+                            </label>
+                            <label class="item item-input profile-label" id="firstNameLabel">
+                                <p>Нэр</p>
+                                <input type="text" id="customerFirstName" placeholder="Нэр" name="firstName" ng-model="$root.customerProfileData.firstname" ng-change="replaceCyr2($root.customerProfileData.firstname)" ng-keyup="hideKeyboard($event)" select-on-click />
+                                <span id="firstNameError" class="profile-input-name-error">Та нэрээ крилл үсгээр оруулна уу</span>
+                            </label>
+                            <label class="item item-input profile-label" id="regLabel">
+                                <p class="ion-overflow-unset">Регситр</p>
+                                <div class="select-reg-chars">
+                                    <span id="regCharA" type="text">{{$root.customerProfileData.uniqueidentifier.substr(0, 1)}}</span>
+                                    <span id="regCharB" type="text">{{$root.customerProfileData.uniqueidentifier.substr(1, 1)}}</span>
+                                </div>
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="00000000" id="regNums" class="profileRegSelector" value="{{$root.customerProfileData.uniqueidentifier.substr(2, 8)}}" name="uniqueIdentifier" readonly />
+                            </label>
+                            <label class="item item-input profile-label" id="mailLabel">
+                                <p>И-мэйл хаяг</p>
+                                <input type="text" placeholder="И-мэйл хаяг" name="email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" ng-model="$root.customerProfileData.email" ng-keyup="hideKeyboard($event)" select-on-click />
+                            </label>
+                            <label class="item item-input profile-label" id="phoneLabel">
+                                <p>Утасны дугаар</p>
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="Утасны дугаар" name="mobileNumber" class="profilePhoneNumber" ng-model="$root.customerProfileData.mobilenumber" ng-keyup="hideKeyboard($event)" select-on-click />
+                            </label>
+                            <label class="item item-input profile-label" id="marriageLabel">
+                                <p>Гэрлэсэн эсэх</p>
+                                <select class="profile-select" ng-model="$root.customerProfileData.ismarried" ng-options="c.id as c.name for c in familtStatData | filter:{id:'!!'}" ng-init="$root.customerProfileData.ismarried = $root.customerProfileData.ismarried"></select>
+                            </label>
+                            <label class="item item-input profile-label" id="mikLabel">
+                                <p>МИК-ийн зээлтэй эсэх</p>
+                                <select class="profile-select" ng-model="$root.customerProfileData.mikmortgagecondition" ng-options="c.id as c.name for c in mortgageData | filter:{id:'!!'}" ng-init="$root.customerProfileData.mikmortgagecondition = $root.customerProfileData.mikmortgagecondition"></select>
+                            </label>
+                            <label class="item item-input profile-label" id="workLabel">
+                                <p>Ажилласан жил</p>
+                                <select class="profile-select" ng-model="$root.customerProfileData.experienceperiodid" ng-options="c.id as c.name for c in experiencePeriodData | filter:{id:'!!'}" ng-init="$root.customerProfileData.experienceperiodid = $root.customerProfileData.experienceperiodid"></select>
+                            </label>
+                            <label class="item item-input profile-label profile-label-pass">
+                            </label>
+                            <div class="item item-input profile-label profile-ident-container-div">
+                                <div class="profile-card-front" ng-click="ppSourceSelectOn(1)">
+                                    <p>Иргэний үнэмлэхний урд талын зураг</p>
+                                    <div ng-if="$root.customerProfileData.identfrontpic|isEmpty" class="profile-ident-pic-container">+</div>
+                                    <img ng-if="!$root.customerProfileData.identfrontpic|isEmpty" ng-src="{{'data:image/png;base64,'+$root.customerProfileData.identfrontpic}}" height="140px" width="250px" />
+                                </div>
+                                <div class="profile-card-back" ng-click="ppSourceSelectOn(2)">
+                                    <p>Иргэний үнэмлэхний ард талын зураг</p>
+                                    <div ng-if="$root.customerProfileData.identbackpic|isEmpty" class="profile-ident-pic-container">+</div>
+                                    <img ng-if="!$root.customerProfileData.identbackpic|isEmpty" ng-src="{{'data:image/png;base64,'+$root.customerProfileData.identbackpic}}" height="140px" width="250px" />
+                                </div>
+                            </div>
+                            <div class="profile-tab1-save-btn">
+                                <button class="button btn single-button" ng-click="saveProfileData()">
+                                    <span>ХАДГАЛАХ</span>
+                                </button>
+                            </div>
+                        </div>
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab>
+            <!-- Tab 2 -->
+            <ion-tab title="Орлого">
+                <ion-nav-view class="gray-background">
+                    <ion-content overflow-scroll="true" class="profile-content">
+                        <div class="list profile-list">
+                            <label class="item item-input profile-label">
+                                <p>Орлогын эх үүсвэр</p>
+
+                                <select class="profile-select" ng-model="$root.customerIncomeProfileData.incometypeid" ng-options="c.id as c.name for c in incomeType | filter:{id:'!!'}" ng-init="$root.customerIncomeProfileData.incometypeid = $root.customerIncomeProfileData.incometypeid"></select>
+                            </label>
+                            <label class="item item-input profile-label">
+                                <p>Сарын орлого</p>
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" ng-model="$root.customerIncomeProfileData.monthlyincome" placeholder="-" name="monthlyincome" thousand-separator ng-keyup="hideKeyboard($event)" select-on-click />
+                            </label>
+                            <label class="item item-input profile-label">
+                                <p>Таны бусад орлого</p>
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" ng-model="$root.customerIncomeProfileData.totalincomehousehold" placeholder="-" name="totalincome" thousand-separator ng-keyup="hideKeyboard($event)" select-on-click />
+                            </label>
+                            <label class="item item-input profile-label">
+                                <p>Төлж буй зээл</p>
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" ng-model="$root.customerIncomeProfileData.monthlypayment" placeholder="-" name="payloan" thousand-separator ng-keyup="hideKeyboard($event)" select-on-click />
+                            </label>
+                            <!-- <label class="item profile-label">
+                                <p>Харьцдаг банк</p>
+                            </label>
+                            <div id="dealBankContainer" class="item profile-bank-list">
+                                <div class="col  added-deal-bank" ng-repeat="dealbank in customerDealBanks | filter:{id:'!!'}">
+                                    <div class="deal-bank-remove">-</div>
+                                    <img src="{{$root.imagePath}}{{dealbank.banklogo}}" />
+                                    <p>{{dealbank.departmentname}}</p>
+                                </div>
+                                <select class="profile-select-deal-banks col" ng-model="$root.customerDealBank.dim2" ng-change="addDealBank()">
+                                    <span style="margin: 0;position: absolute;top: 50%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">+</span>
+                                    <option ng-repeat="bank in allBankList | filter:{id:'!!'}" ng-if="bank.departmentname" value="{{bank.id}}">{{bank.departmentname}}</option>
+                                </select>
+                            </div> -->
+                            <div class="profile-tab1-save-btn">
+                                <button class="button btn single-button" ng-click="saveIncomeProfileData()">ХАДГАЛАХ</button>
+                            </div>
+                        </div>
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab>
+            <!-- Tab 3 -->
+            <!-- <ion-tab title="Хөрөнгө">
+                <ion-nav-view>
+                    <ion-content overflow-scroll="true" class="profile-content">
+                        <div class="list profile-list">
+                            <div class="item property-card-body">
+                                <div class="expandcollapse-item" ng-click="growDivTab3(1)">
+                                    <div class="row" style="display: block;">
+                                        <span class="ion-float-left ion-color-text ion-font-weight-bold">Автомашин</span>
+                                        <div class="property-save-btn" id="propertySaveButton1" style="display: none;" ng-click="saveCustomerCar(1)">Хадгалах</div>
+                                    </div>
+                                </div>
+                                <div class="list fix-list grow expanded" id="grow1">
+                                    <div class="measuringWrapper1">
+                                        <div class="list car-collateral-list property-expanded">
+                                            <label class="item item-input customer-car-collateral-label" style="border-top: 0;">
+                                                <span>Улсын дугаар</span>
+                                                <input type="text" id="nationalNumber" placeholder="0000 УАА" name="nationalNumber" ng-model="$root.customerCar.nationalNumber" />
+                                            </label>
+                                            <label class="item item-input item-select customer-car-collateral-label">
+                                                <span class="input-label">Үйлдвэр</span>
+                                                <select ng-model="$root.customerCar.factoryId" style="background-color: transparent" ng-change="getCarmarkData(customerCar.factoryId)">
+                                                    <option ng-repeat="com in companyData | filter:{factoryid:'!!'}" value="{{com.factoryid}}">
+                                                        {{com.factoryname}}</option>
+                                                </select>
+                                            </label>
+                                            <label class="item item-input item-select customer-car-collateral-label">
+                                                <span class="input-label">Загвар</span>
+                                                <select ng-model="$root.customerCar.modelId" style="background-color: transparent">
+                                                    <option ng-repeat="model in carmerkData | filter:{modelid:'!!'}" value="{{model.modelid}}">
+                                                        {{model.modelname}}</option>
+                                                </select>
+                                            </label>
+                                            <label class="item item-input customer-car-collateral-label">
+                                                <span>Үйлдвэрлэсэн он</span>
+                                                <input inputmode="numeric" pattern="[0-9]*" type="text" id="productYear" placeholder="-" name="productYear" ng-model="$root.customerCar.productYear" />
+                                            </label>
+                                            <label class="item item-input customer-car-collateral-label">
+                                                <span>Орж ирсэн он</span>
+                                                <input inputmode="numeric" pattern="[0-9]*" type="text" id="entryYear" maxlength="4" placeholder="-" name="entryYear" ng-model="$root.customerCar.entryYear" />
+                                            </label>
+                                            <label class="item item-input customer-car-collateral-label">
+                                                <span>Явсан км</span>
+                                                <input inputmode="numeric" pattern="[0-9]*" type="text" id="odo" placeholder="-" name="odo" ng-model="$root.customerCar.mile"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item property-card-body">
+                                <div class="expandcollapse-item" ng-click="growDivTab3(2)">
+                                    <div class="row" style="display: block;">
+                                        <span class="ion-float-left ion-color-text ion-font-weight-bold">Хашаа байшин</span>
+                                        <div class="property-save-btn" id="propertySaveButton2" style="display: none;" ng-click="saveCustomerCar(2)">Хадгалах</div>
+                                    </div>
+                                </div>
+                                <div class="list fix-list grow expanded" id="grow2">
+                                    <div class="measuringWrapper2">
+                                        <div class="list car-collateral-list property-expanded">
+                                            <label class="item item-input customer-car-collateral-label" style="border-top: 0;">
+                                                <span>А</span>
+                                                <input type="text" placeholder="А" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item property-card-body">
+                                <div class="expandcollapse-item" ng-click="growDivTab3(3)">
+                                    <div class="row" style="display: block;">
+                                        <span class="ion-float-left ion-color-text ion-font-weight-bold">Цахилгаан бараа</span>
+                                        <div class="property-save-btn" id="propertySaveButton3" style="display: none;" ng-click="saveCustomerCar(3)">Хадгалах</div>
+                                    </div>
+                                </div>
+                                <div class="list fix-list grow expanded" id="grow3">
+                                    <div class="measuringWrapper3">
+                                        <div class="list car-collateral-list property-expanded">
+                                            <label class="item item-input customer-car-collateral-label" style="border-top: 0;">
+                                                <span>А</span>
+                                                <input type="text" placeholder="А" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item property-card-body">
+                                <div class="expandcollapse-item" ng-click="growDivTab3(4)">
+                                    <div class="row" style="display: block;">
+                                        <span class="ion-float-left ion-color-text ion-font-weight-bold">Тавилга</span>
+                                        <div class="property-save-btn" id="propertySaveButton4" style="display: none;" ng-click="saveCustomerCar(4)">Хадгалах</div>
+                                    </div>
+                                </div>
+                                <div class="list fix-list grow expanded" id="grow4">
+                                    <div class="measuringWrapper4">
+                                        <div class="list car-collateral-list property-expanded">
+                                            <label class="item item-input customer-car-collateral-label" style="border-top: 0;">
+                                                <span>А</span>
+                                                <input type="text" placeholder="А" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab> -->
+            <!-- Tab 4 -->
+            <!-- <ion-tab title="QR">
+                <ion-nav-view>
+                    <ion-content overflow-scroll="true" class="profile-content">
+                        <div>
+                            <div ng-click="generateQR()" ng-if="$root.customerProfileData.customerqr|isEmpty" style="width: 30%;border-radius: 10px;border: 1px dashed #ccc;height: 88px;text-align: center;font-size: 20px;color: #ccc;margin: 60px auto;line-height: 35px;display: grid;"><span>QR үүсгэх</span><span style="font-size: 49px;">+</span></div>
+                            <img ng-if="!$root.customerProfileData.customerqr|isEmpty" ng-src="{{$root.imagePath}}{{$root.customerProfileData.customerqr}}" height="250px" width="250px" style="margin: 0 auto;display: flex;" />
+
+                        </div>
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab> -->
+        </ion-tabs>
+    </ion-pane>
+</ion-view>
+<script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view id="profileKeyContainer" class="reg-num-modal">
+        <ion-content scroll="false" class="padding overlay-profile-reg-select-content">
+            <div id="keypadReg" cellpadding="5" cellspacing="3">
+                <div class="row keyboard-row-1">
+                    <div class="col keyboard-title keyboard-title-left" ng-click="cancelRegNums()">Хаах</div>
+                    <div class="col keyboard-title keyboard-title-right" ng-click="saveRegNums()">Хадгалах</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('1')">1</div>
+                    <div class="col keypad-col" ng-click="addCode('2')">2</div>
+                    <div class="col keypad-col" ng-click="addCode('3')">3</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('4')">4</div>
+                    <div class="col keypad-col" ng-click="addCode('5')">5</div>
+                    <div class="col keypad-col" ng-click="addCode('6')">6</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('7')">7</div>
+                    <div class="col keypad-col" ng-click="addCode('8')">8</div>
+                    <div class="col keypad-col" ng-click="addCode('9')">9</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="emptyCode()">C</div>
+                    <div class="col keypad-col" ng-click="addCode('0')">0</div>
+                    <div class="col keypad-col" ng-click="clearD()"><i class="ion-arrow-left-c"></i></div>
+                </div>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>
