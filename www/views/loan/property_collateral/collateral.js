@@ -9,7 +9,7 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
   // $("#squareSize").mask("0.000", { reverse: true });
   $("#roomCount").mask("000");
   $("#floorCount").mask("00");
-  $("#propertyStep2loanMonth").mask("00");
+  $("#propertyStep2loanMonth").mask("000");
   $scope.takePhoto = function (type) {
     var srcType = Camera.PictureSourceType.CAMERA;
     if (type == "1") {
@@ -33,7 +33,6 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
 
   $scope.saveProperty = function () {
     if ($scope.propertyCheckReqiured("step1")) {
-      localStorage.setItem("requestType", "estate");
       $state.go("property_collateral2");
     }
   };
@@ -120,6 +119,7 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
                 $rootScope.danCustomerData.lastname = userInfo.result.lastname;
                 $rootScope.danCustomerData.firstname = userInfo.result.firstname;
                 $rootScope.danCustomerData.uniqueidentifier = userInfo.result.regnum.toUpperCase();
+                $rootScope.danCustomerData.customertypeid = "1";
 
                 if (userSalaryInfo) {
                   serverDeferred.carCalculation(userSalaryInfo.result.list, "https://services.digitalcredit.mn/api/salary").then(function (response) {
@@ -132,6 +132,7 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
                       $rootScope.danIncomeData.workplace = response.result[2];
                       $rootScope.danIncomeData.incmonthlynetincome = response.result[3];
                       $rootScope.danIncomeData.workedmonths = response.result[4];
+                      $rootScope.filterSalaries = response.result[5];
                     }
                   });
                 }
@@ -223,6 +224,10 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
     } else {
       $state.go("property_collateral");
     }
+
+    $rootScope.lastNameDanDisable = false;
+    $rootScope.firstNameDanDisable = false;
+    $rootScope.uniqueIdentifierDanDisable = false;
   };
 
   $scope.savePropertyRequestData = function () {
@@ -277,7 +282,7 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
         $rootScope.alert("Зээлийн хэмжээ оруулна уу", "warning");
         return false;
       } else if (isEmpty($rootScope.propertyRequestData.loanMonth)) {
-        $rootScope.alert("Зээл авах хугацаа сонгоно уу", "warning");
+        $rootScope.alert("Зээл авах хугацаа оруулна уу", "warning");
         return false;
       } else if (isEmpty($rootScope.propertyRequestData.locationId)) {
         $rootScope.alert("Зээл авах байршил сонгоно уу", "warning");
@@ -318,6 +323,8 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
     json.location = $rootScope.propertyRequestData.locationId;
     json.month = $rootScope.propertyRequestData.loanMonth;
     json.currency = 16074201974821;
+    json.salaries = $rootScope.filterSalaries;
+    
     if (!isEmpty($rootScope.loginUserInfo)) {
       json.isMortgage = $rootScope.loginUserInfo.mikmortgagecondition;
       json.totalIncome = $rootScope.loginUserInfo.totalincomehousehold;

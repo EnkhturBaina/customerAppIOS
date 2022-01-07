@@ -13,6 +13,7 @@
     return true;
   };
   $rootScope.newCarReq = {};
+  $rootScope.filterSalaries = {};
   // ========= Slide =============
   $scope.activeSlideIndex = 0;
   $rootScope.showBanner = true;
@@ -42,7 +43,6 @@
     document.getElementsByTagName("ion-nav-bar")[0].style.visibility = "visible";
     $rootScope.showBanner = false;
   };
-
   $scope.isBanneNotShowChecked = { checked: false };
   $scope.isNotShow = function () {
     if ($scope.isBanneNotShowChecked.checked == true) {
@@ -154,13 +154,41 @@
         $rootScope.supplierConditions = response.filter((value) => Object.keys(value).length !== 0);
       }
     });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "16269369396661" }).then(function (response) {
+      if (!isEmpty(response)) {
+        $rootScope.supplierConditionsNotMap = response.filter((value) => Object.keys(value).length !== 0);
+      }
+    });
     serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1629173002695086" }).then(function (response) {
       if (!isEmpty(response)) {
         $rootScope.educationData = response.filter((value) => Object.keys(value).length !== 0);
       }
     });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1634710517519245" }).then(function (response) {
+      if (!isEmpty(response)) {
+        $rootScope.ecoProductType = response.filter((value) => Object.keys(value).length !== 0);
+      }
+    });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1614229736963117" }).then(function (response) {
+      $rootScope.supplierCategory = response;
+    });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1614229588590652" }).then(function (response) {
+      $rootScope.supplierHaveCategory = response;
+    });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1614232214127503" }).then(function (response) {
+      $rootScope.allSupplierList = response;
+      $rootScope.suppcategoryStore = response;
+    });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "16347033464591" }).then(function (response) {
+      $rootScope.supplierHaveSubCategory = response;
+    });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1634724795622863" }).then(function (response) {
+      $rootScope.termContent = response[0].templatebody;
+    });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1636343385639929" }).then(function (response) {
+      $rootScope.ERPappVersion = response[0].name;
+    });
   };
-  $scope.getProfileLookupData();
   $scope.callComingSoon = function () {
     $rootScope.alert("Тун удахгүй", "warning");
   };
@@ -201,6 +229,24 @@
   }, 101);
   $rootScope.profilePictureSideMenu = localStorage.getItem("profilePictureSideMenu");
   $scope.$on("$ionicView.loaded", function (ev, info) {
+    document.addEventListener("offline", onOffline, false);
+
+    function onOffline() {
+      // Handle the offline event
+      $ionicPopup.show({
+        template: "<b>Оффлайн горимд ажиллах боломжгүй. Та интернэт холболтоо шалгана уу</b>",
+        cssClass: "confirmPopup",
+        buttons: [
+          {
+            text: "OK",
+            type: "button-confirm",
+            onTap: function () {
+              ionic.Platform.exitApp();
+            },
+          },
+        ],
+      });
+    }
     $rootScope.hideFooter = false;
 
     localStorage.removeItem("requestType");
@@ -227,9 +273,46 @@
     }
     if (isEmpty($rootScope.allBankList)) $scope.getAllBankList();
     $ionicSlideBoxDelegate.update();
-  });
 
+    $scope.getProfileLookupData();
+  });
+  $rootScope.checkisUpdate = function () {
+    if (!isEmpty($scope.alertPopup)) {
+      $scope.alertPopup.close();
+    }
+    template = '<div class="svg-box"><svg class="circular yellow-stroke">' + '<circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="4" stroke-miterlimit="10"/></svg>' + '<svg class="alert-sign yellow-stroke">' + '<g transform="matrix(1,0,0,1,-615.516,-257.346)">' + '<g transform="matrix(0.56541,-0.56541,0.56541,0.56541,93.7153,495.69)">' + '<path class="line" d="M634.087,300.805L673.361,261.53" fill="none"/>' + "</g>" + '<g transform="matrix(2.27612,-2.46519e-32,0,2.27612,-792.339,-404.147)">' + '<circle class="dot" cx="621.52" cy="316.126" r="1.318" />' + "</g>" + "</g>" + "</svg></div>" + "<style>.popup { text-align:center;}</style>" + "Шинэ хувилбар гарсан байна шинэчлэн үү" + "";
+    $scope.alertPopup = $ionicPopup.alert({
+      title: "",
+      template: template,
+      cssClass: "confirmPopup",
+      buttons: [
+        {
+          text: "Шинэчлэх",
+          type: "button-outline button-positive OutbuttonSize OutbuttonSizeFirst button-dc-default",
+          onTap: function (e) {
+            //play store -s zeelme duudah
+            startApp
+              .set({
+                action: "ACTION_VIEW",
+                uri: "market://details?id=com.digital.customerN",
+              })
+              .start();
+            //Шинэчлэх darahad app haaj play store duudah
+            ionic.Platform.exitApp();
+            return true;
+          },
+        },
+      ],
+    });
+  };
   $scope.$on("$ionicView.enter", function () {
+    //App version check
+    $timeout(function () {
+      if (!isEmpty($rootScope.ERPappVersion) && $rootScope.zeelmeAppVersion === $rootScope.ERPappVersion) {
+      } else {
+        $rootScope.checkisUpdate();
+      }
+    }, 2000);
     $rootScope.hideFooter = false;
 
     //Render хийгдсэн байхад бүх Slide давхардаад байгааг дахин render хийх
@@ -259,5 +342,15 @@
   $scope.supplierDetailFromHome = function (id) {
     $rootScope.selectSupplierID = id;
     $state.go("supplier-detail");
+  };
+
+  $scope.goLoanPage = function (type, state, isactive, cat) {
+    if (isactive == "active") {
+      localStorage.setItem("requestType", type);
+      localStorage.setItem("requestCategory", cat);
+      $state.go(state);
+    } else {
+      $rootScope.alert("Тун удахгүй", "warning");
+    }
   };
 });

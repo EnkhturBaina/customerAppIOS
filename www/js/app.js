@@ -47,7 +47,7 @@ var app = angular
     "salary.Ctrl",
     "dan_page.Ctrl",
   ])
-  .run(function ($ionicPlatform, $cordovaNetwork, $cordovaSplashscreen) {
+  .run(function ($ionicPlatform, $cordovaNetwork, $rootScope) {
     $ionicPlatform.ready(function () {
       if (window.StatusBar) {
         StatusBar.styleDefault();
@@ -366,6 +366,7 @@ var app = angular
   })
   .controller("index", function ($scope, $ionicPlatform, $state) {})
   .controller("indexCtrl", function ($scope, $rootScope, $state, $ionicPopup) {
+    $rootScope.zeelmeAppVersion = "1.1.5";
     $scope.toggleSideMenu = function () {
       $("#mobile").toggleClass("non-navigation");
       $("#mobile").toggleClass("navigation");
@@ -599,6 +600,31 @@ var app = angular
         // all are rendered
         scope.$eval(attrs.repeatDone);
       }
+    };
+  })
+  .directive("groupedRadio", function () {
+    return {
+      restrict: "A",
+      require: "ngModel",
+      scope: {
+        model: "=ngModel",
+        value: "=groupedRadio",
+      },
+      link: function (scope, element, attrs, ngModelCtrl) {
+        element.addClass("button");
+        element.on("click", function (e) {
+          scope.$apply(function () {
+            ngModelCtrl.$setViewValue(scope.value);
+          });
+        });
+
+        scope.$watch("model", function (newVal) {
+          element.removeClass("button-positive");
+          if (newVal === scope.value) {
+            element.addClass("button-positive");
+          }
+        });
+      },
     };
   })
   .filter("htmlToPlaintext", function () {

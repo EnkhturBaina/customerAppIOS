@@ -64,12 +64,13 @@ angular.module("dan_page.Ctrl", []).controller("dan_pageCtrl", function ($scope,
                       $rootScope.danIncomeData.workplace = response.result[2];
                       $rootScope.danIncomeData.incmonthlynetincome = response.result[3];
                       $rootScope.danIncomeData.workedmonths = response.result[4];
+                      $rootScope.filterSalaries = response.result[5];
                     }
                   });
                 }
               }, 1000);
 
-              $state.go("salary");
+              $state.go("autoleasing-4");
               $rootScope.alert("Таны мэдээллийг амжилттай татлаа. Та мэдээллээ шалгаад дутуу мэдээллээ оруулна уу", "success");
             } else {
               $rootScope.alert("Мэдээлэл татахад алдаа гарлаа", "warning");

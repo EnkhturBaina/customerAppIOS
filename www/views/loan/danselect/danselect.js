@@ -1,17 +1,6 @@
 // app.controller("danselectCtrl", function ($scope, $state, $stateParams, $rootScope, serverDeferred, $ionicPlatform, $ionicModal, $timeout) {});
 angular.module("danselect.Ctrl", []).controller("danselectCtrl", function ($scope, $ionicModal, $timeout, $state, $stateParams, $rootScope, serverDeferred, $ionicPlatform) {
-  $ionicModal
-    .fromTemplateUrl("templates/autoColl.html", {
-      scope: $scope,
-      animation: "slide-in-up",
-    })
-    .then(function (autoCollModal) {
-      $scope.autoCollModal = autoCollModal;
-    });
   // modals.show();
-  $timeout(function () {
-    $scope.autoCollModal.show();
-  }, 300);
   $ionicModal
     .fromTemplateUrl("templates/danIs.html", {
       scope: $scope,
@@ -37,9 +26,13 @@ angular.module("danselect.Ctrl", []).controller("danselectCtrl", function ($scop
       $("#productYear").val("");
       $state.go("car_coll");
     }
+
+    $rootScope.lastNameDanDisable = false;
+    $rootScope.firstNameDanDisable = false;
+    $rootScope.uniqueIdentifierDanDisable = false;
   };
 
-  $scope.gotoDanLoginDanSelect = function () {
+  $rootScope.gotoDanLoginDanSelect = function () {
     $rootScope.danCustomerData = {};
     $rootScope.danIncomeData = {};
     serverDeferred.carCalculation({ type: "auth_car_collateral", redirect_uri: "customerapp" }, "https://services.digitalcredit.mn/api/v1/c").then(function (response) {
@@ -102,6 +95,7 @@ angular.module("danselect.Ctrl", []).controller("danselectCtrl", function ($scop
                   $rootScope.danCustomerData.lastname = userInfo.result.lastname;
                   $rootScope.danCustomerData.firstname = userInfo.result.firstname;
                   $rootScope.danCustomerData.uniqueidentifier = userInfo.result.regnum.toUpperCase();
+                  $rootScope.danCustomerData.customertypeid = "1";
 
                   if (userSalaryInfo) {
                     serverDeferred.carCalculation(userSalaryInfo.result.list, "https://services.digitalcredit.mn/api/salary").then(function (response) {
@@ -114,6 +108,7 @@ angular.module("danselect.Ctrl", []).controller("danselectCtrl", function ($scop
                         $rootScope.danIncomeData.workplace = response.result[2];
                         $rootScope.danIncomeData.incmonthlynetincome = response.result[3];
                         $rootScope.danIncomeData.workedmonths = response.result[4];
+                        $rootScope.filterSalaries = response.result[5];
                       }
                     });
                   }
