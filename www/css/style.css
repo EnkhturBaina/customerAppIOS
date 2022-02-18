@@ -752,7 +752,7 @@ h4 {
 
 .side-menu-off-icon {
   color: #fff;
-  margin: 20px;
+  margin: 50px 20px 20px 20px;
   font-size: 25px;
   position: absolute;
 }
@@ -1763,4 +1763,7 @@ input[type="number"] {
 }
 .stp2-loan-amount-label {
   padding: 0px !important;
+}
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > * {
+    margin-top: 33px !important;
 }
