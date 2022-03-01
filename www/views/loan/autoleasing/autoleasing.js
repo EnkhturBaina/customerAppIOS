@@ -101,8 +101,20 @@
       }
     }, 200);
   };
+  $scope.removeItemAll = function (arr, value) {
+    var i = 0;
+    while (i < arr.length) {
+      if (arr[i] === value) {
+        arr.splice(i, 1);
+      } else {
+        ++i;
+      }
+    }
+    return arr;
+  };
   // console.log("$rootScope.loginUserInfo", $rootScope.loginUserInfo);
   $rootScope.getbankData = function (a) {
+    $rootScope.isSupplierLoanLocal = localStorage.getItem("isSupplierLoan");
     if (a != "forced") $rootScope.ShowLoader();
 
     $rootScope.requestType = localStorage.getItem("requestType");
@@ -112,93 +124,89 @@
 
     json.isPerson = "1";
     json.currency = 16074201974821;
-    json.isMortgage = 1554263832151;
+    json.isMortgage = "";
     json.salaries = $rootScope.filterSalaries;
-    if (!isEmpty($rootScope.danIncomeData)) {
+    if (!isEmpty($rootScope.danIncomeData) /*&& $state.current.name == "autoleasing-4"*/) {
       json.income = $rootScope.danIncomeData.incometypeid;
     } else {
       json.income = null;
     }
 
     if ($state.current.name == "autoleasing-4") {
+      console.log("/////////////////////////////////////////////////////////////////", $rootScope.danCustomerData);
       json.isMortgage = isEmpty($rootScope.danCustomerData.mikmortgagecondition) ? "" : $rootScope.danCustomerData.mikmortgagecondition;
+      json.totalIncome = isEmpty($rootScope.danIncomeData.totalincomehousehold) ? 0 : $rootScope.danIncomeData.totalincomehousehold;
+      json.monthIncome = isEmpty($rootScope.danIncomeData.monthlyincome) ? 0 : $rootScope.danIncomeData.monthlyincome;
+      json.monthPay = isEmpty($rootScope.danIncomeData.monthlypayment) ? 0 : $rootScope.danIncomeData.monthlypayment;
     }
-    if ($state.current.name == "autoleasing-5") {
-      console.log("$rootScope.danIncomeData", $rootScope.danIncomeData);
+
+    if ($rootScope.isSupplierLoanLocal == "yes") {
       json.totalIncome = isEmpty($rootScope.danIncomeData.totalincomehousehold) ? 0 : $rootScope.danIncomeData.totalincomehousehold;
       json.monthIncome = isEmpty($rootScope.danIncomeData.monthlyincome) ? 0 : $rootScope.danIncomeData.monthlyincome;
       json.monthPay = isEmpty($rootScope.danIncomeData.monthlypayment) ? 0 : $rootScope.danIncomeData.monthlypayment;
     }
 
     if ($rootScope.requestType == "consumer") {
-      //Хэрэглээний лизинг банк шүүлт
       json.type = "consumerLeasingFilter";
       json.totalLoan = $rootScope.newReqiust.getLoanAmount;
       json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
       json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
-      json.supplier = $rootScope.otherGoodsData[0].shopId;
+      if ($rootScope.isSupplierLoanLocal != "yes") {
+        json.supplier = $rootScope.otherGoodsData[0].shopId;
+      } else {
+        json.supplier = $rootScope.selectedSupplierID;
+      }
       json.preTotal = isEmpty($rootScope.newReqiust.advancePayment) ? 0 : $rootScope.newReqiust.advancePayment;
     } else if ($rootScope.requestType == "autoColl") {
-      console.log("$rootScope.carCollateralRequestData", $rootScope.carCollateralRequestData);
-      //Авто Барьцаат лизинг банк шүүлт
       json.type = "carLoanFilter";
-      json.totalLoan = $rootScope.carCollateralRequestData.loanAmount;
-      json.location = isEmpty($rootScope.carCollateralRequestData.locationId) ? 0 : $rootScope.carCollateralRequestData.locationId;
-      json.month = isEmpty($rootScope.carCollateralRequestData.loanMonth) ? 0 : $rootScope.carCollateralRequestData.loanMonth;
-    } else if ($rootScope.requestType == "estate") {
-      //ҮХХ Барьцаат лизинг банк шүүлт
-      json.type = "estateLoanFilter";
-      json.totalLoan = $rootScope.propertyRequestData.loanAmount;
-      json.location = isEmpty($rootScope.propertyRequestData.locationId) ? 0 : $rootScope.propertyRequestData.locationId;
-      json.month = isEmpty($rootScope.propertyRequestData.loanMonth) ? 0 : $rootScope.propertyRequestData.loanMonth;
-    } else if ($rootScope.requestType == "auto") {
-      //Авто лизинг банк шүүлт
-      if ((!isEmpty($rootScope.selectedCarData) && !isEmpty($rootScope.selectedCarData.itemcode)) || $rootScope.newReqiust.choose !== "1") {
-        json.type = "autoLeasingFilterZeelMe";
-        json.totalLoan = $rootScope.newReqiust.getLoanAmount;
-        json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
-        json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
-        json.isCollateral = isEmpty($rootScope.newReqiust.collateralConditionId) ? "" : $rootScope.newReqiust.collateralConditionId;
-        if ($rootScope.newReqiust.choose === "1") {
-          json.code = $rootScope.selectedCarData.itemcode;
-        }
-        json.preTotal = isEmpty($rootScope.newReqiust.advancePayment) ? 0 : $rootScope.newReqiust.advancePayment;
-      }
-    } else if ($rootScope.requestType == "preLoan") {
-      //ҮХХ Барьцаат лизинг банк шүүлт
-      json.type = "autoLeasingLoanFilter";
-      json.totalLoan = $rootScope.newReqiust.loanAmount;
+      json.totalLoan = $rootScope.newReqiust.getLoanAmount;
       json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
       json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
+    } else if ($rootScope.requestType == "estate") {
+      json.type = "estateLoanFilter";
+      json.totalLoan = $rootScope.newReqiust.getLoanAmount;
+      json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
+      json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
+    } else if ($rootScope.requestType == "auto") {
+      json.type = "autoLeasingFilterZeelMe";
+      json.totalLoan = $rootScope.newReqiust.getLoanAmount;
+      json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
+      json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
+      json.isCollateral = isEmpty($rootScope.newReqiust.collateralConditionId) ? "" : $rootScope.newReqiust.collateralConditionId;
+      if ($scope.isSelected0001 === "0001") {
+        json.code = $rootScope.carProduct.itemCode;
+      }
       json.preTotal = isEmpty($rootScope.newReqiust.advancePayment) ? 0 : $rootScope.newReqiust.advancePayment;
-      json.isCollateral = "";
     } else if ($rootScope.requestType == "supLoan") {
-      //Хувааж төлөх банк шүүлт
       json.type = "divideLoanFilter";
       json.totalLoan = $rootScope.newReqiust.loanAmount;
       json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
       json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
     } else if ($rootScope.requestType == "eco") {
-      //Ногоон зээл банк шүүлт
       json.type = "ecoLoanFilter";
       json.totalLoan = $rootScope.newReqiust.getLoanAmount;
       json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
       json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
+      json.preTotal = isEmpty($rootScope.newReqiust.advancePayment) ? 0 : $rootScope.newReqiust.advancePayment;
     } else if ($rootScope.requestType == "building") {
-      //Хувааж төлөх банк шүүлт
       json.type = "buildingLoanFilter";
       json.totalLoan = $rootScope.newReqiust.getLoanAmount;
       json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
       json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
+      json.preTotal = isEmpty($rootScope.newReqiust.advancePayment) ? 0 : $rootScope.newReqiust.advancePayment;
     } else if ($rootScope.requestType == "card") {
-      //Хувааж төлөх банк шүүлт
       json.type = "cardLoanFilter";
       json.totalLoan = $rootScope.newReqiust.getLoanAmount;
       json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
       json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
     } else if ($rootScope.requestType == "salary") {
-      //Хувааж төлөх банк шүүлт
       json.type = "salaryLoanFilter";
+      json.totalLoan = $rootScope.newReqiust.getLoanAmount;
+      json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
+      json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
+      json.income = 1600939426988;
+    } else if ($rootScope.requestType == "money") {
+      json.type = "moneyLoanFilter";
       json.totalLoan = $rootScope.newReqiust.getLoanAmount;
       json.location = isEmpty($rootScope.newReqiust.locationId) ? 0 : $rootScope.newReqiust.locationId;
       json.month = isEmpty($rootScope.newReqiust.loanMonth) ? 0 : $rootScope.newReqiust.loanMonth;
@@ -213,17 +221,20 @@
       $rootScope.months = [];
       $rootScope.minPayments = [];
       //Зөвхөн Step2 -д ажлуулах
-      if ($state.current.name == "autoleasing-2") {
+      if ($state.current.name == "autoleasing-2" && isEmpty($rootScope.newReqiust.advancePayment)) {
         $rootScope.bankListFilter.Agree.map((el) => {
           $rootScope.products.push(el.products);
         });
         $rootScope.products.map((obj) => {
           $rootScope.result = [].concat($rootScope.result, obj);
         });
-
         $rootScope.result.map((a) => {
           $rootScope.months.push(a.max_loan_month_id);
-          a.min_payment != 0 ? $rootScope.minPayments.push(a.min_payment) : "";
+          if (a.min_payment != 0 && a.min_payment != null) {
+            $rootScope.minPayments.push(a.min_payment);
+          } else {
+            $rootScope.minPayment = 0;
+          }
         });
 
         $rootScope.maxMonth = Math.max(...$rootScope.months);
@@ -240,32 +251,42 @@
 
           $rootScope.result.map((a) => {
             $rootScope.months.push(a.max_loan_month_id);
-            a.min_payment != 0 ? $rootScope.minPayments.push(a.min_payment) : $rootScope.minPayments.push(0);
+            if (a.min_payment !== 0 && a.min_payment !== null) {
+              $rootScope.minPayments.push(a.min_payment);
+            } else {
+              $rootScope.minPayments.push(0);
+            }
           });
-
-          $rootScope.maxMonth = Math.max(...$rootScope.months);
-          $rootScope.minPayment = Math.min(...$rootScope.minPayments);
+          isEmpty($rootScope.months) ? ($rootScope.maxMonth = 0) : ($rootScope.maxMonth = Math.max(...$rootScope.months));
+          if (isEmpty($rootScope.minPayments)) {
+            $rootScope.minPayment = 0;
+          } else {
+            if (Math.min(...$rootScope.minPayments) == 0) {
+              $rootScope.minPayment = Math.min(...$scope.removeItemAll($rootScope.minPayments, 0));
+              if (isEmpty($rootScope.minPayments)) {
+                $rootScope.minPayment = 0;
+              }
+            } else {
+              $rootScope.minPayment = Math.min(...$rootScope.minPayments);
+              if (isEmpty($rootScope.minPayments)) {
+                $rootScope.minPayment = 0;
+              }
+            }
+          }
         }
 
         if ($rootScope.requestType == "consumer") {
-          $rootScope.displayMinPayment = $rootScope.sumPrice * $rootScope.minPayment;
-        } else {
-          if ($rootScope.newReqiust.choose === "1") {
-            $rootScope.displayMinPayment = $rootScope.selectedCarData.price * $rootScope.minPayment;
-          } else {
-            $rootScope.displayMinPayment = $rootScope.newReqiust.carPrice * $rootScope.minPayment;
-          }
+          $rootScope.displayMinPayment = ($rootScope.sumPrice * $rootScope.minPayment).toFixed(2);
+        } else if ($rootScope.requestType == "eco") {
+          $rootScope.displayMinPayment = ($rootScope.ecoProduct.unitPrice * $rootScope.minPayment).toFixed(2);
+        } else if ($rootScope.requestType == "building") {
+          $rootScope.displayMinPayment = ($rootScope.newReqiust.buildingPrice * $rootScope.minPayment).toFixed(2);
+        } else if ($rootScope.requestType == "auto" && !isEmpty($rootScope.newReqiust.carPrice)) {
+          $rootScope.displayMinPayment = ($rootScope.newReqiust.carPrice * $rootScope.minPayment).toFixed(2);
         }
       }
     });
     console.log("json", json);
-    console.log("$rootScope.bankListFilter.Agree", $rootScope.bankListFilter.Agree);
-
-    // if ($rootScope.minPayment > $rootScope.newReqiust.advancePayment || $rootScope.newReqiust.advancePayment == 0 || isEmpty($rootScope.newReqiust.advancePayment)) {
-    //   $rootScope.collTrueStep2 = false;
-    // } else {
-    //   $rootScope.collTrueStep2 = true;
-    // }
   };
   //Банк шүүлт step 2 дээр шууд ажиллах
   //Банк сонгох autoleasing-3 хуудасруу ороход ажиллах
