@@ -1,7 +1,7 @@
 <ion-view hide-nav-bar="true">
     <link href="views/loan/autoleasing/autoleasing.css" rel="stylesheet" />
     <div ng-repeat="data in [{'title':'Кредит карт'}]" ng-include src="'views/navbar.html'"></div>
-    <ion-content overflow-scroll="false" ng-controller="cardCtrl" class="eco-container margin-top-50">
+    <ion-content overflow-scroll="false" class="eco-container margin-top-50">
         <div class="big-container">
             <div class="magic-container">
                 <div class="bg-container">
@@ -77,6 +77,14 @@
     <ion-content class="padding bank-chat-content" scroll="false">
         <span class="term-modal-off-text" ng-click="termModalAgreement.hide()"><img style="width: 20px" src="img/x_mark.png" /></span>
         <div class="term-modal-include" ng-include src="'views/term/term-content.html'"></div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+<script id="templates/auto.html" type="text/ng-template">
+  <ion-modal-view class="auto-temp-modal-view">
+    <ion-content class="padding bank-chat-content" scroll="false">
+        <!-- <span class="term-modal-off-text" ng-click="autoModal.hide()"><img style="width: 20px" src="img/x_mark.png" /></span> -->
+        <div class="templates-modal-include" ng-include src="'views/templates/auto.html'"></div>
     </ion-content>
   </ion-modal-view>
 </script>

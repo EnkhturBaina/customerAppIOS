@@ -83,6 +83,17 @@ angular.module("salary.Ctrl", []).controller("salaryCtrl", function ($scope, $ro
         $scope.getbankDataSalary("forced");
       }, 200);
     }
+    $ionicModal
+      .fromTemplateUrl("templates/auto.html", {
+        scope: $scope,
+        animation: "slide-in-up",
+      })
+      .then(function (autoModal) {
+        $scope.autoModal = autoModal;
+      });
+    $timeout(function () {
+      $scope.autoModal.show();
+    }, 300);
   });
 
   $rootScope.$on("$ionicView.loaded", function () {

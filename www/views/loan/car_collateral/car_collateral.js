@@ -19,17 +19,28 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
   $scope.$on("$ionicView.enter", function () {
     $rootScope.hideFooter = true;
     if ($state.current.name == "car_coll2") {
+      // $ionicModal
+      //   .fromTemplateUrl("templates/autoColl.html", {
+      //     scope: $scope,
+      //     animation: "slide-in-up",
+      //   })
+      //   .then(function (autoCollModal) {
+      //     $scope.autoCollModal = autoCollModal;
+      //   });
+      // $timeout(function () {
+      //   $scope.autoCollModal.show();
+      // }, 100);
       $ionicModal
-        .fromTemplateUrl("templates/autoColl.html", {
+        .fromTemplateUrl("templates/auto.html", {
           scope: $scope,
           animation: "slide-in-up",
         })
-        .then(function (autoCollModal) {
-          $scope.autoCollModal = autoCollModal;
+        .then(function (autoModal) {
+          $scope.autoModal = autoModal;
         });
       $timeout(function () {
-        $scope.autoCollModal.show();
-      }, 100);
+        $scope.autoModal.show();
+      }, 300);
       //автомашин барьцаалсан зээлийн хүсэлтийн мэдээлэл
       $rootScope.carCollateralRequestData = {};
       $rootScope.carCollateralRequestData.loanAmount = 0;

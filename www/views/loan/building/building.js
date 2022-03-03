@@ -136,6 +136,17 @@ angular.module("building.Ctrl", []).controller("buildingCtrl", function ($scope,
         $scope.getbankDataBuilding("forced");
       }, 200);
     }
+    $ionicModal
+      .fromTemplateUrl("templates/auto.html", {
+        scope: $scope,
+        animation: "slide-in-up",
+      })
+      .then(function (autoModal) {
+        $scope.autoModal = autoModal;
+      });
+    $timeout(function () {
+      $scope.autoModal.show();
+    }, 300);
   });
 
   $rootScope.$on("$ionicView.loaded", function () {

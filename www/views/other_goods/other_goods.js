@@ -95,5 +95,16 @@ angular.module("addOtherGoods.Ctrl", []).controller("addOtherGoodsCtrl", functio
     $rootScope.getLocalGoodsData();
     $rootScope.calcTotalPrice();
     !isEmpty($rootScope.otherGoods) ? ($rootScope.showSec = false) : ($rootScope.showSec = true);
+    $ionicModal
+      .fromTemplateUrl("templates/auto.html", {
+        scope: $scope,
+        animation: "slide-in-up",
+      })
+      .then(function (autoModal) {
+        $scope.autoModal = autoModal;
+      });
+    $timeout(function () {
+      $scope.autoModal.show();
+    }, 300);
   });
 });

@@ -36,19 +36,20 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
       $state.go("property_collateral2");
     }
   };
-  $ionicModal
-    .fromTemplateUrl("templates/property.html", {
-      scope: $scope,
-      animation: "slide-in-up",
-    })
-    .then(function (propertyModal) {
-      $scope.propertyModal = propertyModal;
-    });
-  $timeout(function () {
-    if ($state.current.name == "property_collateral_danselect") {
-      $scope.propertyModal.show();
-    }
-  }, 300);
+  // $ionicModal
+  //   .fromTemplateUrl("templates/property.html", {
+  //     scope: $scope,
+  //     animation: "slide-in-up",
+  //   })
+  //   .then(function (propertyModal) {
+  //     $scope.propertyModal = propertyModal;
+  //   });
+  // $timeout(function () {
+  //   if ($state.current.name == "property_collateral_danselect") {
+  //     $scope.propertyModal.show();
+  //   }
+  // }, 300);
+
   $ionicModal
     .fromTemplateUrl("templates/danIs.html", {
       scope: $scope,
@@ -324,7 +325,7 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
     json.month = $rootScope.propertyRequestData.loanMonth;
     json.currency = 16074201974821;
     json.salaries = $rootScope.filterSalaries;
-    
+
     if (!isEmpty($rootScope.loginUserInfo)) {
       json.isMortgage = $rootScope.loginUserInfo.mikmortgagecondition;
       json.totalIncome = $rootScope.loginUserInfo.totalincomehousehold;
@@ -453,6 +454,19 @@ angular.module("property_collateral.Ctrl", []).controller("property_collateralCt
         }
       }
     }, 500);
+    $ionicModal
+      .fromTemplateUrl("templates/auto.html", {
+        scope: $scope,
+        animation: "slide-in-up",
+      })
+      .then(function (autoModal) {
+        $scope.autoModal = autoModal;
+      });
+    $timeout(function () {
+      if ($state.current.name == "property_collateral_danselect") {
+        $scope.autoModal.show();
+      }
+    }, 300);
   });
   $ionicModal
     .fromTemplateUrl("templates/propertyDan.html", {

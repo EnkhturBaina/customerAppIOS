@@ -187,6 +187,7 @@ angular.module("home.Ctrl", []).controller("homeCtrl", function ($scope, $ionicP
     });
     serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1636343385639929" }).then(function (response) {
       $rootScope.ERPappVersion = response[0].name;
+      $rootScope.isAppActive = response[0].isactive;
     });
   };
   $scope.callComingSoon = function () {
@@ -305,12 +306,35 @@ angular.module("home.Ctrl", []).controller("homeCtrl", function ($scope, $ionicP
       ],
     });
   };
+  $rootScope.checkisAppActive = function () {
+    if (!isEmpty($scope.alertPopup)) {
+      $scope.alertPopup.close();
+    }
+    template = '<div class="svg-box"><svg class="circular yellow-stroke">' + '<circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="4" stroke-miterlimit="10"/></svg>' + '<svg class="alert-sign yellow-stroke">' + '<g transform="matrix(1,0,0,1,-615.516,-257.346)">' + '<g transform="matrix(0.56541,-0.56541,0.56541,0.56541,93.7153,495.69)">' + '<path class="line" d="M634.087,300.805L673.361,261.53" fill="none"/>' + "</g>" + '<g transform="matrix(2.27612,-2.46519e-32,0,2.27612,-792.339,-404.147)">' + '<circle class="dot" cx="621.52" cy="316.126" r="1.318" />' + "</g>" + "</g>" + "</svg></div>" + "<style>.popup { text-align:center;}</style>" + "Уучлаарай апп засвартай байна" + "";
+    $scope.alertPopup = $ionicPopup.alert({
+      title: "",
+      template: template,
+      cssClass: "confirmPopup",
+      buttons: [
+        {
+          text: "OK",
+          type: "button-outline button-positive OutbuttonSize OutbuttonSizeFirst button-dc-default",
+          onTap: function (e) {
+            ionic.Platform.exitApp();
+          },
+        },
+      ],
+    });
+  };
   $scope.$on("$ionicView.enter", function () {
     //App version check
     $timeout(function () {
       if (!isEmpty($rootScope.ERPappVersion) && $rootScope.zeelmeAppVersion === $rootScope.ERPappVersion) {
       } else {
-//        $rootScope.checkisUpdate();
+        //        $rootScope.checkisUpdate();
+      }
+      if ($rootScope.isAppActive === "0") {
+        $rootScope.checkisAppActive();
       }
     }, 2000);
     $rootScope.hideFooter = false;
