@@ -46,8 +46,8 @@
       "cordova-plugin-device": {},
       "cordova-plugin-inappbrowser": {},
       "WebViewer": {},
-      "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-camera-preview": {}
+      "cordova-plugin-camera-preview": {},
+      "cordova-plugin-ionic-webview": {}
     }
   }
 }
