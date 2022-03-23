@@ -152,6 +152,7 @@
 
 .total-price {
   display: flex;
+  align-items: center;
   margin: 10px 10px;
 }
 
@@ -160,10 +161,13 @@
 }
 
 .total-price .total-price-amount {
-  margin-left: auto;
-  float: right;
 }
-
+.clear-all-product {
+  margin-left: auto;
+  display: flex;
+  float: right;
+  align-items: center;
+}
 .attention-text {
   display: grid;
   margin: 20px 50px;
@@ -307,10 +311,6 @@
 .goods-middle-card span {
   font-size: 14px !important;
 }
-.middle-card-mid-text {
-  color: #4b5180 !important;
-  font-weight: bold;
-}
 .goods-row1-text {
   text-align: center;
   display: block;
@@ -325,10 +325,16 @@
 }
 .consumer-slider {
   display: grid;
+  height: 220px;
 }
 .consumer-ion-slide {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+.other-goods-reload {
+  padding: 0 5px;
+  font-weight: bold;
+  font-size: 28px;
 }

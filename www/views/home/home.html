@@ -6,7 +6,18 @@
             <ion-tab title="Зээлийн маркет">
                 <ion-nav-view class="ghostwhite">
                     <ion-content overflow-scroll="true" class="padding scroll-content ionic-scroll has-header home-tab-2-content">
-
+                        <div class="templates-content">
+                            <div class="templates-content-ul">
+                                <img class="template-img" style="width: 70px" src="img/month.png">
+                                <h3>1 - 180 сар</h3>
+                                <p>Хугацаа</p>
+                            </div>
+                            <div class="templates-content-ul">
+                                <img class="template-img" style="width: 70px" src="img/fee.png">
+                                <h3>1.4 - 3.0 %</h3>
+                                <p>Хүү</p>
+                            </div>
+                        </div>
                         <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('auto','autoleasing-1', 'active', '16082024283142')">
                             <i class="icon ion-model-s"></i>
                             <span class="home-product-name">Автолизинг</span>
@@ -17,17 +28,12 @@
                             <span class="home-product-name">Хэрэглээний лизинг</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
                         </div>
-                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('autoColl','car_coll2','active', '16082024252301')">
+                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('autoColl','car_coll','active', '16082024252301')">
                             <i class="icon ion-model-s"></i>
                             <span class="home-product-name">Автомашин барьцаалсан зээл</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
                         </div>
-                        <!-- <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('preLoan','pre_loan','active')">
-                            <i class="icon ion-ios7-paper"></i>
-                            <span class="home-product-name">Зээлийн эрхээ шалгах</span>
-                            <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
-                        </div> -->
-                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('estate','property_collateral_danselect','active', '16082024283512')">
+                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('estate','property_collateral','active', '16082024283512')">
                             <i class="icon ion-ios7-home"></i>
                             <span class="home-product-name">Үл хөдлөх барьцаалсан зээл</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
@@ -44,7 +50,7 @@
                         </div>
                         <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('card','card','active', '16082024283628')">
                             <i class="icon ion-card"></i>
-                            <span class="home-product-name">Кредит карт</span>
+                            <span class="home-product-name">Зээлийн карт</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
                         </div>
                         <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('salary','salary','active', '16082024283627')">
@@ -52,7 +58,12 @@
                             <span class="home-product-name">Цалингийн зээл</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
                         </div>
-                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('money','money','notactive')">
+                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('business','business_loan','active','16082024283622')">
+                            <i class="icon ion-ios7-box"></i>
+                            <span class="home-product-name">Бизнесийн зээл</span>
+                            <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
+                        </div>
+                        <!-- <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('money','money','notactive')">
                             <i class="icon ion-cash"></i>
                             <span class="home-product-name">Бэлэн мөнгө авах</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
@@ -62,16 +73,11 @@
                             <span class="home-product-name">Бараа авах хүүгүй зээл</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
                         </div>
-                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('smallBusiness','dan_page','notactive')">
+                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('smallBusiness','income','notactive')">
                             <i class="icon ion-bag"></i>
                             <span class="home-product-name">Бичил бизнесийн зээл</span>
                             <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
-                        </div>
-                        <div class="home-card-icon-left home-tab-1-card" ng-click="goLoanPage('business','dan_page','notactive')">
-                            <i class="icon ion-ios7-box"></i>
-                            <span class="home-product-name">Бизнесийн зээл</span>
-                            <i class="card-arrow-icon ion-ios7-arrow-forward"></i>
-                        </div>
+                        </div> -->
                         <div class="none-div">
                         </div>
                     </ion-content>
@@ -79,11 +85,11 @@
             </ion-tab>
             <ion-tab title="Барааны маркет">
                 <ion-nav-view class="ghostwhite">
-                    <ion-content overflow-scroll="true" style="height: 80%;margin: 0 10px;" class="">
+                    <ion-content overflow-scroll="true" style="height: 80%;margin: 0 20px;" class="">
                         <ion-slide-box does-continue="true" auto-play="true" slide-interval="2000" ng-if="dcSuppliers.length" show-pager="false" class="home-tab-2-slide-box" delegate-handle="suppliersDelegate">
                             <ion-slide ng-repeat="bg in dcSuppliers | filter:{id:'!!'}" ng-click="supplierDetailFromHome(bg.id)">
                                 <div class="home-tab2-slider home-tab2-ion-slide card home-card home-card-1">
-                                    <img style="width: 200px;max-height: 150px;" ng-src="{{$root.imagePath}}{{bg.supplierpicture}}" />
+                                    <img style="width: 100%;max-height: 200px;" ng-src="{{$root.imagePath}}{{bg.supplierpicture}}" />
                                 </div>
 
                             </ion-slide>

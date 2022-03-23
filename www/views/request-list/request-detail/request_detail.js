@@ -43,18 +43,18 @@ angular.module("request_detail.Ctrl", ["ngAnimate"]).controller("request_detailC
         $scope.bankFirstChat = response[0].text1;
         $scope.bankFirstChatDate = response[0].createddate;
       } else {
-        $scope.bankFirstChat = "Байгууллагатай холбогдох";
+        $scope.bankFirstChat = "Банктай холбогдох";
       }
     });
   };
   $scope.showPopupDTL = function (text, type) {
     $rootScope.acceptRequestData = {};
     $rootScope.acceptRequestData.id = $rootScope.selectedMapBank.mapid;
-    $rootScope.acceptRequestData.wfmStatusId = 1609944955126013;
+    $rootScope.acceptRequestData.wfmStatusId = 1626834162709226;
 
     $rootScope.cancelRequestData = {};
     $rootScope.cancelRequestData.id = $rootScope.selectedMapBank.mapid;
-    $rootScope.cancelRequestData.wfmStatusId = 1609944902958196;
+    $rootScope.cancelRequestData.wfmStatusId = 1626834162623021;
 
     var templateBody = "";
     var alertBody = "";
@@ -62,7 +62,7 @@ angular.module("request_detail.Ctrl", ["ngAnimate"]).controller("request_detailC
       templateBody = "Та " + "<span class='dtl-pop-up-bank-name'>" + $rootScope.selectedMapBankDTL.departmentname + "</span>" + " руу зөвшөөрөл илгээхдээ итгэлтэй байна уу";
       alertBody = "" + "<span class='dtl-pop-up-bank-name'>" + $rootScope.selectedMapBankDTL.departmentname + "</span>" + " руу амжилттай илгээгдлээ";
     } else if (type == "decline") {
-      templateBody = "Та " + "<span class='dtl-pop-up-bank-name'>" + $rootScope.selectedMapBankDTL.departmentname + "</span>" + " руу илгээсэн хүсэлтээ цуцлахад итгэлтэй байна уу<br/>" + "<span class='dtl-pop-up-sub-title'>" + "Хүсэлтээ цуцалснаар байгууллагад зээл авахгүй гэсэн мэдэгдэл очихыг анхаарна уу" + "</span>";
+      templateBody = "Та " + "<span class='dtl-pop-up-bank-name'>" + $rootScope.selectedMapBankDTL.departmentname + "</span>" + " руу илгээсэн хүсэлтээ цуцлахад итгэлтэй байна уу<br/>" + "<span class='dtl-pop-up-sub-title'>" + "Хүсэлтээ цуцалснаар банкинд зээл авахгүй гэсэн мэдэгдэл очихыг анхаарна уу" + "</span>";
       alertBody = "" + "<span class='dtl-pop-up-bank-name'>" + $rootScope.selectedMapBankDTL.departmentname + "</span>" + " руу илгээсэн хүсэлт цуцлагдлаа";
     }
     $ionicPopup.show({
@@ -95,7 +95,7 @@ angular.module("request_detail.Ctrl", ["ngAnimate"]).controller("request_detailC
 
   $scope.sendChat = function () {
     if (isEmpty($rootScope.sendChatData.text1)) {
-      $rootScope.alert("Байгууллагад илгээх зурвасаа бичнэ үү", "warning");
+      $rootScope.alert("Банкинд илгээх зурвасаа бичнэ үү", "warning");
     } else {
       $rootScope.sendChatData.dim1 = $rootScope.selectedMapBank.mapid;
 
@@ -115,7 +115,7 @@ angular.module("request_detail.Ctrl", ["ngAnimate"]).controller("request_detailC
   $scope.isConfirmedOrCanceled();
   $scope.checkIsConfirmed = function () {
     if ($rootScope.selectedMapBank.wfmstatusid != 1609944955126013) {
-      $rootScope.alert("Таны хүсэлт байгууллагад батлагдаагүй байна", "warning");
+      $rootScope.alert("Таны хүсэлт банкинд батлагдаагүй байна", "warning");
     }
   };
   // MODAL

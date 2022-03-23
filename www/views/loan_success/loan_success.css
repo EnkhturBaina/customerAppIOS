@@ -11,6 +11,7 @@
   top: 10vh;
   height: 100%;
   position: absolute;
+  width: 100%;
 }
 .checkmark_success {
   width: 80px;
@@ -54,7 +55,7 @@
 .row-2-text {
   text-align: center;
   margin: 0 auto;
-  width: 60%;
+  width: 50%;
   color: #acd322;
 }
 .success-bank-list {

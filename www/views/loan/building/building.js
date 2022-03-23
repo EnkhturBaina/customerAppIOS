@@ -1,5 +1,5 @@
 angular.module("building.Ctrl", []).controller("buildingCtrl", function ($scope, $rootScope, serverDeferred, $ionicModal, $state, $timeout) {
-  $("#step2loanMonth").mask("000");
+  $("#buildingPrice").mask("00000000000");
   $ionicModal
     .fromTemplateUrl("templates/term-content.html", {
       scope: $scope,
@@ -13,28 +13,22 @@ angular.module("building.Ctrl", []).controller("buildingCtrl", function ($scope,
       if (isEmpty($rootScope.newReqiust.choose)) {
         $rootScope.alert("Орон сууцаа сонгосон эсэх", "warning");
         return false;
-      } else if (isEmpty($rootScope.newReqiust.vendorId)) {
-        $rootScope.alert("Агентын оффис сонгоно уу", "warning");
+      } else if (isEmpty($rootScope.newReqiust.buildingLoanType)) {
+        $rootScope.alert("Орон сууцны зээлийн төрөл сонгоно уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.newReqiust.getLoanAmount)) {
+      } else if (isEmpty($rootScope.newReqiust.buildingPrice)) {
         $rootScope.alert("Орон сууцны үнэ оруулна уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.newReqiust.advancePayment)) {
-        $rootScope.alert("Урьдчилгаа оруулна уу", "warning");
-        return false;
-      } else if (isEmpty($rootScope.newReqiust.loanMonth)) {
-        $rootScope.alert("Хугацаа оруулна уу", "warning");
-        return false;
-      } else if (isEmpty($rootScope.newReqiust.collateralConditionId)) {
-        $rootScope.alert("ҮХХөрөнгө барьцаалах уу", "warning");
-        return false;
-      } else if (isEmpty($rootScope.newReqiust.isCoBorrower)) {
-        $rootScope.alert("Хамтран зээлдэгчтэй эсэх сонгоно уу", "warning");
-        return false;
-      } else if (isEmpty($rootScope.newReqiust.locationId)) {
-        $rootScope.alert("Байршил сонгоно уу", "warning");
-        return false;
-      } else if (isEmpty($rootScope.newReqiust.serviceAgreementId) || $rootScope.newReqiust.serviceAgreementId == 1554263832151) {
+      }
+      //  else if (isEmpty($rootScope.newReqiust.buildingSurvey) && $rootScope.isAgent) {
+      //   $rootScope.alert("Судалгаанд о/с-ны мэдээлэл өгөх боломжтой сонгоно уу", "warning");
+      //   return false;
+      // }
+      // else if (isEmpty($rootScope.newReqiust.buildingSurvey) && !$rootScope.isAgent) {
+      //   $rootScope.alert("Орон сууцны агенттай холбохыг зөвшөөрөх үү?", "warning");
+      //   return false;
+      // }
+      else if (isEmpty($rootScope.newReqiust.serviceAgreementId) || $rootScope.newReqiust.serviceAgreementId == 1554263832151) {
         $rootScope.alert("Та үйлчилгээний нөхцлийг зөвшөөрөөгүй байна", "warning");
         return false;
       } else {
@@ -42,7 +36,7 @@ angular.module("building.Ctrl", []).controller("buildingCtrl", function ($scope,
       }
     } else if (param == "agreeBank") {
       if (isEmpty($rootScope.bankListFilter.Agree)) {
-        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох байгууллага байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
+        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох банк, ББСБ байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
         return false;
       } else {
         return true;
@@ -52,7 +46,8 @@ angular.module("building.Ctrl", []).controller("buildingCtrl", function ($scope,
   $scope.buildingStep2 = function () {
     if ($scope.checkReqiured("building-valid")) {
       if ($scope.checkReqiured("agreeBank")) {
-        $state.go("income");
+        $rootScope.isIncomeConfirm = true;
+        $state.go("autoleasing-2");
       }
     }
   };
@@ -69,66 +64,32 @@ angular.module("building.Ctrl", []).controller("buildingCtrl", function ($scope,
 
     //банк шүүлт
     json.type = "buildingLoanFilter";
-    json.totalLoan = $rootScope.newReqiust.getLoanAmount;
+    // json.totalLoan = $rootScope.newReqiust.buildingPrice;
     json.location = $rootScope.newReqiust.locationId;
     json.month = $rootScope.newReqiust.loanMonth;
     json.salaries = $rootScope.filterSalaries;
+    json.buildingType = $rootScope.newReqiust.buildingLoanType;
 
     serverDeferred.carCalculation(json).then(function (response) {
       $rootScope.bankListFilter = response.result.data;
       $rootScope.HideLoader();
-
-      $rootScope.products = [];
-      $rootScope.result = [];
-      $rootScope.months = [];
-      $rootScope.minPayments = [];
-      //Зөвхөн Step2 -д ажлуулах
-      if ($state.current.name == "building") {
-        $rootScope.bankListFilter.Agree.map((el) => {
-          $rootScope.products.push(el.products);
-        });
-        $rootScope.products.map((obj) => {
-          $rootScope.result = [].concat($rootScope.result, obj);
-        });
-
-        $rootScope.result.map((a) => {
-          $rootScope.months.push(a.max_loan_month_id);
-          a.min_payment != 0 ? $rootScope.minPayments.push(a.min_payment) : "";
-        });
-
-        $rootScope.maxMonth = Math.max(...$rootScope.months);
-        $rootScope.minPayment = Math.min(...$rootScope.minPayments);
-
-        //тэнцсэн банкуудын урьдчилгаа 0 үед ажиллах
-        if (isEmpty($rootScope.minPayments)) {
-          $rootScope.bankListFilter.NotAgree.map((el) => {
-            $rootScope.products.push(el.products);
-          });
-          $rootScope.products.map((obj) => {
-            $rootScope.result = [].concat($rootScope.result, obj);
-          });
-
-          $rootScope.result.map((a) => {
-            $rootScope.months.push(a.max_loan_month_id);
-            a.min_payment != 0 ? $rootScope.minPayments.push(a.min_payment) : $rootScope.minPayments.push(0);
-          });
-
-          $rootScope.maxMonth = Math.max(...$rootScope.months);
-          $rootScope.minPayment = Math.min(...$rootScope.minPayments);
-        }
-        if (isEmpty($rootScope.newReqiust.getLoanAmount)) {
-          $rootScope.displayMinPayment = 0;
-        } else {
-          $rootScope.displayMinPayment = $rootScope.newReqiust.getLoanAmount * $rootScope.minPayment;
-        }
-      }
     });
     console.log("json", json);
   };
   $rootScope.$on("$ionicView.enter", function () {
-    if ($state.current.name == "building") {
+    $rootScope.isAgent = false;
+    $rootScope.msgShow = false;
+    var firstReq = localStorage.getItem("firstReq");
+    var local = localStorage.getItem("requestType");
+    $rootScope.isCarColl = false;
+    //нүүрнээс зээлийн хүсэлтрүү орох үед талбаруудыг шинэчлэх
+    if (firstReq === "yes" && local == "building") {
       $rootScope.newReqiust = {};
+      $rootScope.danCustomerData = {};
+      $rootScope.danIncomeData = {};
+      localStorage.setItem("firstReq", "no");
     }
+
     $rootScope.newReqiust.serviceAgreementId = 1554263832132;
 
     if ($state.current.name == "building") {
@@ -136,48 +97,29 @@ angular.module("building.Ctrl", []).controller("buildingCtrl", function ($scope,
         $scope.getbankDataBuilding("forced");
       }, 200);
     }
-    $ionicModal
-      .fromTemplateUrl("templates/auto.html", {
-        scope: $scope,
-        animation: "slide-in-up",
-      })
-      .then(function (autoModal) {
-        $scope.autoModal = autoModal;
-      });
-    $timeout(function () {
-      $scope.autoModal.show();
-    }, 300);
   });
 
   $rootScope.$on("$ionicView.loaded", function () {
     $rootScope.hideFooter = true;
-    $scope.selectedSupplierCategory = [];
-    $scope.supplierHaveCategory.map((item) => {
-      if (item.categoryid === "1578891191298") {
-        $scope.selectedSupplierCategory.push(item.supplierid);
-        return true;
-      }
-    });
-    var selectedCategory = [];
-
-    $rootScope.allSupplierList = $rootScope.suppcategoryStore.some((item) => {
-      $scope.selectedSupplierCategory.map((item2) => {
-        if (item2 == item.id) {
-          selectedCategory.push(item);
-          return true;
-        }
-      });
-    });
-    $rootScope.buildingAgent = selectedCategory;
   });
-
-  $rootScope.calcLoanAmountBuilding = function () {
-    if (parseInt($rootScope.newReqiust.advancePayment) < $rootScope.newReqiust.buildingPrice) {
-      $rootScope.newReqiust.getLoanAmount = $rootScope.newReqiust.buildingPrice - $rootScope.newReqiust.advancePayment;
-      $rootScope.newReqiust.loanAmount = $rootScope.newReqiust.getLoanAmount;
-    } else if (parseInt($rootScope.newReqiust.advancePayment) > $rootScope.newReqiust.buildingPrice) {
-      var tmp = $rootScope.newReqiust.advancePayment;
-      $rootScope.newReqiust.advancePayment = tmp.slice(0, -1);
+  $scope.buildingChosen = function (id) {
+    if (id === "1554263832132") {
+      $rootScope.isAgent = true;
+      if ($rootScope.newReqiust.buildingSurvey === "1554263832151") {
+        $rootScope.msgShow = true;
+      } else {
+        $rootScope.msgShow = false;
+      }
+    } else {
+      $rootScope.isAgent = false;
+      $rootScope.msgShow = false;
+    }
+  };
+  $scope.surveyChosen = function (id) {
+    if (id === "1554263832151") {
+      $rootScope.msgShow = true;
+    } else {
+      $rootScope.msgShow = false;
     }
   };
 });

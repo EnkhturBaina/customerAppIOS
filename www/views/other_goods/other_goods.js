@@ -17,6 +17,12 @@ angular.module("addOtherGoods.Ctrl", []).controller("addOtherGoodsCtrl", functio
   $rootScope.sumPrice = 0;
   $rootScope.calcTotalPrice = function () {
     $rootScope.sumPrice = 0;
+    if (isEmpty($rootScope.consumerData)) {
+      $rootScope.consumerData = JSON.parse(localStorage.getItem("otherGoods"));
+      if (!isEmpty($rootScope.consumerData)) {
+        $rootScope.selectedSupplierID = $rootScope.consumerData[0].shopId;
+      }
+    }
     var local = localStorage.getItem("otherGoods");
     if (!isEmpty(local) && local != "undefined") {
       $rootScope.otherGoods = JSON.parse(localStorage.getItem("otherGoods"));
@@ -32,6 +38,7 @@ angular.module("addOtherGoods.Ctrl", []).controller("addOtherGoodsCtrl", functio
   $scope.nexClivk = function () {
     if (!isEmpty($rootScope.otherGoodsData)) {
       $rootScope.newReqiust.advancePayment = "";
+      $rootScope.isIncomeConfirm = true;
       $state.go("autoleasing-2");
     } else {
       $rootScope.alert("Та зээлээр авах бараагаа бүртгэнэ үү", "warning");
@@ -57,6 +64,7 @@ angular.module("addOtherGoods.Ctrl", []).controller("addOtherGoodsCtrl", functio
 
                 localStorage.removeItem("otherGoods");
                 localStorage.setItem("otherGoods", JSON.stringify($rootScope.otherGoodsData));
+                $rootScope.consumerData = $rootScope.otherGoodsData;
 
                 $rootScope.calcTotalPrice();
                 $rootScope.getLocalGoodsData();
@@ -73,17 +81,6 @@ angular.module("addOtherGoods.Ctrl", []).controller("addOtherGoodsCtrl", functio
     $state.go("home");
   };
 
-  // $ionicModal
-  //   .fromTemplateUrl("templates/consumer.html", {
-  //     scope: $scope,
-  //     animation: "slide-in-up",
-  //   })
-  //   .then(function (consumerModal) {
-  //     $scope.consumerModal = consumerModal;
-  //   });
-  // $timeout(function () {
-  //   $scope.consumerModal.show();
-  // }, 300);
   $rootScope.hideFooter = true;
 
   $scope.clickSlidePager = function (index) {
@@ -94,17 +91,32 @@ angular.module("addOtherGoods.Ctrl", []).controller("addOtherGoodsCtrl", functio
     $rootScope.is0001Price = false;
     $rootScope.getLocalGoodsData();
     $rootScope.calcTotalPrice();
+    $rootScope.newReqiust = {};
+    $rootScope.danCustomerData = {};
+    $rootScope.danIncomeData = {};
+    var firstReq = localStorage.getItem("firstReq");
+
+    if (firstReq === "yes" && $state.current.name == "otherGoods") {
+      // $ionicModal
+      //   .fromTemplateUrl("templates/consumer.html", {
+      //     scope: $scope,
+      //     animation: "slide-in-up",
+      //   })
+      //   .then(function (consumerModal) {
+      //     $scope.consumerModal = consumerModal;
+      //   });
+      // $timeout(function () {
+      //   $scope.consumerModal.show();
+      // }, 300);
+    }
+    localStorage.setItem("firstReq", "no");
     !isEmpty($rootScope.otherGoods) ? ($rootScope.showSec = false) : ($rootScope.showSec = true);
-    $ionicModal
-      .fromTemplateUrl("templates/auto.html", {
-        scope: $scope,
-        animation: "slide-in-up",
-      })
-      .then(function (autoModal) {
-        $scope.autoModal = autoModal;
-      });
-    $timeout(function () {
-      $scope.autoModal.show();
-    }, 300);
   });
+  $scope.clearAllProduct = function () {
+    console.log("AS");
+    localStorage.removeItem("otherGoods");
+    $rootScope.otherGoods = [];
+    $rootScope.showSec = true;
+    $rootScope.sumPrice = 0;
+  };
 });

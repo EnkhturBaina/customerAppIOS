@@ -1,18 +1,16 @@
 <ion-view id="loanPages" hide-nav-bar="true">
     <link href="views/loan/autoleasing/autoleasing.css" rel="stylesheet" />
-    <div ng-repeat="data in [{'title':'Байгууллага сонгох'}]" ng-include src="'views/navbar.html'"></div>
+    <div ng-repeat="data in [{'title':'Банк сонгох'}]" ng-include src="'views/navbar.html'"></div>
     <ion-content overflow-scroll="true" class="ion-modified-content has-header autoleas-step3-content">
         <div class="big-container">
             <div class="magic-container">
                 <div class="bg-container">
                     <!-- <p class="header-title-step3 ion-color-big-text">Та зээл судлуулах банк, ББСБ-аас 3 хүртэлхийг сонгон илгээнэ үү</p> -->
                     <div class="bank-list">
-                        <p class="middle-title ion-color-big-text">Шалгуурыг хангасан байгууллага: {{bankListFilter.Agree.length}}</p>
-                        <button class="button btn single-button" id="Next" ng-click="sendRequest()" ng-disabled="disabledBtnSendReq">Хүсэлт илгээх</button>
-                        <!-- <p class="middle-title ion-color-big-text">Зээлийн нөхцлийг хангасан банк, ББСБ-ууд</p>
+                        <p class="middle-title ion-color-big-text">Зээлийн нөхцлийг хангасан банк, ББСБ-ууд</p>
                         <ul class="switch-list">
                             <li ng-repeat="bank in bankListFilter.Agree | filter:{id:'!!'}">
-                                <ion-checkbox ng-model="bank.checked" class="step3-bankList-checkbox-container" ng-change="selectBankLastStep(bank.checked,bank.id)">
+                                <ion-checkbox ng-model="bank.checked" class="step3-bankList-checkbox-container" ng-checked="bank.checked" ng-change="selectBankLastStep(bank,bank.id)">
                                     <div class="bank-list-container">
                                         <img ng-src="{{bank.bank_logo|guessImageMime}}" />
                                     </div>
@@ -20,13 +18,14 @@
                                     <p class="bank-desc-green">Тэнцсэн</p>
                                 </ion-checkbox>
                             </li>
-                        </ul> -->
+                        </ul>
                     </div>
                     <!-- Shalguur hangaagui bankuud -->
-                    <!-- <div class="bank-list">
+                    <div class="bank-list">
                         <p class="middle-title ion-color-big-text" style="margin-top: 50px">Зээлийн нөхцлийг хангаагүй банк, ББСБ-ууд</p>
                         <ul class="switch-list">
                             <li ng-repeat="rejectbank in bankListFilter.NotAgree | filter:{id:'!!'}">
+                                <!-- <ion-checkbox ng-model="rejectbank.checked" class="step3-bankList-checkbox-container " ng-change="selectBankLastStep(rejectbank.checked,rejectbank.id)"> -->
                                 <div class="checkBank-not-agree">
                                     <div class="bank-list-container">
                                         <img ng-src="{{rejectbank.bank_logo|guessImageMime}}" />
@@ -34,13 +33,14 @@
                                     <span class="bank-middle-title">{{rejectbank.department_name}}</span>
                                     <p class="bank-desc-red">Шалгуур хангаагүй</p>
                                 </div>
+                                <!-- </ion-checkbox> -->
                             </li>
                         </ul>
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <ion-footer class="bottom-footer ion-mb-10">
-                <!-- <button class="button btn single-button" id="Next" ng-click="sendRequest()" ng-disabled="disabledBtnSendReq">Хүсэлт илгээх</button> -->
+                <button class="button btn single-button" id="Next" ng-click="sendRequest()" ng-disabled="disabledBtnSendReq">Хүсэлт илгээх</button>
             </ion-footer>
         </div>
     </ion-content>

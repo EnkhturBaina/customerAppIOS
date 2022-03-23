@@ -1,6 +1,4 @@
 angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", function (serverDeferred, $scope, $rootScope, $state, $ionicModal, $ionicPlatform, $timeout) {
-  //Төрөл
-  $scope.carCategory = [];
   //Загвар
   $scope.modelData = [];
   //Хөдөлгүүрийн төрөл
@@ -18,52 +16,29 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
 
   $scope.$on("$ionicView.enter", function () {
     $rootScope.hideFooter = true;
+    var firstReq = localStorage.getItem("firstReq");
+    if (firstReq === "yes" && $state.current.name == "car_coll") {
+      $rootScope.carDetailData = {};
+      $rootScope.newReqiust = {};
+      $rootScope.danCustomerData = {};
+      $rootScope.danIncomeData = {};
+      localStorage.setItem("firstReq", "no");
+    }
     if ($state.current.name == "car_coll2") {
-      // $ionicModal
-      //   .fromTemplateUrl("templates/autoColl.html", {
-      //     scope: $scope,
-      //     animation: "slide-in-up",
-      //   })
-      //   .then(function (autoCollModal) {
-      //     $scope.autoCollModal = autoCollModal;
-      //   });
-      // $timeout(function () {
-      //   $scope.autoCollModal.show();
-      // }, 100);
       $ionicModal
-        .fromTemplateUrl("templates/auto.html", {
+        .fromTemplateUrl("templates/autoColl.html", {
           scope: $scope,
           animation: "slide-in-up",
         })
-        .then(function (autoModal) {
-          $scope.autoModal = autoModal;
+        .then(function (autoCollModal) {
+          $scope.autoCollModal = autoCollModal;
         });
       $timeout(function () {
-        $scope.autoModal.show();
-      }, 300);
-      //автомашин барьцаалсан зээлийн хүсэлтийн мэдээлэл
-      $rootScope.carCollateralRequestData = {};
-      $rootScope.carCollateralRequestData.loanAmount = 0;
-      $rootScope.carCollateralRequestData.serviceAgreementId = 1554263832132;
-      $scope.getbankDataCarColl();
+        // $scope.autoCollModal.show();
+      }, 100);
     }
-    $timeout(function () {
-      if ($state.current.name == "car_coll") {
-        if (!isEmpty($rootScope.propJsonAutoColl) && $rootScope.isDanLoginAutoColl) {
-          $scope.autoCollDan.show();
-        } else if (($rootScope.isDanLoginAutoColl && isEmpty($rootScope.propJsonAutoColl)) || ($rootScope.isDanLoginAutoColl && $rootScope.propJsonAutoColl != undefined)) {
-          $rootScope.alert("Таньд автомашин бүртгэлгүй байна", "warning");
-        }
-      }
-    }, 500);
   });
   $scope.getCarCollateralLookupData = function () {
-    if (isEmpty($scope.carCategory)) {
-      serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1613363794516634" }).then(function (datas) {
-        delete datas.aggregatecolumns;
-        $scope.carCategory = datas;
-      });
-    }
     if (isEmpty($scope.engineTypeData)) {
       serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1613363836067418" }).then(function (datas) {
         delete datas.aggregatecolumns;
@@ -100,25 +75,17 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
         $scope.carColorData = datas;
       });
     }
-    if (isEmpty($scope.carColorData)) {
-      serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1613364305380357" }).then(function (datas) {
-        delete datas.aggregatecolumns;
-        $scope.carFactoryData = datas;
-      });
-    }
-    if (isEmpty($scope.carColorData)) {
-      serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1613364325545258" }).then(function (datas) {
-        delete datas.aggregatecolumns;
-        $scope.carModelData = datas;
-      });
-    }
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "16433624973471" }).then(function (datas) {
+      delete datas.aggregatecolumns;
+      $rootScope.ownershipSelect = datas;
+    });
   };
 
   $scope.getCarFactoryCategory = function (val) {
     $scope.factoryData = [];
-    $rootScope.newCarReq.brandId = "";
+    $rootScope.carDetailData.brandId = "";
 
-    $scope.carFactoryData.map((item) => {
+    $rootScope.carFactoryData.map((item) => {
       if (item.number1 === val) {
         $scope.factoryData.push(item);
         return true;
@@ -128,9 +95,9 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
   };
   $scope.getCarModelData = function (val) {
     $scope.modelData = [];
-    $rootScope.newCarReq.markId = "";
+    $rootScope.carDetailData.markId = "";
 
-    $scope.carModelData.map((item) => {
+    $rootScope.carModelData.map((item) => {
       if (item.parentid === val) {
         $scope.modelData.push(item);
         return true;
@@ -139,63 +106,9 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
     val != "" ? (document.getElementById("modelSelect").disabled = false) : (document.getElementById("modelSelect").disabled = true);
   };
 
-  $scope.getbankDataCarColl = function () {
-    //Шүүгдсэн банкууд
-    $rootScope.bankListFilter = [];
-    var json = {};
-    $rootScope.newReqiust = {};
-    json.type = "carLoanFilter";
-    json.totalLoan = $rootScope.carCollateralRequestData.loanAmount;
-    json.isPerson = "1";
-    json.location = $rootScope.carCollateralRequestData.locationId;
-    json.month = $rootScope.carCollateralRequestData.loanMonth;
-    json.salaries = $rootScope.filterSalaries;
-
-    json.currency = 16074201974821;
-    if (!isEmpty($rootScope.loginUserInfo)) {
-      json.isMortgage = $rootScope.loginUserInfo.mikmortgagecondition;
-      json.totalIncome = $rootScope.loginUserInfo.totalincomehousehold;
-      json.monthIncome = $rootScope.loginUserInfo.monthlyincome;
-      json.monthPay = $rootScope.loginUserInfo.monthlypayment;
-    }
-    serverDeferred.carCalculation(json).then(function (response) {
-      $rootScope.bankListFilter = response.result.data;
-
-      $rootScope.products = [];
-      $rootScope.result = [];
-      $rootScope.months = [];
-      //Зөвхөн Step2 -д ажлуулах
-      if ($state.current.name == "car_coll2") {
-        $rootScope.bankListFilter.Agree.map((el) => {
-          $rootScope.products.push(el.products);
-        });
-
-        $rootScope.products.map((obj) => {
-          $rootScope.result = [].concat($rootScope.result, obj);
-        });
-
-        $rootScope.result.map((a) => {
-          $rootScope.months.push(a.max_loan_month_id);
-        });
-        if (!isEmpty($rootScope.products)) {
-          $rootScope.maxMonth = Math.max(...$rootScope.months);
-        } else {
-          $rootScope.maxMonth = 0;
-        }
-      }
-    });
-    // console.log("json", json);
-  };
-
-  // localStorage.removeItem("carColl");
   $scope.saveCarCol = function () {
-    if (isEmpty($rootScope.newCarReq)) {
-      $rootScope.newCarReq = {};
-    }
     if ($scope.carCollCheckReqiured("step1")) {
-      localStorage.setItem("carColl", JSON.stringify($rootScope.newCarReq));
-
-      $state.go("autoleasing-4");
+      $state.go("car_pic_coll");
     }
   };
   $rootScope.yearsArray = [];
@@ -220,7 +133,7 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
           trigger: ".nationalNumberPicker",
           wheels: [{ data: nums }, { data: nums }, { data: nums }, { data: nums }, { data: charA }, { data: chars }, { data: chars }],
           position: [0, 0],
-          ensureBtnText: "Болсон",
+          ensureBtnText: "Хадгалах",
           maskOpacity: 0.5,
           cancelBtnText: "Хаах",
           transitionEnd: function (indexArr, data) {
@@ -229,14 +142,14 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
           callback: function (indexArr, data) {
             var a = data.join("");
             $scope.setNumber("nationalNumber", a);
-            $rootScope.newCarReq.nationalNumber = a;
+            $rootScope.carDetailData.nationalNumber = a;
           },
         });
         new MobileSelect({
           trigger: ".productYearPicker",
           wheels: [{ data: $rootScope.yearsArray }],
           position: [0, 0],
-          ensureBtnText: "Болсон",
+          ensureBtnText: "Хадгалах",
           title: "Үйлдвэрлэсэн он",
           maskOpacity: 0.5,
           cancelBtnText: "Хаах",
@@ -246,7 +159,7 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
           callback: function (indexArr, data) {
             var a = data.join("");
             $scope.setNumber("manufacturedYearId", a);
-            $rootScope.newCarReq.manufacturedYearId = a;
+            $rootScope.carDetailData.manufacturedYearId = a;
             mobileSelect4.show();
           },
         });
@@ -254,7 +167,7 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
           trigger: ".cameYearPicker",
           wheels: [{ data: $rootScope.yearsArray }],
           position: [0, 0],
-          ensureBtnText: "Болсон",
+          ensureBtnText: "Хадгалах",
           title: "Орж ирсэн он",
           maskOpacity: 0.5,
           cancelBtnText: "Хаах",
@@ -264,7 +177,11 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
           callback: function (indexArr, data) {
             var a = data.join("");
             $scope.setNumber("cameYearId", a);
-            $rootScope.newCarReq.cameYearId = a;
+            $rootScope.carDetailData.cameYearId = a;
+            if ($rootScope.carDetailData.manufacturedYearId > $rootScope.carDetailData.cameYearId) {
+              $rootScope.alert("Орж ирсэн он зөв оруулна уу", "warning");
+              $rootScope.carDetailData.cameYearId = "";
+            }
           },
         });
       }, 1000);
@@ -283,58 +200,55 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
       });
     };
   }
-  $scope.backFromCarCollStep1 = function () {
-    $state.go("home");
-  };
-  $scope.backFromCarCollStep2 = function () {
-    $state.go("car_coll");
-  };
-
-  $scope.saveCarCollRequestData = function () {
-    console.log("$rootScope.carCollateralRequestData ", $rootScope.carCollateralRequestData);
-    if ($scope.carCollCheckReqiured("step2")) {
-      if ($scope.carCollCheckReqiured("agreeBank")) {
-        $state.go("danselect");
-      }
-    }
-  };
 
   $scope.carCollCheckReqiured = function (param) {
+    if (isEmpty($rootScope.newReqiust)) {
+      $rootScope.newReqiust = {};
+    }
     if (param == "step1") {
-      if (isEmpty($rootScope.newCarReq.carCategoryId) && !$rootScope.isDanLoginAutoColl) {
-        $rootScope.alert("Машины төрлөө сонгоно уу", "warning");
+      if (isEmpty($rootScope.carDetailData.carCategoryId) && !$rootScope.isDanLoginAutoColl) {
+        $rootScope.alert("Барьцаалах автомашины төрөл сонгоно уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.newCarReq.brandId) && !$rootScope.isDanLoginAutoColl) {
-        $rootScope.alert("Үйлдвэрээ сонгоно уу", "warning");
+      } else if (isEmpty($rootScope.carDetailData.ownershipTypeId) && !$rootScope.isDanLoginAutoColl) {
+        $rootScope.alert("Автомашины өмчлөл сонгоно уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.newCarReq.markId) && !$rootScope.isDanLoginAutoColl) {
-        $rootScope.alert("Загвараа сонгоно уу", "warning");
+      } else if (isEmpty($rootScope.carDetailData.nationalNumber) && !$rootScope.isDanLoginAutoColl) {
+        $rootScope.alert("Улсын дугаар оруулна уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.newCarReq.manufacturedYearId) && !$rootScope.isDanLoginAutoColl) {
+      } else if (isEmpty($rootScope.carDetailData.brandId) && !$rootScope.isDanLoginAutoColl) {
+        $rootScope.alert("Үйлдвэр сонгоно уу", "warning");
+        return false;
+      } else if (isEmpty($rootScope.carDetailData.markId) && !$rootScope.isDanLoginAutoColl) {
+        $rootScope.alert("Загвар сонгоно уу", "warning");
+        return false;
+      } else if (isEmpty($rootScope.carDetailData.manufacturedYearId) && !$rootScope.isDanLoginAutoColl) {
         $rootScope.alert("Үйлдвэрлэсэн он оруулна уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.newCarReq.cameYearId) && !$rootScope.isDanLoginAutoColl) {
+      } else if (isEmpty($rootScope.carDetailData.cameYearId) && !$rootScope.isDanLoginAutoColl) {
         $rootScope.alert("Орж ирсэн он оруулна уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.newCarReq.itemPic)) {
-        $rootScope.alert("Машины зураг оруулна уу", "warning");
+      } else if (isEmpty($rootScope.newReqiust.proveIncome)) {
+        $rootScope.alert("Орлого нотлох эсэх сонгоно уу", "warning");
         return false;
       } else {
         return true;
       }
       return true;
-    } else if (param == "step2") {
-      if (isEmpty($rootScope.carCollateralRequestData.loanAmount)) {
-        $rootScope.alert("Зээлийн хэмжээ оруулна уу", "warning");
+    } else if (param == "step2Images") {
+      if (isEmpty($rootScope.carDetailData.itempic)) {
+        $rootScope.alert("Машины гэрчилгээний зураг оруулна уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.carCollateralRequestData.loanMonth)) {
-        $rootScope.alert("Зээл авах хугацаа оруулна уу", "warning");
+      } else if (isEmpty($rootScope.carDetailData.itempic2)) {
+        $rootScope.alert("Машины нүүрэн талын зураг оруулна уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.carCollateralRequestData.locationId)) {
-        $rootScope.alert("Зээл авах байршил сонгоно уу", "warning");
+      } else if (isEmpty($rootScope.carDetailData.itempic3)) {
+        $rootScope.alert("Машины баруун талын зураг оруулна уу", "warning");
         return false;
-      } else if (isEmpty($rootScope.carCollateralRequestData.serviceAgreementId) || $rootScope.carCollateralRequestData.serviceAgreementId == 1554263832151) {
-        $rootScope.alert("Та үйлчилгээний нөхцлийг зөвшөөрөөгүй байна", "warning");
+      } else if (isEmpty($rootScope.carDetailData.itempic4)) {
+        $rootScope.alert("Машины зүүн талын зураг оруулна уу", "warning");
+        return false;
+      } else if (isEmpty($rootScope.carDetailData.itempic5)) {
+        $rootScope.alert("Машины хойд талын зураг оруулна уу", "warning");
         return false;
       } else {
         return true;
@@ -342,7 +256,7 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
       return true;
     } else if (param == "agreeBank") {
       if (isEmpty($rootScope.bankListFilter.Agree)) {
-        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох байгууллага байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
+        $rootScope.alert("Таны мэдээллийн дагуу зээл олгох банк, ББСБ байхгүй байна. Та мэдээллээ дахин оруулна уу.", "warning");
         return false;
       } else {
         return true;
@@ -356,10 +270,7 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
     }
     navigator.camera.getPicture(
       function (imageData) {
-        if (isEmpty($rootScope.newCarReq)) {
-          $rootScope.newCarReq = {};
-        }
-        $rootScope.newCarReq[$scope.selectedImagePath] = imageData;
+        $rootScope.carDetailData[$scope.selectedImagePath] = imageData;
         if (!$scope.$$phase) {
           $scope.$apply();
         }
@@ -402,21 +313,9 @@ angular.module("car_collateral.Ctrl", []).controller("car_collateralCtrl", funct
     .then(function (termModalAgreement) {
       $scope.termModalAgreement = termModalAgreement;
     });
-  $ionicModal
-    .fromTemplateUrl("templates/autoCollDan.html", {
-      scope: $scope,
-      animation: "slide-in-up",
-    })
-    .then(function (autoCollDan) {
-      $scope.autoCollDan = autoCollDan;
-    });
-
-  $scope.selectDanAutoColl = function (el) {
-    $rootScope.autoCollDanCarData = el;
-    $rootScope.autoCollDanCarData.importDate = formatDate(el.importDate);
-  };
-  $scope.registerHandAutoColl = function () {
-    $rootScope.autoCollDanCarData = {};
-    $rootScope.isDanLoginAutoColl = false;
+  $scope.saveCarColStep2 = function () {
+    if ($scope.carCollCheckReqiured("step2Images")) {
+      $state.go("autoleasing-2");
+    }
   };
 });

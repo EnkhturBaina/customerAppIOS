@@ -18,7 +18,7 @@
     <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular-filter.min.js"></script>
-    <script src="lib/jquery/jquery-2.1.1.min.js"></script>
+    <script src="lib/jquery/jquery-3.3.1.min.js"></script>
     <script src="lib/signature_pad.min.js"></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.js"></script>
@@ -38,33 +38,24 @@
     <script src="views/request-list/request_list.js"></script>
     <script src="views/register/register.js"></script>
     <script src="views/login/login.js"></script>
-    <script src="views/sign/sign.js"></script>
     <script src="views/loan/autoleasing/autoleasing.js"></script>
     <script src="views/loan/property_collateral/collateral.js"></script>
     <script src="views/loan/car_collateral/car_collateral.js"></script>
     <script src="views/loan_success/loan_success.js"></script>
     <script src="views/request-list/request-detail/request_detail.js"></script>
-    <script src="views/car/car-info.js"></script>
+    <!-- <script src="views/car/car-info.js"></script> -->
     <script src="views/other_goods/other_goods.js"></script>
     <script src="views/other_goods/add_other_goods.js"></script>
     <script src="views/reset_password/reset_password.js"></script>
     <script src="views/contact/contact.js"></script>
-    <!-- <script src="views/loan_calculator/loan_calculator.js"></script> -->
     <!-- <script src="views/settings/settings.js"></script> -->
-    <!-- <script src="views/carlist/carlist.js"></script> -->
-    <!-- <script src="views/qr/qr.js"></script> -->
-    <!-- <script src="views/trend/trend.js"></script> -->
     <!-- <script src="views/car/car.js"></script> -->
-    <!-- <script src="views/basket/basket.js"></script> -->
-    <!-- <script src="views/loan/business_loan/business_loan.js"></script> -->
-    <!-- <script src="views/search/search.js"></script> -->
+    <script src="views/loan/business_loan/business_loan.js"></script>
     <!-- dcApp_profile_dv_002
     dcApp_preLoan_001 -->
     <script src="views/notif/notif.js"></script>
     <script src="views/notif/notif_detail/notif_detail.js"></script>
     <script src="js/mobileSelect.js" type="text/javascript"></script>
-    <script src="views/loan/danselect/danselect.js"></script>
-    <script src="views/loan/pre_loan/pre_loan.js"></script>
     <script src="views/term/term.js"></script>
     <script src="views/suppliers/suppliers.js"></script>
     <script src="views/suppliers-search/suppliers-search.js"></script>
@@ -76,7 +67,6 @@
     <script src="views/loan/money/money.js"></script>
     <script src="views/loan/divide/divide.js"></script>
     <script src="views/loan/salary/salary.js"></script>
-    <script src="views/loan/dan_page/dan_page.js"></script>
 
 </head>
 
@@ -89,11 +79,10 @@
             </div>
             <div class="side-menu-items side-menu-user-name" ng-if="!$root.loginUserInfo|isEmpty">{{sidebarUserName}}</div>
             <div class="side-menu-items" ng-click="toggleSideMenu();hideShowFooter()" ng-if="!$root.loginUserInfo|isEmpty" ui-sref="profile"><i class="icon fa fa-user-o"></i>Миний мэдээлэл</div>
-            <!-- <div class="side-menu-items" ng-click="toggleSideMenu()" ui-sref="loan_calculator"><i class="icon fa fa-calculator"></i>Зээлийн тооцоолуур</div> -->
             <div class="side-menu-items" ng-click="toggleSideMenu()" ui-sref="intro"><i class="icon fa fa-sticky-note-o"></i>Хэрэглэх заавар</div>
             <div class="side-menu-items" ng-click="toggleSideMenu()" ui-sref="term"><i class="icon fa fa-question-circle-o"></i>Үйлчилгээний нөхцөл</div>
             <div class="side-menu-items" ng-click="toggleSideMenu()" ui-sref="contact"><i class="icon fa fa-phone"></i>Холбоо барих</div>
-            <!-- <div class="side-menu-items" ng-click="toggleSideMenu()" ui-sref="reset_password" ng-if="!$root.loginUserInfo|isEmpty"><i class="icon fa fa-key"></i>Нууц үг солих</div> -->
+            <div class="side-menu-items" ng-click="toggleSideMenu()" ui-sref="reset_password" ng-if="!$root.loginUserInfo|isEmpty"><i class="icon fa fa-key"></i>Нууц үг солих</div>
 
             <!-- <div class="side-menu-items" ng-click="toggleSideMenu()"><i class="icon fa fa-cog" aria-hidden="true"></i>Тохиргоо</div> -->
 

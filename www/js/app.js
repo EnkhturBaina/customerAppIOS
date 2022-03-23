@@ -12,29 +12,21 @@ var app = angular
     "request_list.Ctrl",
     "request_detail.Ctrl",
     "register.Ctrl",
-    "sign.Ctrl",
     "login.Ctrl",
     "autoleasing.Ctrl",
     "car_collateral.Ctrl",
     "property_collateral.Ctrl",
-    "carinfo.Ctrl",
+    // "carinfo.Ctrl",
     "otherGoods.Ctrl",
     "addOtherGoods.Ctrl",
     "reset_password.Ctrl",
-    "preLoan.Ctrl",
     // "settings.Ctrl",
-    // "loan_calculator.Ctrl",
-    // "carlist.Ctrl",
-    // "search.Ctrl",
-    // "business_loan.Ctrl",
-    // "basket.Ctrl",
-    // "trend.Ctrl",
+    "business_loan.Ctrl",
     // "qr.Ctrl",
     // "car.Ctrl",
     "notif.Ctrl",
     "notif_detail.Ctrl",
     "term.Ctrl",
-    "danselect.Ctrl",
     "suppliers.Ctrl",
     "suppliers-search.Ctrl",
     "supplier-detail.Ctrl",
@@ -45,7 +37,6 @@ var app = angular
     "money.Ctrl",
     "divide.Ctrl",
     "salary.Ctrl",
-    "dan_page.Ctrl",
   ])
   .run(function ($ionicPlatform, $cordovaNetwork, $rootScope) {
     $ionicPlatform.ready(function () {
@@ -98,11 +89,6 @@ var app = angular
       templateUrl: "views/intro/intro.html",
       controller: "introCtrl",
     });
-    // $stateProvider.state("search", {
-    //   url: "/views/search",
-    //   templateUrl: "views/search/search.html",
-    //   controller: "searchCtrl",
-    // });
     $stateProvider.state("profile", {
       url: "/views/profile",
       templateUrl: "views/profile/profile.html",
@@ -116,14 +102,6 @@ var app = angular
       templateUrl: "views/register/register.html",
       controller: "registerCtrl",
     });
-    $stateProvider.state("sign", {
-      url: "/views/sign",
-      templateUrl: "views/sign/sign.html",
-      controller: "signCtrl",
-      params: {
-        path: null,
-      },
-    });
     $stateProvider.state("login", {
       url: "/views/login",
       templateUrl: "views/login/login.html",
@@ -136,11 +114,6 @@ var app = angular
       url: "/views/autoleasing-1",
       templateUrl: "views/loan/autoleasing/step1.html",
       controller: "autoleasingCtrl",
-    });
-    $stateProvider.state("pre_loan", {
-      url: "/views/pre_loan",
-      templateUrl: "views/loan/pre_loan/pre_loan.html",
-      controller: "pre_loanCtrl",
     });
     $stateProvider.state("autoleasing-2", {
       url: "/views/autoleasing-2",
@@ -157,35 +130,45 @@ var app = angular
       templateUrl: "views/loan/autoleasing/step4.html",
       controller: "autoleasingCtrl",
     });
-    $stateProvider.state("autoleasing-5", {
-      url: "/views/autoleasing-5",
-      templateUrl: "views/loan/autoleasing/step5.html",
-      controller: "autoleasingCtrl",
-    });
     $stateProvider.state("ident-pic", {
       url: "/views/ident-pic",
       templateUrl: "views/loan/autoleasing/ident_pic.html",
       controller: "autoleasingCtrl",
     });
-    // $stateProvider.state("autoleasing-bank-info", {
-    //   url: "/views/autoleasing-bank-info",
-    //   templateUrl: "views/loan/autoleasing/step3-bank-info.html",
-    //   controller: "autoleasingCtrl",
-    // });
-    // $stateProvider.state("business_loan", {
-    //   url: "/views/business_loan",
-    //   templateUrl: "views/loan/business_loan/business_loan.html",
-    //   controller: "business_loanCtrl",
-    // });
+    $stateProvider.state("business_loan", {
+      url: "/views/business_loan",
+      templateUrl: "views/loan/business_loan/business_loan.html",
+      controller: "business_loanCtrl",
+    });
+    $stateProvider.state("business_loan2", {
+      url: "/views/business_loan2",
+      templateUrl: "views/loan/business_loan/business_loan2.html",
+      controller: "business_loanCtrl",
+    });
+    $stateProvider.state("business_loan3", {
+      url: "/views/business_loan3",
+      templateUrl: "views/loan/business_loan/business_loan3.html",
+      controller: "business_loanCtrl",
+    });
     $stateProvider.state("car_coll", {
       url: "/views/car_collateral",
       templateUrl: "views/loan/car_collateral/car_collateral.html",
       controller: "car_collateralCtrl",
     });
-    $stateProvider.state("car_coll2", {
-      url: "/views/car_collateral2",
-      templateUrl: "views/loan/car_collateral/car_collateral2.html",
+    $stateProvider.state("car_pic_coll", {
+      url: "/views/car_pic_coll",
+      templateUrl: "views/templates/car_pic.html",
       controller: "car_collateralCtrl",
+    });
+    $stateProvider.state("car_pic_auto", {
+      url: "/views/car_pic_auto",
+      templateUrl: "views/templates/car_pic.html",
+      controller: "autoleasingCtrl",
+    });
+    $stateProvider.state("apart_pic", {
+      url: "/views/apart_pic",
+      templateUrl: "views/templates/apart_pic.html",
+      controller: "autoleasingCtrl",
     });
     $stateProvider.state("property_collateral", {
       url: "/views/property_collateral",
@@ -197,16 +180,6 @@ var app = angular
       templateUrl: "views/loan/property_collateral/property_collateral2.html",
       controller: "property_collateralCtrl",
     });
-    $stateProvider.state("property_collateral_danselect", {
-      url: "/views/danselect_property",
-      templateUrl: "views/loan/property_collateral/danselect_property.html",
-      controller: "property_collateralCtrl",
-    });
-    // $stateProvider.state("basket", {
-    //   url: "/views/basket",
-    //   templateUrl: "views/basket/basket.html",
-    //   controller: "basketCtrl",
-    // });
     $stateProvider.state("loan_success", {
       url: "/views/loan_success",
       templateUrl: "views/loan_success/loan_success.html",
@@ -227,25 +200,10 @@ var app = angular
     //   templateUrl: "views/car/brandlist.html",
     //   controller: "carCtrl",
     // });
-    $stateProvider.state("car-info", {
-      url: "/views/loan/car/info",
-      templateUrl: "views/car/car-info.html",
-      controller: "carinfoCtrl",
-    });
-    // $stateProvider.state("carlist", {
-    //   url: "/views/carlist",
-    //   templateUrl: "views/carlist/carlist.html",
-    //   controller: "carlistCtrl",
-    // });
-    // $stateProvider.state("qr", {
-    //   url: "/views/qr",
-    //   templateUrl: "views/qr/qr.html",
-    //   controller: "qrCtrl",
-    // });
-    // $stateProvider.state("trend", {
-    //   url: "/views/trend",
-    //   templateUrl: "views/trend/trend.html",
-    //   controller: "trendCtrl",
+    // $stateProvider.state("car-info", {
+    //   url: "/views/loan/car/info",
+    //   templateUrl: "views/car/car-info.html",
+    //   controller: "carinfoCtrl",
     // });
     $stateProvider.state("otherGoods", {
       url: "/views/otherGoods",
@@ -267,11 +225,6 @@ var app = angular
       templateUrl: "views/reset_password/reset_password.html",
       controller: "reset_passwordCtrl",
     });
-    // $stateProvider.state("loan_calculator", {
-    //   url: "/views/loan_calculator",
-    //   templateUrl: "views/loan_calculator/loan_calculator.html",
-    //   controller: "loan_calculatorCtrl",
-    // });
     $stateProvider.state("contact", {
       url: "/views/contact",
       templateUrl: "views/contact/contact.html",
@@ -286,11 +239,6 @@ var app = angular
       url: "/views/notif/notif_detail",
       templateUrl: "views/notif/notif_detail/notif_detail.html",
       controller: "notif_detailCtrl",
-    });
-    $stateProvider.state("danselect", {
-      url: "/views/loan/danselect/danselect",
-      templateUrl: "views/loan/danselect/danselect.html",
-      controller: "danselectCtrl",
     });
     $stateProvider.state("term", {
       url: "/views/term",
@@ -320,6 +268,11 @@ var app = angular
     $stateProvider.state("supplier-detail2", {
       url: "/views/supplier-detail2",
       templateUrl: "views/supplier-detail/supplier-detail2.html",
+      controller: "supplier-detailCtrl",
+    });
+    $stateProvider.state("supplier-detail3", {
+      url: "/views/supplier-detail3",
+      templateUrl: "views/supplier-detail/supplier-detail3.html",
       controller: "supplier-detailCtrl",
     });
     $stateProvider.state("purchase-inst", {
@@ -357,11 +310,6 @@ var app = angular
       templateUrl: "views/loan/salary/salary.html",
       controller: "salaryCtrl",
     });
-    $stateProvider.state("dan_page", {
-      url: "/views/loan/dan_page",
-      templateUrl: "views/loan/dan_page/dan_page.html",
-      controller: "dan_pageCtrl",
-    });
     $urlRouterProvider.otherwise("/views/home");
   })
   .controller("index", function ($scope, $ionicPlatform, $state) {})
@@ -376,7 +324,7 @@ var app = angular
       $rootScope.loginUserInfo = undefined;
       localStorage.removeItem("loginUserInfo");
       localStorage.removeItem("profilePictureSideMenu");
-      localStorage.removeItem("all_ID");
+      localStorage.removeItem("ALL_ID");
       //Хэрэглээний лизинг
       localStorage.removeItem("otherGoods");
       localStorage.removeItem("consumerRequestData");
@@ -384,7 +332,7 @@ var app = angular
     };
     $scope.logOut = function () {
       $ionicPopup.show({
-        template: "<b>Та аппликейшнээс гарах уу?</b>",
+        template: "<b>Профайлаасаа гарах уу?</b>",
         cssClass: "confirmPopup",
         buttons: [
           {
@@ -398,7 +346,7 @@ var app = angular
               $rootScope.loginUserInfo = undefined;
               localStorage.removeItem("loginUserInfo");
               localStorage.removeItem("profilePictureSideMenu");
-              localStorage.removeItem("all_ID");
+              localStorage.removeItem("ALL_ID");
               $rootScope.danCustomerData = {};
               $rootScope.danIncomeData = {};
               //Хэрэглээний лизинг
@@ -406,8 +354,9 @@ var app = angular
               localStorage.removeItem("consumerRequestData");
               localStorage.removeItem("otherGoodsMaxId");
 
+              localStorage.setItem("firstReq", "yes");
               $rootScope.profilePictureSideMenu = "";
-              $state.go("home");
+              location.reload();
             },
           },
         ],
@@ -552,78 +501,6 @@ var app = angular
             contentAsHTML: true,
           });
         }
-      },
-    };
-  })
-  .directive("limitChar", function () {
-    "use strict";
-    return {
-      restrict: "A",
-      scope: {
-        limit: "=limit",
-        ngModel: "=ngModel",
-      },
-      link: function (scope) {
-        scope.$watch("ngModel", function (newValue, oldValue) {
-          if (newValue) {
-            var length = newValue.toString().length;
-            if (length > scope.limit) {
-              scope.ngModel = oldValue;
-            }
-          }
-        });
-      },
-    };
-  })
-  .directive("preventTypingGreater", function () {
-    return {
-      link: function (scope, element, attributes) {
-        var oldVal = null;
-        element.on("keydown keyup", function (e) {
-          if (
-            Number(element.val()) > Number(attributes.max) &&
-            e.keyCode != 46 && // delete
-            e.keyCode != 8 // backspace
-          ) {
-            e.preventDefault();
-            element.val(oldVal);
-          } else {
-            oldVal = Number(element.val());
-          }
-        });
-      },
-    };
-  })
-  .directive("repeatDone", function () {
-    return function (scope, element, attrs) {
-      if (scope.$last) {
-        // all are rendered
-        scope.$eval(attrs.repeatDone);
-      }
-    };
-  })
-  .directive("groupedRadio", function () {
-    return {
-      restrict: "A",
-      require: "ngModel",
-      scope: {
-        model: "=ngModel",
-        value: "=groupedRadio",
-      },
-      link: function (scope, element, attrs, ngModelCtrl) {
-        element.addClass("button");
-        element.on("click", function (e) {
-          scope.$apply(function () {
-            ngModelCtrl.$setViewValue(scope.value);
-          });
-        });
-
-        scope.$watch("model", function (newVal) {
-          element.removeClass("button-positive");
-          if (newVal === scope.value) {
-            element.addClass("button-positive");
-          }
-        });
       },
     };
   })

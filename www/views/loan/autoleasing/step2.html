@@ -20,15 +20,7 @@
                         <p class="request-middle-title ion-color-big-text text-center">Зээлийн мэдээлэл</p>
                         <label class="item item-input item-stacked-label form-input-label" ng-if="$root.is0001Price">
                             <p class="input-label" style="margin: 0;">Авах автомашины үнэ</p>
-                            <input inputmode="numeric" id="carPrice" pattern="[0-9]*" type="text" placeholder="" name="" class="property-input disabled-loan-amount" ng-model="$root.newReqiust.carPrice" ng-blur="getbankData()" thousand-separator>
-                        </label>
-                        <label class="item item-input item-stacked-label form-input-label">
-                            <p class="input-label" style="margin: 0;">Урьдчилгаа төлбөр</p>
-                            <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="" name="" id="sendRequestAdvancePayment" ng-model="$root.newReqiust.advancePayment" class="property-input" ng-change="calcLoanAmount();" ng-blur="getbankData()" ng-click="removeAdvancePayment()" thousand-separator select-on-click>
-                        </label>
-                        <label class="item item-input item-stacked-label form-input-label stp2-loan-amount-label">
-                            <p class="input-label" style="margin: 0;">Зээлийн хэмжээ</p>
-                            <input inputmode="numeric" id="loanAmountRequest" pattern="[0-9]*" type="text" placeholder="" name="" class="property-input disabled-loan-amount" ng-model="$root.newReqiust.getLoanAmount" ng-blur="getbankData()" disabled format-input thousand-separator>
+                            <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="" name="" id="carPrice" ng-model="$root.newReqiust.carPrice" class="property-input disabled-loan-amount" ng-keyup="hideKeyboard($event)" ng-blur="getbankData();changeCarPrice();" thousand-separator select-on-click>
                         </label>
                         <!-- <div ng-if="isCollShow" class="vxx-title-container"><span class="vxx-title">Та үл хөдлөх хөрөнгө(ҮХХ) барьцаалснаар зарим банк, ББСБ-аас урьдчилгаа төлбөргүй авах боломжтой</span></div> -->
                         <label class="item item-input item-select form-input-label" ng-if="!isHideFromConsumer">
@@ -39,28 +31,70 @@
                                 </option>
                             </select>
                         </label>
-                        <div ng-if="!$root.collTrueStep2" class="vxx-title-container">
-                            <span class="vxx-title">Тухайн зээлийн урьдчилгаа багадаа <br />
-                                <span class="step2-valid-text-bold">{{$root.displayMinPayment|formatNumber}}</span> байна
-                            </span>
+                        <div ng-if="!$root.isCarColl">
+                            <label class="item item-input item-stacked-label form-input-label" ng-if="!$root.isHiddenAdvanePayment">
+                                <p class="input-label" style="margin: 0;">Төлөх урьдчилгаа төлбөр</p>
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="" name="" id="sendRequestAdvancePayment" ng-model="$root.newReqiust.advancePayment" class="property-input" ng-change="calcLoanAmount();" ng-blur="getbankData()" ng-click="removeAdvancePayment()" thousand-separator select-on-click>
+                            </label>
+                            <div ng-if="!$root.isHiddenAdvanePayment">
+                                <div ng-if="!$root.collTrueStep2" class="vxx-title-container">
+                                    <span class="vxx-title">Төлөх урьдчилгаа багадаа <span class="step2-valid-text-bold">{{$root.displayMinPayment|formatNumber}} ₮</span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <label class="item item-input item-stacked-label form-input-label">
-                            <p class="input-label" style="margin: 0;">Зээлийн хугацаа(сараар)</p>
-                            <input type="tel" placeholder="" id="step2loanMonth" name="" ng-model="$root.newReqiust.loanMonth" class="property-input" ng-blur="getbankData()" ng-keyup="hideKeyboard($event)" select-on-click>
+                            <p class="input-label" style="margin: 0;">Зээлийн хэмжээ</p>
+                            <input inputmode="numeric" id="loanAmountRequest" pattern="[0-9]*" type="text" placeholder="" name="" class="property-input disabled-loan-amount" ng-model="$root.newReqiust.getLoanAmount" ng-blur="getbankData()" disabled format-input thousand-separator>
                         </label>
-                        <div class="vxx-title-container"><span class="vxx-title">Тухайн зээлийн хугацаа хамгийн ихдээ <span class="step2-valid-text-bold">{{$root.maxMonth}}</span> сар байна</span></div>
+                        <div class="vxx-title-container" ng-if="$root.showMIN_MAXloanAMOUNT"><span class="vxx-title">Тухайн зээлийн боломжит зээлийн хэмжээ <br /><span class="step2-valid-text-bold">{{$root.minLoanAmount|formatNumber}} - {{$root.maxLoanAmount|formatNumber}}</span> байна</span></div>
                         <label class="item item-input item-select form-input-label">
-                            <p class="input-label" style="margin: 0;">Зээл авах байршил</p>
-                            <select ng-model="$root.newReqiust.locationId" class="custom-form-input-select" ng-change="getbankData()">
-                                <option ng-repeat="loc in $root.locationData | filter:{id:'!!'}" ng-if="loc.name" value="{{loc.id}}">
+                            <p class="input-label" style="margin: 0;">Зээл авах хугацаа (сараар)</p>
+                            <select ng-model="$root.newReqiust.loanMonth" class="custom-form-input-select" ng-change="getbankData()">
+                                <option ng-repeat="loc in $root.filteredMonths" ng-if="loc" value="{{loc}}">
+                                    {{loc}}
+                                </option>
+                            </select>
+                        </label>
+                        <div class="vxx-title-container"><span class="vxx-title">Зээл олгох хугацаа <span class="step2-valid-text-bold">{{$root.maxMonth}}</span> сараас ихгүй байна</span></div>
+                        <label class="item item-input item-stacked-label form-input-label" id="regLabel" ng-click="slideTo('regLabel')" disabled>
+                            <span class="input-label">Регистрийн дугаар</span>
+                            <div class="reg-chars-container">
+                                <div class="select-reg-chars step2-select-reg-chars">
+                                    <span id="regCharA" type="text">Р</span>
+                                    <span id="regCharB" type="text">Д</span>
+                                </div>
+                                <input inputmode="numeric" pattern="[0-9]*" type="text" placeholder="00000000" id="regNums" class="step2RegSelector mr-0" name="uniqueIdentifier" readonly />
+                            </div>
+                        </label>
+                        <label class="item item-input item-stacked-label form-input-label">
+                            <p class="input-label" style="margin: 0;">Утасны дугаар</p>
+                            <input inputmode="numeric" pattern="[0-9]*" maxlength="8" type="text" placeholder="" name="" class="ng-pristine ng-untouched ng-valid ng-valid-pattern mask bg-fff" ng-model="$root.danCustomerData.mobilenumber" ng-keyup="hideKeyboard($event)" select-on-click />
+                        </label>
+                        <label class="item item-input item-stacked-label form-input-label">
+                            <p class="input-label" style="margin: 0;">И-мэйл хаяг</p>
+                            <input type="text" placeholder="" name="" class="ng-pristine ng-untouched ng-valid ng-valid-pattern mask bg-fff" ng-model="$root.danCustomerData.email" ng-keyup="hideKeyboard($event)" select-on-click />
+                        </label>
+                        <label class="item item-input item-select form-input-label" ng-if="$root.isIncomeConfirm">
+                            <p class="input-label" style="margin: 0;">Орлогын төрөл</p>
+                            <select class="custom-form-input-select" ng-model="$root.danIncomeData.incometypeid" ng-options="c.id as c.name for c in incomeType | filter:{id:'!!'}" ng-init="$root.danIncomeData.incometypeid = $root.danIncomeData.incometypeid" ng-change="getbankData();selectIncomeType($root.danIncomeData.incometypeid);"></select>
+                        </label>
+                        <label class="item item-input item-select form-input-label" ng-if="$root.isIncomeConfirm">
+                            <p class="input-label" style="margin: 0;">Орлого нотлогдох байдал</p>
+                            <select class="custom-form-input-select" ng-model="$root.danIncomeData.proofofincome" ng-options="c.conditionid as c.conditionname for c in proofOfIncomeData | filter:{id:'!!'}" ng-change="selectIncomeCondition($root.danIncomeData.proofofincome);$root.checkUserService($root.danIncomeData.incometypeid, $root.danIncomeData.proofofincome);"></select>
+                        </label>
+                        <label class="item item-input item-select form-input-label">
+                            <p class="input-label" style="margin: 0;">Хамтран зээлдэгчтэй эсэх</p>
+                            <select ng-model="$root.newReqiust.isCoBorrower" class="custom-form-input-select" ng-change="getbankData()">
+                                <option ng-repeat="loc in $root.coBorrowerData | filter:{id:'!!'}" ng-if="loc.name" value="{{loc.id}}">
                                     {{loc.name}}
                                 </option>
                             </select>
                         </label>
                         <label class="item item-input item-select form-input-label">
-                            <p class="input-label" style="margin: 0;">Хамтран зээлдэгчтэй эсэх</p>
-                            <select ng-model="$root.newReqiust.isCoBorrower" class="custom-form-input-select" ng-change="getbankData()">
-                                <option ng-repeat="loc in $root.isColl | filter:{id:'!!'}" ng-if="loc.name" value="{{loc.id}}">
+                            <p class="input-label" style="margin: 0;">Оршин суугаа хаяг</p>
+                            <select ng-model="$root.newReqiust.locationId" class="custom-form-input-select" ng-change="getbankData()">
+                                <option ng-repeat="loc in $root.locationData | filter:{id:'!!'}" ng-if="loc.name" value="{{loc.id}}">
                                     {{loc.name}}
                                 </option>
                             </select>
@@ -83,21 +117,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="container-padding pulse-animation" id="section07">
-                    <ion-scroll id="photoBanner" direction="x" class="wide-scroll-bank-step agree-bank-arrow">
-                        <p style="width: 100%;margin: 40px auto;white-space: break-spaces;text-align: center;">Таны мэдээлэл зээлийн шалгуурт тэнцэхгүй байна. Та дахин шалгаж оруулна уу</p>
-                    </ion-scroll>
-                </div>
+                <!-- IOS HIDE START-->
                 <!-- <div class="container-padding pulse-animation" id="section07">
                     <p class="middle-title agree-banks">ТА ЗЭЭЛИЙН ШАЛГУУРЫГ НЬ ХАНГАЖ БУЙ БАНК, ББСБ-УУД</p>
-                    <ion-scroll id="photoBanner" direction="x" class="wide-scroll-bank-step agree-bank-arrow">
+                    <ion-scroll id="photoBanner" direction="x" class="wide-scroll-bank-step agree-bank-arrow" ng-if="bankListFilter.Agree.length!=0">
                         <div class="bank" ng-repeat="bank in bankListFilter.Agree">
                             <img ng-src="{{bank.bank_logo|guessImageMime}}" />
                             <p>{{bank.department_name}}</p>
                         </div>
                     </ion-scroll>
-                </div> -->
-                <!-- <div class="container-padding" id="section07">
+                    <div class="unavailable-banks" ng-if="bankListFilter.Agree.length==0">
+                        <img style="width: 70px" src="img/unavailable.png" />
+                        <span>
+                            Шалгуурыг хангасан санхүүгийн байгууллага олдсонгүй.<br>Та оруулсан мэдээллээ шалгана уу.
+                        </span>
+                    </div>
+                </div>
+                <div class="container-padding" id="section07">
                     <p class="middle-title not-agree-banks">ТА ЗЭЭЛИЙН ШАЛГУУРЫГ НЬ ХАНГААГҮЙ БАНК, ББСБ-УУД</p>
                     <ion-scroll direction="x" class="wide-scroll-bank-step">
                         <div class="bank" ng-repeat="bank in bankListFilter.NotAgree">
@@ -106,6 +142,7 @@
                         </div>
                     </ion-scroll>
                 </div> -->
+                <!-- IOS HIDE END-->
             </div>
             <button class="button btn single-button" id="Next" ng-click="goStep3()">ҮРГЭЛЖЛҮҮЛЭХ</button><br />
         </div>
@@ -122,3 +159,36 @@
     </ion-content>
   </ion-modal-view>
 </script>
+<!-- Регистрийн дугаар huseltiin dund oorchlogdox bolomjgu tul haaw !!! -->
+<!-- <script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view id="profileKeyContainer" class="reg-num-modal">
+        <ion-content scroll="false" class="padding overlay-profile-reg-select-content">
+            <div id="keypadReg" cellpadding="5" cellspacing="3">
+                <div class="row keyboard-row-1">
+                    <div class="col keyboard-title keyboard-title-left" ng-click="cancelRegNums()">Хаах</div>
+                    <div class="col keyboard-title keyboard-title-right" ng-click="saveRegNums()">Хадгалах</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('1')">1</div>
+                    <div class="col keypad-col" ng-click="addCode('2')">2</div>
+                    <div class="col keypad-col" ng-click="addCode('3')">3</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('4')">4</div>
+                    <div class="col keypad-col" ng-click="addCode('5')">5</div>
+                    <div class="col keypad-col" ng-click="addCode('6')">6</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="addCode('7')">7</div>
+                    <div class="col keypad-col" ng-click="addCode('8')">8</div>
+                    <div class="col keypad-col" ng-click="addCode('9')">9</div>
+                </div>
+                <div class="row keypad-row">
+                    <div class="col keypad-col" ng-click="emptyCode()">C</div>
+                    <div class="col keypad-col" ng-click="addCode('0')">0</div>
+                    <div class="col keypad-col" ng-click="clearD()"><i class="ion-arrow-left-c"></i></div>
+                </div>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script> -->
