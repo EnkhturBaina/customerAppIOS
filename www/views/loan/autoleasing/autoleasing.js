@@ -1159,8 +1159,16 @@
   //   }
   // };
   $scope.goStep5 = function () {
+    // IOS STEP хүсэлт банк сонгуулахгүй шууд явуулах
     if ($scope.checkReqiured("identPic")) {
-      $state.go("autoleasing-3");
+      // $state.go("autoleasing-3");
+      $rootScope.bankListFilter.Agree.map((el) => {
+        el.checked = true;
+        $rootScope.selectedBanksList.push(el.id);
+      });
+      $timeout(function () {
+        $scope.sendRequest();
+      }, 600);
     }
   };
 
