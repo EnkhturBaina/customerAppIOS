@@ -397,6 +397,8 @@
   $scope.sendRequest = function () {
     //all_ID.dccustomerid
     //1639133516578203
+    $rootScope.all_ID = JSON.parse(localStorage.getItem("ALL_ID"));
+    console.log("$rootScope.all_ID", $rootScope.all_ID);
 
     $scope.disabledBtnSendReq = true;
     $rootScope.ShowLoader();
@@ -1146,7 +1148,14 @@
   $scope.goStep5ORIdent = function () {
     if ($scope.checkReqiured("step4CustomerData")) {
       if ($scope.checkReqiured("agreeBank")) {
-        $state.go("ident-pic");
+        // $state.go("ident-pic");
+        $rootScope.bankListFilter.Agree.map((el) => {
+          el.checked = true;
+          $rootScope.selectedBanksList.push(el.id);
+        });
+        $timeout(function () {
+          $scope.sendRequest();
+        }, 600);
       }
     }
   };
