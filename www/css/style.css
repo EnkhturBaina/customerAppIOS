@@ -1668,7 +1668,6 @@ input[type="number"] {
   position: relative !important;
   float: right !important;
   appearance: auto !important;
-  direction: ltr !important;
   width: 100% !important;
   max-width: 100% !important;
   opacity: 1 !important;
