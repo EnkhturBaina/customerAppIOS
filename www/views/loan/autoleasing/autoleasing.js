@@ -392,6 +392,8 @@
       $("#monthlyIncome").mask("0000000000");
       $("#totalIncomeHousehold").mask("0000000000");
       $("#monthlyPayment").mask("0000000000");
+      $rootScope.danIncomeData.totalincomehousehold = 0;
+      $rootScope.danIncomeData.monthlypayment = 0;
     }, 1000);
   }
 
