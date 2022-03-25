@@ -186,7 +186,9 @@
     });
     serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1636343385639929" }).then(function (response) {
       $rootScope.ERPappVersion = response[0].name;
+      $rootScope.ERPappVersionIOS = response[0].text1;
       $rootScope.isAppActive = response[0].isactive;
+      $rootScope.isAppActiveIOS = response[0].number1;
     });
     serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1643091771811030" }).then(function (response) {
       $rootScope.customerSector = response;
@@ -351,7 +353,7 @@
           } else {
             $rootScope.checkisUpdate();
           }
-          if ($rootScope.isAppActive === "0") {
+          if ($rootScope.isAppActiveIOS === "0") {
             $rootScope.checkisAppActive();
           }
         }
