@@ -338,13 +338,22 @@
       $scope.getProfileLookupData();
       //App version check
       $timeout(function () {
-        if (!isEmpty($rootScope.ERPappVersion) && $rootScope.zeelmeAppVersion === $rootScope.ERPappVersion) {
+        if (ionic.Platform.platform() == "android") {
+          if (!isEmpty($rootScope.ERPappVersion) && $rootScope.zeelmeAppVersion === $rootScope.ERPappVersion) {
+          } else {
+            $rootScope.checkisUpdate();
+          }
+          if ($rootScope.isAppActive === "0") {
+            $rootScope.checkisAppActive();
+          }
         } else {
-          // console.log($rootScope.ERPappVersion, $rootScope.zeelmeAppVersion);
-          $rootScope.checkisUpdate();
-        }
-        if ($rootScope.isAppActive === "0") {
-          $rootScope.checkisAppActive();
+          if (!isEmpty($rootScope.ERPappVersionIOS) && $rootScope.zeelmeAppVersion === $rootScope.ERPappVersionIOS) {
+          } else {
+            $rootScope.checkisUpdate();
+          }
+          if ($rootScope.isAppActive === "0") {
+            $rootScope.checkisAppActive();
+          }
         }
       }, 2000);
       $rootScope.hideFooter = false;
@@ -384,10 +393,15 @@
           type: "button-outline button-positive OutbuttonSize OutbuttonSizeFirst button-dc-default",
           onTap: function (e) {
             //play store -s zeelme duudah
+            if (ionic.Platform.platform() == "android") {
+              var deviceType = "market://details?id=com.digital.customerN";
+            } else {
+              var deviceType = "itms-apps://itunes.apple.com/nl/app/blackboard-mobile-learn/id1575199367?mt=8";
+            }
             startApp
               .set({
                 action: "ACTION_VIEW",
-                uri: "market://details?id=com.digital.customerN",
+                uri: deviceType,
               })
               .start();
             //Шинэчлэх darahad app haaj play store duudah
