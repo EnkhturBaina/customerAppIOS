@@ -189,6 +189,7 @@ angular.module("salary.Ctrl", []).controller("salaryCtrl", function ($scope, $ro
     var local = localStorage.getItem("requestType");
     $rootScope.all_ID = JSON.parse(localStorage.getItem("ALL_ID"));
     $rootScope.isIncomeConfirm = true;
+    $("#loanAmountRequest").mask("000000000");
     //нүүрнээс зээлийн хүсэлтрүү орох үед талбаруудыг шинэчлэх
     if (firstReq === "yes" && local == "salary") {
       $rootScope.newReqiust = {};
