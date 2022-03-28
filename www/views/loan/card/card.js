@@ -137,15 +137,17 @@ angular.module("card.Ctrl", []).controller("cardCtrl", function ($scope, $rootSc
         if (isEmpty($rootScope.minMonth)) {
           $rootScope.minMonth = 0;
         }
-        Object.keys($rootScope.monthsArr).forEach(function (key) {
-          if ($rootScope.requestType == key) {
-            $rootScope.monthsArr[key].map((el) => {
-              if ($rootScope.months.includes(el) && el >= $rootScope.minMonth && el <= $rootScope.maxMonth) {
-                $rootScope.filteredMonths.push(el);
-              }
-            });
-          }
-        });
+        if (isEmpty($rootScope.filteredMonths)) {
+          Object.keys($rootScope.monthsArr).forEach(function (key) {
+            if ($rootScope.requestType == key) {
+              $rootScope.monthsArr[key].map((el) => {
+                if ($rootScope.months.includes(el) && el >= $rootScope.minMonth && el <= $rootScope.maxMonth) {
+                  $rootScope.filteredMonths.push(el);
+                }
+              });
+            }
+          });
+        }
       }
     });
     // console.log("json", json);
@@ -238,6 +240,7 @@ angular.module("card.Ctrl", []).controller("cardCtrl", function ($scope, $rootSc
       $rootScope.newReqiust = {};
       $rootScope.danCustomerData = {};
       $rootScope.danIncomeData = {};
+      $rootScope.filteredMonths = [];
       localStorage.setItem("firstReq", "no");
     }
     $rootScope.newReqiust.serviceAgreementId = 1554263832132;
