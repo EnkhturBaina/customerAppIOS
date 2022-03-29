@@ -412,6 +412,7 @@
         $scope.newReqiust.areasOfActivity = $rootScope.danCustomerData.areasofactivity;
         $scope.newReqiust.jobPositionId = $rootScope.danCustomerData.jobpositionid;
         $scope.newReqiust.experiencePeriodId = $rootScope.danCustomerData.experienceperiodid;
+        $scope.newReqiust.customerTypeId = $rootScope.danCustomerData.customertypeid;
 
         //Харилцагчийн income data
         $scope.newReqiust.incomeTypeId = $rootScope.danIncomeData.incometypeid; //Орлогын төрөл
@@ -558,6 +559,7 @@
         $scope.newReqiust.areasOfActivity = $rootScope.danCustomerData.areasofactivity;
         $scope.newReqiust.jobPositionId = $rootScope.danCustomerData.jobpositionid;
         $scope.newReqiust.experiencePeriodId = $rootScope.danCustomerData.experienceperiodid;
+        $scope.newReqiust.customerTypeId = $rootScope.danCustomerData.customertypeid;
 
         //Харилцагчийн income data
         $scope.newReqiust.incomeTypeId = $rootScope.danIncomeData.incometypeid; //Орлогын төрөл
@@ -669,6 +671,7 @@
         $scope.newReqiust.areasOfActivity = $rootScope.danCustomerData.areasofactivity;
         $scope.newReqiust.jobPositionId = $rootScope.danCustomerData.jobpositionid;
         $scope.newReqiust.experiencePeriodId = $rootScope.danCustomerData.experienceperiodid;
+        $scope.newReqiust.customerTypeId = $rootScope.danCustomerData.customertypeid;
 
         //Харилцагчийн income data
         $scope.newReqiust.incomeTypeId = $rootScope.danIncomeData.incometypeid; //Орлогын төрөл
@@ -763,6 +766,7 @@
         $scope.newReqiust.areasOfActivity = $rootScope.danCustomerData.areasofactivity;
         $scope.newReqiust.jobPositionId = $rootScope.danCustomerData.jobpositionid;
         $scope.newReqiust.experiencePeriodId = $rootScope.danCustomerData.experienceperiodid;
+        $scope.newReqiust.customerTypeId = $rootScope.danCustomerData.customertypeid;
 
         //Харилцагчийн income data
         $scope.newReqiust.incomeTypeId = $rootScope.danIncomeData.incometypeid; //Орлогын төрөл
@@ -838,6 +842,7 @@
         $scope.newReqiust.areasOfActivity = $rootScope.danCustomerData.areasofactivity;
         $scope.newReqiust.jobPositionId = $rootScope.danCustomerData.jobpositionid;
         $scope.newReqiust.experiencePeriodId = $rootScope.danCustomerData.experienceperiodid;
+        $scope.newReqiust.customerTypeId = $rootScope.danCustomerData.customertypeid;
 
         //Харилцагчийн income data
         $scope.newReqiust.incomeTypeId = $rootScope.danIncomeData.incometypeid; //Орлогын төрөл
@@ -984,6 +989,7 @@
         $scope.newReqiust.areasOfActivity = $rootScope.danCustomerData.areasofactivity;
         $scope.newReqiust.jobPositionId = $rootScope.danCustomerData.jobpositionid;
         $scope.newReqiust.experiencePeriodId = $rootScope.danCustomerData.experienceperiodid;
+        $scope.newReqiust.customerTypeId = $rootScope.danCustomerData.customertypeid;
 
         //Харилцагчийн income data
         $scope.newReqiust.incomeTypeId = $rootScope.danIncomeData.incometypeid; //Орлогын төрөл
@@ -1101,6 +1107,7 @@
         $scope.newReqiust.areasOfActivity = $rootScope.danCustomerData.areasofactivity;
         $scope.newReqiust.jobPositionId = $rootScope.danCustomerData.jobpositionid;
         $scope.newReqiust.experiencePeriodId = $rootScope.danCustomerData.experienceperiodid;
+        $scope.newReqiust.customerTypeId = $rootScope.danCustomerData.customertypeid;
 
         //Харилцагчийн income data
         $scope.newReqiust.incomeTypeId = $rootScope.danIncomeData.incometypeid; //Орлогын төрөл
