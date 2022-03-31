@@ -17,7 +17,7 @@
                     <div class="money-input custom-form-container">
                         <label class="item item-input item-select form-input-label">
                             <p class="input-label" style="margin: 0;">Барьцаалах автомашины төрөл</p>
-                            <select ng-model="$root.carDetailData.carCategoryId" style="background-color: transparent" ng-change="getCarFactoryCategory(carDetailData.carCategoryId)" class="custom-form-input-select">
+                            <select ng-model="$root.carDetailData.carCategoryId" style="background-color: transparent" ng-change="getCarFactoryCategory(carDetailData.carCategoryId);$root.getbankDataCarColl()" class="custom-form-input-select">
                                 <option ng-repeat="com in $root.carCategory track by $index" ng-if="com.name" value="{{com.id}}">
                                     {{com.name}}</option>
                             </select>
@@ -57,7 +57,7 @@
                         </label>
                         <label class="item item-input item-select form-input-label">
                             <span class="input-label">Орлого нотлох эсэх</span>
-                            <select ng-model="$root.newReqiust.proveIncome" class="custom-form-input-select" ng-change="incomeConfirm(newReqiust.proveIncome)">
+                            <select ng-model="$root.newReqiust.proveIncome" class="custom-form-input-select" ng-change="incomeConfirm(newReqiust.proveIncome);$root.getbankDataCarColl()">
                                 <option ng-repeat="loc in $root.proveIncomeData | filter:{id:'!!'}" ng-if="loc.name" value="{{loc.id}}">
                                     {{loc.name}}</option>
                             </select>
