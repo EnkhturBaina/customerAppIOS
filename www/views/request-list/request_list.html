@@ -24,7 +24,7 @@
                         </div>
                         <div class="list fix-list grow" style="height: fit-content;" ng-hide="active" id="{{'grow'+$index}}">
                             <div class="{{'measuringWrapper'+$index}}">
-                                <a class="item item-thumbnail-left" ng-repeat="bank in banks" ng-click="selectbank(bank, banks[0].leasingid);">
+                                <a class="item item-thumbnail-left" ng-repeat="bank in banks" ng-click="selectbank(bank, banks[0].leasingid, banks[0].requesttypeid);">
                                     <!-- <a class="item item-thumbnail-left" ng-repeat="bank in banks"> -->
                                     <img ng-src="{{$root.imagePath}}{{bank.banklogo}}" />
                                     <div class="row">
