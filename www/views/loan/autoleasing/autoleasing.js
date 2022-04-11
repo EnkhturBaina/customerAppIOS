@@ -1616,7 +1616,7 @@
         var authWindow = cordova.InAppBrowser.open($rootScope.stringHtmlsLink.url, "_blank", "location=no,toolbar=no");
         $(authWindow).on("loadstart", function (e) {
           var url = e.originalEvent.url;
-          var code = url.indexOf("https://devservices.digitalcred");
+          var code = url.indexOf("https://services.digitalcred");
           var error = /\?error=(.+)$/.exec(url);
           if (code == 0 || error) {
             authWindow.close();
