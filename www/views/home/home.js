@@ -1,4 +1,4 @@
-angular.module("home.Ctrl", []).controller("homeCtrl", function ($scope, $ionicPopup, $ionicLoading, serverDeferred, $ionicSlideBoxDelegate, $cordovaNetwork, $rootScope, $ionicTabsDelegate, $ionicHistory, $ionicPlatform, $timeout, $state) {
+﻿angular.module("home.Ctrl", []).controller("homeCtrl", function ($scope, $ionicPopup, $ionicLoading, serverDeferred, $ionicSlideBoxDelegate, $cordovaNetwork, $rootScope, $ionicTabsDelegate, $ionicHistory, $ionicPlatform, $timeout, $state) {
   // $rootScope.serverUrl = "http://dev.veritech.mn:8082/erp-services/RestWS/runJson";
   // $rootScope.imagePath = "https://dev.veritech.mn/";
   $rootScope.serverUrl = "http://leasing.digitalcredit.mn:8080/erp-services/RestWS/runJsonz";
@@ -195,7 +195,10 @@ angular.module("home.Ctrl", []).controller("homeCtrl", function ($scope, $ionicP
       $rootScope.ERPappVersionIOS = response[0].text1;
       $rootScope.isAppActive = response[0].isactive;
       $rootScope.isAppActiveIOS = response[0].number1;
+      //Review хийх үед Erp version check ANDROID
       $rootScope.isInReview = response[0].number2;
+      //Review хийх үед Erp version check IOS
+      $rootScope.isInReview_IOS = response[0].number3;
     });
     serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1646622257271491" }).then(function (response) {
       $rootScope.customerSector = response;
@@ -245,6 +248,9 @@ angular.module("home.Ctrl", []).controller("homeCtrl", function ($scope, $ionicP
     });
     serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "164612642423810" }).then(function (response) {
       $rootScope.proveIncomeData = response;
+    });
+    serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1649731248094570" }).then(function (response) {
+      $rootScope.loan_condition = response;
     });
     $rootScope.monthsArr = {
       auto: [6, 12, 15, 18, 24, 30, 36, 48],
@@ -360,7 +366,7 @@ angular.module("home.Ctrl", []).controller("homeCtrl", function ($scope, $ionicP
         } else {
           if (!isEmpty($rootScope.ERPappVersionIOS) && $rootScope.zeelmeAppVersion === $rootScope.ERPappVersionIOS) {
           } else {
-            if ($rootScope.isInReview == "0") {
+            if ($rootScope.isInReview_IOS == "0") {
               $rootScope.checkisUpdate();
             }
           }
