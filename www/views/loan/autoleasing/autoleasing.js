@@ -452,7 +452,7 @@
                       customerId: $rootScope.all_ID.dccustomerid,
                       bankId: item.id,
                       isAgree: "1",
-                      isMobile: "1626864048648",
+                      isMobile: "16493254226761",
                       wfmStatusId: "1609944755118135",
                       productId: item.products[0].id,
                     };
@@ -538,7 +538,7 @@
             var AgreeBank = {
               bankId: item.id,
               isAgree: "1",
-              isMobile: "1626864048648",
+              isMobile: "16493254226761",
               wfmStatusId: "1609944755118135",
               productId: item.products[0].id,
             };
@@ -651,7 +651,7 @@
             var AgreeBank = {
               bankId: item.id,
               isAgree: "1",
-              isMobile: "1626864048648",
+              isMobile: "16493254226761",
               wfmStatusId: "1609944755118135",
               productId: item.products[0].id,
             };
@@ -750,7 +750,7 @@
             var AgreeBank = {
               bankId: item.id,
               isAgree: "1",
-              isMobile: "1626864048648",
+              isMobile: "16493254226761",
               wfmStatusId: "1609944755118135",
               productId: item.products[0].id,
             };
@@ -885,7 +885,7 @@
                   customerId: $rootScope.all_ID.dccustomerid,
                   bankId: item.id,
                   isAgree: "1",
-                  isMobile: "1626864048648",
+                  isMobile: "16493254226761",
                   wfmStatusId: "1609944755118135",
                   productId: item.products[0].id,
                   vendorId: $rootScope.selectedSupplierID,
@@ -1033,7 +1033,7 @@
                   customerId: $rootScope.all_ID.dccustomerid,
                   bankId: item.id,
                   isAgree: "1",
-                  isMobile: "1626864048648",
+                  isMobile: "16493254226761",
                   wfmStatusId: "1609944755118135",
                   productId: item.products[0].id,
                 };
@@ -1153,7 +1153,7 @@
                   customerId: $rootScope.all_ID.dccustomerid,
                   bankId: item.id,
                   isAgree: "1",
-                  isMobile: "1626864048648",
+                  isMobile: "16493254226761",
                   wfmStatusId: "1609944755118135",
                   productId: item.products[0].id,
                 };
@@ -1586,6 +1586,7 @@
   // dan connection
   $scope.gotoDanLoginAutoIncome = function () {
     $rootScope.stringHtmlsLink = {};
+    console.log("$rootScope.userDataFromCheckService", $rootScope.userDataFromCheckService);
     if (isEmpty($rootScope.userDataFromCheckService.dan)) {
       if ("uniqueidentifier" in $rootScope.loginUserInfo) {
         $rootScope.stringHtmlsLink.state = $rootScope.loginUserInfo.uniqueidentifier;
@@ -1607,40 +1608,41 @@
         $rootScope.ssoVendorID = "";
       }
       // console.log("$rootScope.loginUserInfo", $rootScope.loginUserInfo);
+      // console.log("$rootScope.stringHtmlsLink.state", $rootScope.stringHtmlsLink.state);
       serverDeferred.carCalculation({ state: $rootScope.stringHtmlsLink.state, channel: 1626864048648, vendor: $rootScope.ssoVendorID, type: $rootScope.requestTypeId }, `https://${$rootScope.api_url}digitalcredit.mn/api/sso/check`).then(function (response) {
         $scope.dangetDataFunction(response);
       });
     } else {
-      serverDeferred.carCalculation({ type: "auth_auto", redirect_uri: "customerapp" }, `https://${$rootScope.api_url}digitalcredit.mn/api/v1/c`).then(function (response) {
-        // console.log("ressssssssss", response);
-        $rootScope.stringHtmlsLink = response.result.data;
-        var authWindow = cordova.InAppBrowser.open($rootScope.stringHtmlsLink.url, "_blank", "location=no,toolbar=no");
-        $(authWindow).on("loadstart", function (e) {
-          var url = e.originalEvent.url;
-          var code = url.indexOf("https://services.digitalcred");
-          var error = /\?error=(.+)$/.exec(url);
-          if (code == 0 || error) {
-            authWindow.close();
+      $rootScope.stringHtmlsLink = $rootScope.userDataFromCheckService.dan;
+      var authWindow = cordova.InAppBrowser.open($rootScope.stringHtmlsLink.url, "_blank", "location=no,toolbar=no");
+      $(authWindow).on("loadstart", function (e) {
+        var url = e.originalEvent.url;
+        var code = url.indexOf("https://services.digitalcred");
+        var error = /\?error=(.+)$/.exec(url);
+        // if (code == 0 || error) {
+        //   authWindow.close();
+        // }
+        if (code == 0) {
+          if (isEmpty($rootScope.userDataFromCheckService.dan)) {
+            $rootScope.stringHtmlsLink = $rootScope.loginUserInfo.uniqueidentifier;
+          } else {
+            $rootScope.stringHtmlsLink = $rootScope.userDataFromCheckService.dan;
           }
-          if (code == 0) {
-            if (isEmpty($rootScope.userDataFromCheckService.dan)) {
-              $rootScope.stringHtmlsLink = $rootScope.loginUserInfo.uniqueidentifier;
-            } else {
-              $rootScope.stringHtmlsLink = response.result.data;
+          // console.log("cod$rootScope.stringHtmlsLinke", $rootScope.stringHtmlsLink);
+          serverDeferred.carCalculation({ state: $rootScope.stringHtmlsLink.state, channel: 1626864048648, vendor: $rootScope.ssoVendorID, type: $rootScope.requestTypeId }, `https://${$rootScope.api_url}digitalcredit.mn/api/sso/check`).then(function (response) {
+            // console.log("response autoLEASING DAN", response);
+            if (response.status == "success") {
+              authWindow.close();
             }
-            // console.log("cod$rootScope.stringHtmlsLinke", $rootScope.stringHtmlsLink);
-            serverDeferred.carCalculation({ state: $rootScope.stringHtmlsLink.state, channel: 1626864048648, vendor: $rootScope.ssoVendorID, type: $rootScope.requestTypeId }, `https://${$rootScope.api_url}digitalcredit.mn/api/sso/check`).then(function (response) {
-              // console.log("response autoLEASING DAN", response);
-              $scope.dangetDataFunction(response);
-            });
-          } else if (error) {
-            console.log(error);
-          }
-        });
-        //Дан-н цонх дуудагдахад Регистр оруулах талбар харуулах
-        $(authWindow).on("loadstop", function (e) {
-          authWindow.executeScript({ code: "$('#m-one-sign').attr('class', 'show');" });
-        });
+            $scope.dangetDataFunction(response);
+          });
+        } else if (error) {
+          console.log(error);
+        }
+      });
+      //Дан-н цонх дуудагдахад Регистр оруулах талбар харуулах
+      $(authWindow).on("loadstop", function (e) {
+        authWindow.executeScript({ code: "$('#m-one-sign').attr('class', 'show');" });
       });
       $rootScope.isDanLoginAutoColl = true;
       //Дан -р нэвтэрсэн үед disable хийх
