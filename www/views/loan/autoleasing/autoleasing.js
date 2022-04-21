@@ -1777,7 +1777,10 @@
               //хувааж төлөх нөхцөл
               $rootScope.danIncomeData.incyearofemployment = response.result[1];
               $rootScope.danIncomeData.workplace = response.result[2];
-              $rootScope.danIncomeData.incmonthlynetincome = response.result[3];
+              $rootScope.danIncomeData.monthlyincome = response.result[3]
+                .toFixed(2)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               $rootScope.danIncomeData.workedmonths = response.result[4];
               $rootScope.filterSalaries = response.result[5];
             }
