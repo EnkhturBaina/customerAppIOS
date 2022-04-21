@@ -371,7 +371,6 @@
   if ($state.current.name == "autoleasing-4") {
     $timeout(function () {
       $scope.getbankData();
-      $("#monthlyIncome").mask("0000000000");
       $("#totalIncomeHousehold").mask("0000000000");
       $("#monthlyPayment").mask("0000000000");
       $rootScope.danIncomeData.totalincomehousehold = 0;
@@ -1778,7 +1777,7 @@
               $rootScope.danIncomeData.incyearofemployment = response.result[1];
               $rootScope.danIncomeData.workplace = response.result[2];
               $rootScope.danIncomeData.monthlyincome = response.result[3]
-                .toFixed(2)
+                .toFixed(0)
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               $rootScope.danIncomeData.workedmonths = response.result[4];
