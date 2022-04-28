@@ -411,20 +411,17 @@
           text: "Шинэчлэх",
           type: "button-outline button-positive OutbuttonSize OutbuttonSizeFirst button-dc-default",
           onTap: function (e) {
-            //play store -s zeelme duudah
-            if (ionic.Platform.platform() == "android") {
-              var deviceType = "market://details?id=com.digital.customerN";
-            } else {
-              var deviceType = "itms-apps://itunes.apple.com/nl/app/blackboard-mobile-learn/id1575199367?mt=8";
-            }
-            startApp
-              .set({
-                action: "ACTION_VIEW",
-                uri: deviceType,
-              })
-              .start();
-            //Шинэчлэх darahad app haaj play store duudah
             ionic.Platform.exitApp();
+            var sApp = startApp.set("itms-apps://apps.apple.com/mn/app/zeelme/id1575199367");
+            sApp.start(
+              function () {
+                console.log("deviceType", sApp);
+              },
+              function (error) {
+                console.log("error", error);
+              }
+            );
+            //Шинэчлэх darahad app haaj play store duudah
             return true;
           },
         },
