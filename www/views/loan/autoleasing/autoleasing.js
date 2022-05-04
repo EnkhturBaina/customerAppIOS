@@ -1243,9 +1243,9 @@
           el.checked = true;
           $rootScope.selectedBanksList.push(el.id);
         });
-        $timeout(function () {
-          $scope.sendRequest();
-        }, 600);
+        // $timeout(function () {
+        $scope.sendRequest();
+        // }, 600);
       }
     }
   };
