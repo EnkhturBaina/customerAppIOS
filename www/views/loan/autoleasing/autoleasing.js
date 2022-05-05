@@ -2032,12 +2032,14 @@
   };
   $rootScope.updateDC_danLog = function (leasingId) {
     serverDeferred.request("PL_MDVIEW_004", { systemmetagroupid: "1649219634667485", regNum: $rootScope.danCustomerData.uniqueidentifier }).then(function (response) {
-      console.log("response", response);
+      //console.log("response", response);
       $rootScope.danLog = response;
 
       angular.forEach($rootScope.danLog, function (item) {
-        console.log("response", response);
-        serverDeferred.requestFull("dcApp_dc_dan_log_002", { id: item.id, leasingId: leasingId, regNum: item.regnum, isLast: 0 }).then(function (updateDanLogResponse) {});
+        if (!isEmpty(item)) {
+          //console.log("response", response);
+          serverDeferred.requestFull("dcApp_dc_dan_log_002", { id: item.id, leasingId: leasingId, regNum: item.regnum, isLast: 0 }).then(function (updateDanLogResponse) {});
+        }
       });
     });
   };
