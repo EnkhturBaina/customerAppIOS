@@ -118,7 +118,7 @@
   float: right;
 }
 .home-tab-2-content {
-  height: calc(100% - 144px);
+  height: calc(100% - 170px);
 }
 .home-tab-2-content > .scroll {
   min-height: 0px !important;

@@ -188,6 +188,7 @@ h4 {
   display: flex;
   flex-direction: column;
   background-color: ghostwhite;
+  margin-top: 25px !important;
 }
 
 .big-container {
@@ -287,6 +288,10 @@ h4 {
 
 .margin-top-20 {
   margin-top: 20px;
+}
+
+.margin-top-25 {
+  margin-top: 25px;
 }
 
 .margin-top-50 {
@@ -483,7 +488,7 @@ h4 {
   left: 15px;
   margin-right: 5px;
 }
-.app-header-custom > .title-left  {
+.app-header-custom > .title-left {
   left: 50px !important;
 }
 .bar .title.title-left {
